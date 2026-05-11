@@ -59,13 +59,13 @@ export default function Navigation() {
         Y{SUFFIX.slice(0, count)}<span className="text-text-brand">.</span>
       </Link>
       <div className="flex items-center gap-5xl shrink-0 font-body text-xs not-italic text-text-primary">
-        <Link href="/work" className="relative group">
+        <Link href="/work" className="relative isolate group">
           Work
-          <span aria-hidden="true" className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" />
+          <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />
         </Link>
-        <Link href="/contact" className="relative group">
+        <Link href="/contact" className="relative isolate group">
           Contact
-          <span aria-hidden="true" className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" />
+          <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />
         </Link>
       </div>
     </nav>
