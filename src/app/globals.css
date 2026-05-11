@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── Colors ──────────────────────────────────────────────────────────────── */
+  --color-text-primary:   #0d0d0d;
+  --color-text-brand:     #00ffa3;
+  --color-bg-primary:     #f9f9f9;
+  --color-bg-brand:       #00ffa3;
+  --color-border-primary: #696969;
+  --color-border-brand:   #00ffa3;
+  --color-icon-primary:   #0d0d0d;
+  --color-icon-brand:     #00ffa3;
+  --color-accent:         #00ffa3;
+  --color-almost-ink:     #0d0d0d;
+  --color-paper-white:    #f9f9f9;
+
+  /* ─── Font families ───────────────────────────────────────────────────────── */
+  /* fallback values — overridden at html level by next/font CSS variables */
+  --font-heading: var(--font-bricolage, sans-serif);
+  --font-body:    var(--font-space-mono, monospace);
+
+  /* ─── Font sizes ──────────────────────────────────────────────────────────── */
+  --text-xs:                    12px;
+  --text-xs--line-height:       1;
+  --text-sm:                    14px;
+  --text-sm--line-height:       20px;
+  --text-base:                  16px;
+  --text-base--line-height:     1;
+  --text-heading-s:             24px;
+  --text-heading-s--line-height: 28px;
+  --text-heading-m:             28px;
+  --text-heading-m--line-height: 28px;
+  --text-heading-l:             40px;
+  --text-heading-l--line-height: 44px;
+  --text-heading-xl:            64px;
+  --text-heading-xl--line-height: 1;
+  --text-impact:                240px;
+  --text-impact--line-height:   1;
+  --text-eyebrow:               12px;
+  --text-eyebrow--line-height:  1;
+  --text-button:                20px;
+  --text-button--line-height:   20px;
+
+  /* ─── Spacing ─────────────────────────────────────────────────────────────── */
+  --spacing-xxs:    2px;
+  --spacing-md:     8px;
+  --spacing-lg:     12px;
+  --spacing-xl:     16px;
+  --spacing-2xl:    20px;
+  --spacing-3xl:    24px;
+  --spacing-4xl:    32px;
+  --spacing-5xl:    40px;
+  --spacing-6xl:    48px;
+  --spacing-7xl:    64px;
+  --spacing-9xl:    96px;
+  --spacing-10xl:   128px;
+  --spacing-margin: 20px;
+  --spacing-gutter: 20px;
+
+  /* ─── Letter spacing ──────────────────────────────────────────────────────── */
+  --tracking-impact: 0.03em;
+}
