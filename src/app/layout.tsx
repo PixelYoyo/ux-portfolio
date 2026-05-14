@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import { Bricolage_Grotesque, Space_Mono } from 'next/font/google';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import './globals.css';
 import Navigation from '@/components/Navigation';
+
+config.autoAddCss = false;
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],

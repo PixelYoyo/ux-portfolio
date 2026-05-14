@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { nav } from '@/content/portfolio';
 
-const SUFFIX     = 'olandi Lehner';
-const TYPE_MS    = 60;
-const DELETE_MS  = 40;
+const logoSuffix = nav.logoName.slice(1);
+const TYPE_MS   = 60;
+const DELETE_MS = 40;
 
 export default function Navigation() {
   const [count, setCount] = useState(0);
@@ -21,7 +22,7 @@ export default function Navigation() {
   }
 
   function tick() {
-    if (dirRef.current === 'typing' && countRef.current < SUFFIX.length) {
+    if (dirRef.current === 'typing' && countRef.current < logoSuffix.length) {
       countRef.current++;
       setCount(countRef.current);
       timerRef.current = setTimeout(tick, TYPE_MS);
@@ -54,19 +55,17 @@ export default function Navigation() {
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        aria-label="Yolandi Lehner — home"
+        aria-label={`${nav.logoName} — home`}
       >
-        Y{SUFFIX.slice(0, count)}<span className="text-text-brand">.</span>
+        {nav.logoName[0]}{logoSuffix.slice(0, count)}<span className="text-text-brand">.</span>
       </Link>
       <div className="flex items-center gap-5xl shrink-0 font-body text-xs not-italic text-text-primary">
-        <Link href="/work" className="relative isolate group">
-          Work
-          <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />
-        </Link>
-        <Link href="/contact" className="relative isolate group">
-          Contact
-          <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />
-        </Link>
+        {nav.links.map((link) => (
+          <Link key={link.href} href={link.href} className="relative isolate group">
+            {link.label}
+            <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />
+          </Link>
+        ))}
       </div>
     </nav>
   );

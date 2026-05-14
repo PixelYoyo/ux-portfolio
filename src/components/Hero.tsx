@@ -1,7 +1,5 @@
 import Image from 'next/image';
-
-const PROFILE_SRC =
-  'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778497163/Profile_photo_sfjaho.png';
+import { hero } from '@/content/portfolio';
 
 export default function Hero() {
   return (
@@ -18,18 +16,18 @@ export default function Hero() {
           className="font-heading font-bold text-[64px] lg:text-[80px] leading-none uppercase"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         >
-          HELLO<span className="text-text-brand">.</span>
+          {hero.heading}<span className="text-text-brand">.</span>
         </h1>
 
         <div className="font-body not-italic text-base lg:text-heading-s">
-          <p className="leading-normal lg:leading-[30px] mb-lg lg:mb-[28px]">
-            I&apos;m Yolandi - a Senior product designer with a genuine
-            obsession with why people do what they do, and a habit of turning
-            that into design that works.
-          </p>
-          <p className="leading-normal lg:leading-[30px]">
-            Welcome to my portfolio; schön, dass du da bist - good to have you.
-          </p>
+          {hero.bio.map((para, i) => (
+            <p
+              key={i}
+              className={`leading-normal lg:leading-[30px]${i < hero.bio.length - 1 ? ' mb-lg lg:mb-[28px]' : ''}`}
+            >
+              {para}
+            </p>
+          ))}
         </div>
       </div>
 
@@ -44,8 +42,8 @@ export default function Hero() {
         "
       >
         <Image
-          src={PROFILE_SRC}
-          alt="Yolandi Lehner — Senior product designer"
+          src={hero.profileImageSrc}
+          alt={hero.profileImageAlt}
           fill
           className="object-cover object-[center_top]"
           priority
