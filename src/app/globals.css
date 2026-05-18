@@ -137,6 +137,7 @@
 
 .text-link {
   position: relative;
+  isolation: isolate;
 }
 .text-link::after {
   content: '';
@@ -148,6 +149,7 @@
   background: var(--color-bg-brand);
   transform-origin: left center;
   pointer-events: none;
+  z-index: -1;
 }
 .text-link:hover::after {
   animation: text-link-draw 0.3s ease-out;
