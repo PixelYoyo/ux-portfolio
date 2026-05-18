@@ -84,7 +84,7 @@ export default function FeaturedWork() {
     <div ref={outerRef}>
       {/* sticky top-0 on mobile keeps the section pinned while the outer scrolls. */}
       {/* lg:static restores normal flow on desktop.                               */}
-      <section className="sticky top-0 lg:static bg-bg-primary px-margin pt-4xl pb-[160px] lg:pb-7xl flex flex-col gap-[80px] items-end">
+      <section className="sticky top-0 lg:static bg-bg-primary px-margin pt-4xl pb-7xl lg:pb-10xl flex flex-col gap-[80px] items-end">
 
         {/* Featured project 01 */}
         {/* Mobile: stacked (number → thumbnail → text/CTA) | Desktop: two-column row */}
@@ -100,14 +100,13 @@ export default function FeaturedWork() {
 
           {/* Thumbnail — order 2 on mobile, right col on desktop */}
           <div className="order-2 lg:order-last lg:border-b lg:border-border-primary lg:pb-7xl w-full lg:max-w-[585px]">
-            <div className="aspect-video relative w-full">
-              <Image
-                src={FEATURED.thumbnailSrc}
-                alt={FEATURED.thumbnailAlt}
-                fill
-                className="object-cover"
-              />
-            </div>
+            <Image
+              src={FEATURED.thumbnailSrc}
+              alt={FEATURED.thumbnailAlt}
+              width={1280}
+              height={720}
+              className="w-full"
+            />
           </div>
 
           {/* Text + CTA — order 3 on mobile, left col on desktop */}

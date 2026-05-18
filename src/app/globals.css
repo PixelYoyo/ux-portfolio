@@ -61,11 +61,65 @@
   --tracking-impact: 0.03em;
 }
 
-/* ─── Typewriter cursor ───────────────────────────────────────────────────── */
-@keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+/* ─── ButtonPrimary ───────────────────────────────────────────────────────── */
+/*
+ * ::before  — green fill; fades to transparent on hover
+ * ::after   — aura ripple; expands outward from the border edge on hover
+ * border    — 2px transparent by default, switches to #0d0d0d on hover;
+ *             kept at 2px always so layout never shifts
+ */
+@keyframes btn-primary-aura {
+  0%   { inset: 0;     opacity: 0.8; }
+  100% { inset: -18px; opacity: 0;   }
 }
-.cursor-blink {
-  animation: cursor-blink 0.7s step-start infinite;
+
+.btn-primary {
+  position: relative;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
 }
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg-brand);
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--color-text-primary);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.btn-primary:hover               { border-color: var(--color-text-primary); }
+.btn-primary:hover::before       { opacity: 0; }
+.btn-primary:hover::after        { animation: btn-primary-aura 1.4s ease-out infinite; }
+.btn-primary:active              { transform: translateY(2px); }
+
+/* ─── ButtonSecondary: dark bubble expands from centre on hover ───────────── */
+.btn-secondary {
+  position: relative;
+  overflow: hidden;
+  border: 3px solid var(--color-text-primary);
+  color: var(--color-text-primary);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  aspect-ratio: 1;
+  background: var(--color-text-primary);
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+.btn-secondary:hover              { border-color: transparent; color: var(--color-bg-primary); }
+.btn-secondary:hover::before      { transform: translate(-50%, -50%) scale(1); }
+.btn-secondary:active             { transform: translateY(2px); }

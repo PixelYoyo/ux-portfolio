@@ -21,7 +21,7 @@ export default function Ticker({ text }: TickerProps) {
           to   { transform: translateX(-50%); }
         }
         .ticker-track {
-          animation: ticker 25s linear infinite;
+          animation: ticker 16s linear infinite;
         }
         @media (prefers-reduced-motion: reduce) {
           .ticker-track { animation: none; }
