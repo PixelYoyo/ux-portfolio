@@ -110,16 +110,8 @@ function ListItem({ study }: { study: CaseStudy }) {
         <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
           {study.description}
         </p>
-        <Link
-          href={study.href}
-          className="relative z-10 isolate font-body not-italic text-base text-text-primary self-start cursor-pointer group"
-        >
+        <Link href={study.href} className="text-link font-body not-italic text-base text-text-primary self-start">
           Read the story
-          <span
-            aria-hidden="true"
-            className="absolute left-0 -z-10 h-[6px] w-full bg-bg-brand origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"
-            style={{ top: 'calc(50% + 3px)' }}
-          />
         </Link>
       </div>
     </div>

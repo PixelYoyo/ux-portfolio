@@ -123,3 +123,32 @@
 .btn-secondary:hover              { border-color: transparent; color: var(--color-bg-primary); }
 .btn-secondary:hover::before      { transform: translate(-50%, -50%) scale(1); }
 .btn-secondary:active             { transform: translateY(2px); }
+
+/* ─── Text link ───────────────────────────────────────────────────────────── */
+/*
+ * Default: 6px brand-green bar visible beneath the text.
+ * Hover:   bar redraws from left to right (same draw direction as nav links).
+ * Excluded: .btn-primary and .btn-secondary have their own hover treatments.
+ */
+@keyframes text-link-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.text-link {
+  position: relative;
+}
+.text-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 6px;
+  background: var(--color-bg-brand);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.text-link:hover::after {
+  animation: text-link-draw 0.3s ease-out;
+}

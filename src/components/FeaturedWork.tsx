@@ -171,10 +171,8 @@ export default function FeaturedWork() {
                     <p className="font-body not-italic text-sm leading-[20px]">{project.description}</p>
                   </div>
 
-                  {/* relative z-10 ensures the button sits above any stacking-context siblings */}
-                  <span className="relative z-10 isolate font-body not-italic text-base text-text-primary self-start cursor-pointer group">
+                  <span className="text-link font-body not-italic text-base text-text-primary self-start cursor-pointer">
                     Read the story
-                    <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full bg-bg-brand origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />
                   </span>
                 </div>
               </Link>

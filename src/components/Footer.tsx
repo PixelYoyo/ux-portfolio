@@ -6,19 +6,6 @@ import { faEnvelope, faCode, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { footer as content } from '@/content/portfolio';
 
-function TextLink({ href, label, external }: { href: string; label: string; external?: boolean }) {
-  const props = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
-  return (
-    <a href={href} {...props} className="relative font-body not-italic text-base text-text-primary self-start">
-      {label}
-      <span
-        className="absolute left-0 h-[6px] w-full bg-bg-brand"
-        style={{ top: 'calc(50% + 9px)' }}
-      />
-    </a>
-  );
-}
-
 export default function Footer() {
   return (
     <footer className="bg-bg-primary px-margin pt-4xl lg:pt-7xl pb-2xl flex flex-col gap-[40px]">
@@ -57,29 +44,17 @@ export default function Footer() {
               href={content.contact.linkedinHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-[8px] font-body not-italic text-base text-text-primary self-start group"
+              className="flex items-center gap-[8px] font-body not-italic text-base text-text-primary self-start"
             >
               <FontAwesomeIcon icon={faLinkedinIn} className="flex-shrink-0" />
-              <span className="relative">
-                {content.contact.linkedinLabel}
-                <span
-                  className="absolute left-0 h-[6px] w-full bg-bg-brand"
-                  style={{ top: 'calc(50% + 9px)' }}
-                />
-              </span>
+              <span className="text-link">{content.contact.linkedinLabel}</span>
             </Link>
             <a
               href={content.contact.emailHref}
-              className="flex items-center gap-[8px] font-body not-italic text-base text-text-primary self-start group"
+              className="flex items-center gap-[8px] font-body not-italic text-base text-text-primary self-start"
             >
               <FontAwesomeIcon icon={faEnvelope} className="flex-shrink-0" />
-              <span className="relative">
-                {content.contact.emailLabel}
-                <span
-                  className="absolute left-0 h-[6px] w-full bg-bg-brand"
-                  style={{ top: 'calc(50% + 9px)' }}
-                />
-              </span>
+              <span className="text-link">{content.contact.emailLabel}</span>
             </a>
           </div>
         </div>
