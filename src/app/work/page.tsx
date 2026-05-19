@@ -1,14 +1,25 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import ButtonPrimary from '@/components/ButtonPrimary';
 import ButtonSecondary from '@/components/ButtonSecondary';
 import { workPage } from '@/content/portfolio';
 
 type View = 'grid' | 'list';
 type CaseStudy = (typeof workPage.caseStudies)[number];
+
+const HOVER_BG_URL = 'https://res.cloudinary.com/drd6p33en/image/upload/v1779141549/Hover_state_background_1_r6em3n.png';
+
+// Per-card circle positions (absolute, clipped by card overflow-hidden)
+const CIRCLE_POSITIONS = [
+  'left-[-49px] top-[109px]',       // 0: row 1, col 1
+  'bottom-[-61px] right-[-101px]',  // 1: row 1, col 2
+  'bottom-[-231px] right-[-41px]',  // 2: row 1, col 3
+  'left-[-49px] top-[-51px]',       // 3: row 2, col 1
+  'right-[-51px] top-[-241px]',     // 4: row 2, col 2
+  'left-[-49px] top-[-211px]',      // 5: row 2, col 3
+] as const;
 
 // ── View toggle indicator ─────────────────────────────────────────────────────
 
@@ -42,48 +53,57 @@ function ViewToggle({
 
 // ── Grid card ────────────────────────────────────────────────────────────────
 
-function GridCard({ study }: { study: CaseStudy }) {
+function GridCard({ study, index }: { study: CaseStudy; index: number }) {
+  const circlePos = CIRCLE_POSITIONS[index % CIRCLE_POSITIONS.length];
+
   return (
-    <Link href={study.href} className="flex flex-col gap-3xl group cursor-pointer">
-      {/* Thumbnail */}
-      <div className="relative aspect-square w-full bg-[#d9d9d9] overflow-hidden">
-        {study.thumbnailSrc && (
+    // Outer: the hover bg is revealed when the card lifts. overflow-hidden clips
+    // the card's translation so the grid layout is not disturbed.
+    <div
+      className="relative group overflow-hidden"
+      style={{ backgroundImage: `url('${HOVER_BG_URL}')`, backgroundSize: 'cover' }}
+    >
+      <Link
+        href={study.href}
+        className="relative flex flex-col aspect-square border border-text-primary bg-bg-primary px-[20px] py-[40px] overflow-hidden transition-transform duration-300 ease-out group-hover:-translate-x-4 group-hover:-translate-y-4"
+      >
+        {/* Decorative circle — clipped by card overflow-hidden */}
+        <div className={`absolute size-[210px] pointer-events-none ${circlePos}`}>
           <Image
-            src={study.thumbnailSrc}
-            alt={study.thumbnailAlt}
-            fill
-            className="object-cover"
+            src="/circle-decoration.svg"
+            alt=""
+            aria-hidden
+            width={210}
+            height={210}
+            className="size-full"
           />
-        )}
-
-        {/* Number — top left */}
-        <p
-          className="absolute top-[10px] left-[10px] font-heading font-bold text-heading-xl leading-none uppercase text-text-primary"
-          style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
-        >
-          {study.number}<span className="text-text-brand">.</span>
-        </p>
-
-        {/* CTA button — bottom right, no href so it renders as div */}
-        <div className="absolute bottom-[16px] right-[16px]">
-          <ButtonPrimary label="Read the story" />
         </div>
-      </div>
 
-      {/* Text */}
-      <div className="flex flex-col gap-xl text-text-primary">
-        <div className="flex flex-col gap-xxs">
+        {/* Content — title centered on idle, description expands on hover */}
+        <div className="relative z-10 flex flex-col flex-1 justify-center">
           <p
-            className="font-heading font-medium text-heading-m leading-[28px] uppercase"
+            className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {study.title}
           </p>
-          <p className="font-body not-italic text-xs opacity-60">{study.tags}</p>
+
+          {/* Smooth height expand via grid-rows trick */}
+          <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+            <div className="overflow-hidden">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 mt-xl flex flex-col gap-xl">
+                <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
+                  {study.description}
+                </p>
+                <span className="text-link font-body not-italic text-base text-text-primary">
+                  Read the story
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
-        <p className="font-body not-italic text-sm leading-[20px]">{study.description}</p>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
 
@@ -135,9 +155,9 @@ export default function WorkPage() {
 
       {/* Grid view */}
       {view === 'grid' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4xl gap-y-7xl">
-          {studies.map((study) => (
-            <GridCard key={study.number} study={study} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {studies.map((study, index) => (
+            <GridCard key={study.number} study={study} index={index} />
           ))}
         </div>
       )}
