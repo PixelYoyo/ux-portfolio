@@ -11,14 +11,19 @@ type CaseStudy = (typeof workPage.caseStudies)[number];
 
 const HOVER_BG_URL = 'https://res.cloudinary.com/drd6p33en/image/upload/v1779141549/Hover_state_background_1_r6em3n.png';
 
-// Per-card circle positions (absolute, clipped by card overflow-hidden)
-const CIRCLE_POSITIONS = [
-  'left-[-49px] top-[109px]',       // 0: row 1, col 1
-  'bottom-[-61px] right-[-101px]',  // 1: row 1, col 2
-  'bottom-[-231px] right-[-41px]',  // 2: row 1, col 3
-  'left-[-49px] top-[-51px]',       // 3: row 2, col 1
-  'right-[-51px] top-[-241px]',     // 4: row 2, col 2
-  'left-[-49px] top-[-211px]',      // 5: row 2, col 3
+// Mobile: single circle position used for all cards
+const MOBILE_CIRCLE = 'left-[190px] top-[171px]';
+
+// Desktop: per-card positions (with md: prefix so they override mobile at ≥768px).
+// Values are relative to the card's own top-left corner — Frame 19 offset (x=20, y=189)
+// has already been added so the circle is positioned correctly as a direct child of the Link.
+const DESKTOP_CIRCLE_POSITIONS = [
+  'md:left-[-29px] md:top-[298px]',   // 0: row 1, col 1 — bottom-left arc
+  'md:left-[278px] md:top-[332px]',   // 1: row 1, col 2 — bottom-right arc
+  'md:left-[278px] md:top-[298px]',   // 2: row 1, col 3 — bottom-right arc
+  'md:left-[-29px] md:top-[138px]',   // 3: row 2, col 1 — left-side arc
+  'md:left-[-29px] md:top-[-22px]',   // 4: row 2, col 2 — top-left arc
+  'md:left-[288px] md:top-[-52px]',   // 5: row 2, col 3 — top-right arc
 ] as const;
 
 // ── View toggle indicator ─────────────────────────────────────────────────────
@@ -54,21 +59,43 @@ function ViewToggle({
 // ── Grid card ────────────────────────────────────────────────────────────────
 
 function GridCard({ study, index }: { study: CaseStudy; index: number }) {
-  const circlePos = CIRCLE_POSITIONS[index % CIRCLE_POSITIONS.length];
+  const desktopCircle = DESKTOP_CIRCLE_POSITIONS[index % DESKTOP_CIRCLE_POSITIONS.length];
 
   return (
-    // Outer: the hover bg is revealed when the card lifts. overflow-hidden clips
-    // the card's translation so the grid layout is not disturbed.
+    // Mobile: pb-4 pr-4 reveals the Cloudinary background in a 16px strip at
+    // right/bottom without translating the card (card stays in place, no clipping).
+    // Desktop: no padding — the card translates on hover instead.
+    // Cards beyond index 3 are hidden on mobile (show only 4).
     <div
-      className="relative group overflow-hidden"
-      style={{ backgroundImage: `url('${HOVER_BG_URL}')`, backgroundSize: 'cover' }}
+      className={`relative group hover:z-10${index >= 4 ? ' hidden md:block' : ''}`}
     >
+      {/* Background layer: same size as outer div.
+          Mobile: visible in 16px gap created by Link's mr-4 mb-4.
+          Desktop: fully covered by Link in idle; revealed when Link translates on hover. */}
+      <div
+        className="absolute inset-0 bg-cover"
+        style={{ backgroundImage: `url('${HOVER_BG_URL}')` }}
+        aria-hidden
+      />
+
       <Link
         href={study.href}
-        className="relative flex flex-col aspect-square border border-text-primary bg-bg-primary px-[20px] py-[40px] overflow-hidden transition-transform duration-300 ease-out group-hover:-translate-x-4 group-hover:-translate-y-4"
+        className={[
+          'relative flex flex-col aspect-square overflow-hidden',
+          'bg-bg-primary px-[20px] py-[40px]',
+          // Border: full on mobile; right+bottom only on desktop (top+left from grid container).
+          'border border-text-primary',
+          'md:border-t-0 md:border-l-0',
+          'md:group-hover:border-t md:group-hover:border-l',
+          // Mobile: margin gap reveals background strip at right/bottom.
+          // Desktop: no margin — card fully covers background in idle; translate reveals it on hover.
+          'mb-4 mr-4 md:mb-0 md:mr-0',
+          'md:group-hover:-translate-x-4 md:group-hover:-translate-y-4',
+          'transition-transform duration-300 ease-out',
+        ].join(' ')}
       >
-        {/* Decorative circle — clipped by card overflow-hidden */}
-        <div className={`absolute size-[210px] pointer-events-none ${circlePos}`}>
+        {/* Decorative circle — mobile position overridden per-card on desktop */}
+        <div className={`absolute size-[210px] pointer-events-none ${MOBILE_CIRCLE} ${desktopCircle}`}>
           <Image
             src="/circle-decoration.svg"
             alt=""
@@ -79,23 +106,24 @@ function GridCard({ study, index }: { study: CaseStudy; index: number }) {
           />
         </div>
 
-        {/* Content — title centered on idle, description expands on hover */}
+        {/* Content */}
         <div className="relative z-10 flex flex-col flex-1 justify-center">
+          {/* Title: smaller on mobile, full size on desktop */}
           <p
-            className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
+            className="font-heading font-semibold text-heading-s leading-[28px] md:text-heading-l md:leading-[44px] uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {study.title}
           </p>
 
-          {/* Smooth height expand via grid-rows trick */}
-          <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
+          {/* Description + CTA: always visible on mobile, expands on hover on desktop */}
+          <div className="grid grid-rows-[1fr] md:grid-rows-[0fr] md:group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
             <div className="overflow-hidden">
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100 mt-xl flex flex-col gap-xl">
+              <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 md:delay-100 mt-xl flex flex-col gap-xl">
                 <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
                   {study.description}
                 </p>
-                <span className="text-link font-body not-italic text-base text-text-primary">
+                <span className="text-link font-body not-italic text-base text-text-primary self-start">
                   Read the story
                 </span>
               </div>
@@ -155,7 +183,7 @@ export default function WorkPage() {
 
       {/* Grid view */}
       {view === 'grid' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-text-primary">
           {studies.map((study, index) => (
             <GridCard key={study.number} study={study} index={index} />
           ))}
