@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import ButtonPrimary from '@/components/ButtonPrimary';
 import { caseStudyPages, type CaseStudyPage, type CaseStudyStat } from '@/content/portfolio';
 import ContextSection from './ContextSection';
 import GallerySection from './GallerySection';
@@ -31,7 +32,8 @@ export default async function CaseStudyPage({
     <>
       <Hero study={study} />
       {study.executiveSummary.length > 0 && <ExecutiveSummary study={study} />}
-      <SectionHeading label="The context" />
+      <AnchorNav study={study} />
+      <SectionHeading label="The context" id="context" />
       {study.contextItems.length > 0 && (
         <ContextSection tagline={study.contextTagline} items={study.contextItems} />
       )}
@@ -39,7 +41,7 @@ export default async function CaseStudyPage({
       {study.scrollCards.length > 0 && (
         <ScrollCardsSection tagline={study.scrollCardsTagline} items={study.scrollCards} />
       )}
-      <SectionHeading label="The design" />
+      <SectionHeading label="The design" id="design" />
       {study.designItems.length > 0 && (
         <DesignSection tagline={study.designTagline} items={study.designItems} />
       )}
@@ -51,11 +53,11 @@ export default async function CaseStudyPage({
       )}
       {study.reflectionItems.length > 0 && (
         <>
-          <SectionHeading label="The learnings" />
+          <SectionHeading label="The learnings" id="learnings" />
           <ReflectionSection tagline={study.reflectionTagline} items={study.reflectionItems} />
         </>
       )}
-      <SectionHeading label="The details" />
+      <SectionHeading label="The details" id="details" />
       {study.details.length > 0 && (
         <DetailsSection details={study.details} />
       )}
@@ -163,16 +165,48 @@ function Stat({ stat }: { stat: CaseStudyStat }) {
 
 // ─── Section Heading ──────────────────────────────────────────────────────────
 
-function SectionHeading({ label }: { label: string }) {
+function SectionHeading({ label, id }: { label: string; id?: string }) {
   const body = label.endsWith('.') ? label.slice(0, -1) : label;
   return (
-    <section className="bg-bg-primary px-margin pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl">
+    <section id={id} className="bg-bg-primary px-margin pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl">
       <p
         className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:leading-normal"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
       >
         {body}<span className="text-text-brand">.</span>
       </p>
+    </section>
+  );
+}
+
+// ─── Anchor Nav ───────────────────────────────────────────────────────────────
+
+function AnchorNav({ study }: { study: CaseStudyPage }) {
+  const links = [
+    { label: 'The context',   href: '#context'   },
+    { label: 'The design',    href: '#design'     },
+    ...(study.reflectionItems.length > 0
+      ? [{ label: 'The learnings', href: '#learnings' }]
+      : []),
+    { label: 'The details',   href: '#details'    },
+  ];
+
+  return (
+    <section className="bg-bg-primary px-margin py-4xl border-t border-border-primary">
+      <div className="flex flex-col gap-[24px] lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap gap-[24px]">
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-link font-body not-italic text-sm leading-[20px] text-text-primary"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+        <ButtonPrimary label="Get in touch" href="mailto:yolandi.uxdesign@gmail.com" />
+      </div>
     </section>
   );
 }
