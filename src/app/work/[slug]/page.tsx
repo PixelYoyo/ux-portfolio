@@ -51,6 +51,7 @@ export default async function CaseStudyPage({
           <ReflectionSection tagline={study.reflectionTagline} items={study.reflectionItems} />
         </>
       )}
+      <SectionHeading label="The details" />
     </>
   );
 }
