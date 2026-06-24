@@ -4,6 +4,7 @@ import { caseStudyPages, type CaseStudyPage, type CaseStudyStat } from '@/conten
 import ContextSection from './ContextSection';
 import GallerySection from './GallerySection';
 import ScrollCardsSection from './ScrollCardsSection';
+import DesignSection from './DesignSection';
 
 const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
 
@@ -30,6 +31,10 @@ export default async function CaseStudyPage({
       {study.gallery.length > 0 && <GallerySection images={study.gallery} />}
       {study.scrollCards.length > 0 && (
         <ScrollCardsSection tagline={study.scrollCardsTagline} items={study.scrollCards} />
+      )}
+      <SectionHeading label="The design" />
+      {study.designItems.length > 0 && (
+        <DesignSection tagline={study.designTagline} items={study.designItems} />
       )}
     </>
   );

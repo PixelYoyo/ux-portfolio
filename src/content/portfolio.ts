@@ -213,6 +213,14 @@ export type CaseStudyGalleryImage = {
   caption: string;
 };
 
+export type CaseStudyDesignItem = {
+  heading:      string;
+  body:         string[];
+  imageSrc:     string;
+  imageAlt:     string;
+  imageCaption: string;
+};
+
 export type CaseStudyPage = {
   slug:                string;
   title:               string;
@@ -230,6 +238,8 @@ export type CaseStudyPage = {
   gallery:             CaseStudyGalleryImage[];
   scrollCardsTagline:  string;
   scrollCards:         CaseStudyContextItem[];
+  designTagline:       string;
+  designItems:         CaseStudyDesignItem[];
 };
 
 export const caseStudyPages: Record<string, CaseStudyPage> = {
@@ -266,6 +276,40 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       { src: '', alt: 'Gallery image 1', caption: 'Caption placeholder.' },
       { src: '', alt: 'Gallery image 2', caption: 'Caption placeholder.' },
       { src: '', alt: 'Gallery image 3', caption: 'Caption placeholder.' },
+    ],
+    designTagline: 'a $51.5 billion portfolio deserved a digital presence to match.',
+    designItems: [
+      {
+        heading: 'the marketing team had a vision. they just needed help making the case',
+        body: [
+          "Dexus's marketing team came into this project with a clear ambition: a contemporary, premium digital experience that could win a design award. The problem wasn't vision. It was that the broader business, more conservative and harder to move, needed convincing.",
+          'The existing site reflected that conservatism. Heavy layouts, cluttered pages, and a dominant teal green that had become so associated with the old brand it was holding the new one back. Bold typography, generous white space, and modern layouts were a significant departure from what the business was used to seeing.',
+          'My role was to help the marketing team build the internal case for that change. I put together a presentation that combined competitor benchmarking, showing what premium looked like in this space and where Dexus was falling behind, with a rationale for the specific design decisions we were proposing, including why the teal needed to go. The marketing team took that into the broader business. They got most of what they wanted.',
+        ],
+        imageSrc:     'https://res.cloudinary.com/drd6p33en/image/upload/v1782328154/the_marketing_team_had_a_vision._they_just_needed_help_making_the_case_1_bckxqk.png',
+        imageAlt:     'Slides used as visual aids to support contemporary design',
+        imageCaption: 'Slides we used as visual aids to support contemporary design.',
+      },
+      {
+        heading: 'interaction design as a brand signal.',
+        body: [
+          "A contemporary feel isn't just about how something looks. It's about how it moves. I made the case for bringing interaction design into the project — transitions and scroll behaviour that made the site feel considered and premium in a way that static design alone couldn't achieve. That rationale was part of the same deck the marketing team used to get sign-off.",
+        ],
+        imageSrc:     'https://res.cloudinary.com/drd6p33en/image/upload/v1782328154/interaction_design_as_a_brand_signal_1_xg2zl2.png',
+        imageAlt:     'Interaction design as a brand signal',
+        imageCaption: 'Slides we used as visual aids to support contemporary design.',
+      },
+      {
+        heading: 'one system. twenty-six sites. built in the wrong order.',
+        body: [
+          'Midway through the project, leadership confirmed that the design system built for the corporate site also needed to serve 13 retail shopping centre sites, 9 commercial property sites, and 2 premium property sites, each with their own distinct branding.',
+          "We had to retrofit — and the Figma variables we already set up made it manageable. By structuring the system with properly mapped colour and typography tokens, switching between brand modes became a matter of changing the variable set rather than rebuilding components. I ran hands-on practice sessions with the visual design team so they could apply variables confidently across all 26 brand modes.",
+          'The page templates and AEM infrastructure gave Dexus a modular system for building and updating pages consistently long after Ogilvy handed over. For a business that constantly acquires and divests assets, that kind of maintainability matters.',
+        ],
+        imageSrc:     'https://res.cloudinary.com/drd6p33en/image/upload/v1782328153/one_system._twenty-six_sites._built_in_the_wrong_order._cyss1d.png',
+        imageAlt:     'Design system across twenty-six sites',
+        imageCaption: 'Slides we used as visual aids to support contemporary design.',
+      },
     ],
     scrollCardsTagline: 'two audiences. completely different jobs to do.',
     scrollCards: [
@@ -340,6 +384,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     gallery:            [],
     scrollCardsTagline: '',
     scrollCards:        [],
+    designTagline:      '',
+    designItems:        [],
   },
   'case-study-3': {
     slug:         'case-study-3',
@@ -362,6 +408,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     gallery:            [],
     scrollCardsTagline: '',
     scrollCards:        [],
+    designTagline:      '',
+    designItems:        [],
   },
   'case-study-4': {
     slug:         'case-study-4',
@@ -384,6 +432,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     gallery:            [],
     scrollCardsTagline: '',
     scrollCards:        [],
+    designTagline:      '',
+    designItems:        [],
   },
   'case-study-5': {
     slug:         'case-study-5',
@@ -406,6 +456,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     gallery:            [],
     scrollCardsTagline: '',
     scrollCards:        [],
+    designTagline:      '',
+    designItems:        [],
   },
   'case-study-6': {
     slug:         'case-study-6',
@@ -428,6 +480,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     gallery:            [],
     scrollCardsTagline: '',
     scrollCards:        [],
+    designTagline:      '',
+    designItems:        [],
   },
 };
 
