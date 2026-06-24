@@ -47,7 +47,7 @@ export default async function CaseStudyPage({
       )}
       {study.reflectionItems.length > 0 && (
         <>
-          <SectionHeading label="The learnnings" />
+          <SectionHeading label="The learnings" />
           <ReflectionSection tagline={study.reflectionTagline} items={study.reflectionItems} />
         </>
       )}
