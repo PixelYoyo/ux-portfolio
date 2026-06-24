@@ -49,7 +49,7 @@ export const featuredWork = {
     description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
     thumbnailSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778584285/Dexus_project_thumbnail_litcor.png',
     thumbnailAlt: 'Dexus digital transformation project thumbnail',
-    href:         '/work/dexus',
+    slug:         'dexus',
   },
   projects: [
     {
@@ -57,21 +57,21 @@ export const featuredWork = {
       title:       'FRNSW Service booking system.',
       tags:        'Service · Design · Research UX Design',
       description: 'The work that prevents fire emergencies before they happen was being tracked in personal diaries.',
-      href:        '/work/frnsw',
+      slug:        'frnsw',
     },
     {
       number:      '03',
       title:       'Case study heading.',
       tags:        'Service · Design · Research UX Design',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-      href:        '/work/case-study-3',
+      slug:        'case-study-3',
     },
     {
       number:      '04',
       title:       'Case study heading.',
       tags:        'Service · Design · Research UX Design',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
-      href:        '/work/case-study-4',
+      slug:        'case-study-4',
     },
   ],
   seeAllHref: '/work',
@@ -144,7 +144,7 @@ export const workPage = {
       description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
       thumbnailSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778584285/Dexus_project_thumbnail_litcor.png' as string | null,
       thumbnailAlt: 'Dexus digital transformation project thumbnail',
-      href:         '/work/dexus',
+      slug:         'dexus',
     },
     {
       number:       '02',
@@ -153,7 +153,7 @@ export const workPage = {
       description:  'The work that prevents fire emergencies before they happen was being tracked in personal diaries.',
       thumbnailSrc: null,
       thumbnailAlt: 'FRNSW Service booking system project thumbnail',
-      href:         '/work/frnsw',
+      slug:         'frnsw',
     },
     {
       number:       '03',
@@ -162,7 +162,7 @@ export const workPage = {
       description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
       thumbnailSrc: null,
       thumbnailAlt: 'Case study thumbnail',
-      href:         '/work/case-study-3',
+      slug:         'case-study-3',
     },
     {
       number:       '04',
@@ -171,7 +171,7 @@ export const workPage = {
       description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
       thumbnailSrc: null,
       thumbnailAlt: 'Case study thumbnail',
-      href:         '/work/case-study-4',
+      slug:         'case-study-4',
     },
     {
       number:       '05',
@@ -180,7 +180,7 @@ export const workPage = {
       description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
       thumbnailSrc: null,
       thumbnailAlt: 'Case study thumbnail',
-      href:         '/work/case-study-5',
+      slug:         'case-study-5',
     },
     {
       number:       '06',
@@ -189,9 +189,246 @@ export const workPage = {
       description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
       thumbnailSrc: null,
       thumbnailAlt: 'Case study thumbnail',
-      href:         '/work/case-study-6',
+      slug:         'case-study-6',
     },
   ],
+};
+
+// ─── Case Study Pages ─────────────────────────────────────────────────────────
+
+export type CaseStudyStat = {
+  number:      string;
+  description: string;
+};
+
+export type CaseStudyContextItem = {
+  icon:    string;
+  heading: string;
+  body:    string[];
+};
+
+export type CaseStudyGalleryImage = {
+  src:     string;
+  alt:     string;
+  caption: string;
+};
+
+export type CaseStudyPage = {
+  slug:                string;
+  title:               string;
+  role:                string;
+  company:             string;
+  year:                string;
+  tags:                string;
+  description:         string;
+  heroImageSrc:        string | null;
+  heroImageAlt:        string;
+  stats:               CaseStudyStat[];
+  executiveSummary:    string[];
+  contextTagline:      string;
+  contextItems:        CaseStudyContextItem[];
+  gallery:             CaseStudyGalleryImage[];
+  scrollCardsTagline:  string;
+  scrollCards:         CaseStudyContextItem[];
+};
+
+export const caseStudyPages: Record<string, CaseStudyPage> = {
+  dexus: {
+    slug:         'dexus',
+    title:        'Dexus digital transformation.',
+    role:         'UX/UI Designer',
+    company:      'Ogilvy',
+    year:         '2025',
+    tags:         'Research · Information Architecture · Design Systems',
+    description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
+    heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778584285/Dexus_project_thumbnail_litcor.png',
+    heroImageAlt: 'Dexus digital transformation — project hero',
+    stats: [
+      {
+        number:      '01',
+        description: 'Reduced the time to update retail microsite content from 2 weeks to 2 hours through a redesigned retailer portal.',
+      },
+      {
+        number:      '02',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      },
+      {
+        number:      '03',
+        description: 'Lorem ipsum dolor sit amet.',
+      },
+    ],
+    executiveSummary: [
+      "Dexus manages one of Australasia's largest real estate and infrastructure portfolios, valued at $51.5 billion. Their digital presence hadn't kept pace. A single website was trying to serve two fundamentally different audiences through the same navigation, the same page structure, and the same content. Investors and commercial tenants were arriving with completely different jobs to do, and the site was failing both of them.",
+      "This project was a full digital transformation of dexus.com, built on Adobe Experience Manager, covering the corporate site redesign, eleven audience-specific page templates, and a design system that ultimately had to flex across 26 retail and commercial property microsites.",
+    ],
+    contextTagline: 'One website. Two audiences. None of them finding what they needed.',
+    gallery: [
+      { src: '', alt: 'Gallery image 1', caption: 'Caption placeholder.' },
+      { src: '', alt: 'Gallery image 2', caption: 'Caption placeholder.' },
+      { src: '', alt: 'Gallery image 3', caption: 'Caption placeholder.' },
+    ],
+    scrollCardsTagline: 'two audiences. completely different jobs to do.',
+    scrollCards: [
+      {
+        icon:    'people',
+        heading: 'the research pointed to a structural problem, not a content problem.',
+        body: [
+          'The temptation in a project like this is to fix the content. Write clearer copy. Add more information. Surface the PDFs. But the research kept pointing to something deeper. The navigation labels were internally logical but externally meaningless. "Asset Portfolio" triggered investment associations for leasing audiences. "ESG" meant nothing to first-time investors trying to understand what Dexus stood for. Forcing two distinct audiences with completely different mental models into shared pathways was the root cause of most usability failures.',
+        ],
+      },
+      {
+        icon:    'hand',
+        heading: 'two ways to fix it. one clear recommendation.',
+        body: [
+          'I consolidated the findings and led the IA process, presenting two structural options to the client. A static navigation: a single fixed menu serving all audiences, simpler to build and maintain. Or a contextual navigation: a dynamic structure where the experience shifts based on whether the user is here to invest or here to lease, used by firms like BlackRock, Vanguard, and Morgan Stanley.',
+          "The recommendation was contextual. The two audiences had almost no overlap in what they needed, and corporate information, while relevant to both, worked better as shared context sitting across both experiences rather than as a third pathway competing for attention.",
+        ],
+      },
+      {
+        icon:    'warning',
+        heading: 'three contexts. one domain.',
+        body: [
+          'The result was three distinct navigation experiences within a single website. Each has its own terminology, pathways, and calls to action. A financial advisor looking for fund performance lands in a completely different experience to a commercial tenant searching for office space. Same domain. No shared confusion.',
+        ],
+      },
+    ],
+    contextItems: [
+      {
+        icon:    'gear',
+        heading: 'The site was structured around Dexus, not around its users.',
+        body: [
+          "Dexus's existing website mixed investor information, leasing content, and corporate communications into a single navigation. A financial advisor looking for fund performance data had to navigate the same menus as a commercial tenant searching for office space in Sydney's CBD. Neither could find what they needed quickly, and both were leaving to find it elsewhere.",
+          "Investors were relying on third-party tools because Dexus's own fund data was hard to find and out of date. Commercial tenants described the site as intentionally vague, frustrated by missing floor plans, hidden pricing, and navigation that didn't match how they actually searched for space.",
+        ],
+      },
+      {
+        icon:    'shapes',
+        heading: 'We went to the source.',
+        body: [
+          'We ran two separate research streams: investor interviews exploring how financial advisors and institutional investors discovered, evaluated, and acted on fund information, and leasing research covering how commercial tenants found and assessed properties. Stakeholder workshops brought Dexus\'s internal teams in to align on what the site needed to achieve for the business.',
+          'The finding was consistent across both streams. 90% of first visits began in-context, meaning users arrived already knowing what they were looking for. The site wasn\'t built to receive them that way.',
+        ],
+      },
+      {
+        icon:    'thinking',
+        heading: 'The site architecture was the problem, not the content.',
+        body: [
+          'A card sorting exercise and stakeholder workshop revealed that the underlying information architecture was forcing unrelated audiences into the same pathways. The navigation labels were internally logical but externally meaningless. Terms like "Asset Portfolio" meant investment to one audience and property listing to another. "ESG" meant nothing to a first-time investor who just wanted to understand what Dexus stood for.',
+          "The fix wasn't more content. It was separating the journeys entirely.",
+        ],
+      },
+    ],
+  },
+  frnsw: {
+    slug:         'frnsw',
+    title:        'FRNSW Service booking system.',
+    role:         'UX/UI Designer',
+    company:      'Ogilvy',
+    year:         '2024',
+    tags:         'Service · Design · Research UX Design',
+    description:  'The work that prevents fire emergencies before they happen was being tracked in personal diaries.',
+    heroImageSrc: null,
+    heroImageAlt: 'FRNSW Service booking system — project hero',
+    stats: [
+      { number: '01', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+      { number: '02', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '03', description: 'Lorem ipsum.' },
+    ],
+    executiveSummary:   [],
+    contextTagline:     '',
+    contextItems:       [],
+    gallery:            [],
+    scrollCardsTagline: '',
+    scrollCards:        [],
+  },
+  'case-study-3': {
+    slug:         'case-study-3',
+    title:        'Case study heading.',
+    role:         'UX Designer',
+    company:      'Ogilvy',
+    year:         '2024',
+    tags:         'Service · Design · Research UX Design',
+    description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+    heroImageSrc: null,
+    heroImageAlt: 'Case study — project hero',
+    stats: [
+      { number: '01', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '02', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '03', description: 'Lorem ipsum.' },
+    ],
+    executiveSummary:   [],
+    contextTagline:     '',
+    contextItems:       [],
+    gallery:            [],
+    scrollCardsTagline: '',
+    scrollCards:        [],
+  },
+  'case-study-4': {
+    slug:         'case-study-4',
+    title:        'Case study heading.',
+    role:         'UX Designer',
+    company:      'Ogilvy',
+    year:         '2024',
+    tags:         'Service · Design · Research UX Design',
+    description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+    heroImageSrc: null,
+    heroImageAlt: 'Case study — project hero',
+    stats: [
+      { number: '01', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '02', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '03', description: 'Lorem ipsum.' },
+    ],
+    executiveSummary:   [],
+    contextTagline:     '',
+    contextItems:       [],
+    gallery:            [],
+    scrollCardsTagline: '',
+    scrollCards:        [],
+  },
+  'case-study-5': {
+    slug:         'case-study-5',
+    title:        'Case study heading.',
+    role:         'UX Designer',
+    company:      'Ogilvy',
+    year:         '2024',
+    tags:         'Service · Design · Research UX Design',
+    description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+    heroImageSrc: null,
+    heroImageAlt: 'Case study — project hero',
+    stats: [
+      { number: '01', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '02', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '03', description: 'Lorem ipsum.' },
+    ],
+    executiveSummary:   [],
+    contextTagline:     '',
+    contextItems:       [],
+    gallery:            [],
+    scrollCardsTagline: '',
+    scrollCards:        [],
+  },
+  'case-study-6': {
+    slug:         'case-study-6',
+    title:        'Case study heading.',
+    role:         'UX Designer',
+    company:      'Ogilvy',
+    year:         '2024',
+    tags:         'Service · Design · Research UX Design',
+    description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+    heroImageSrc: null,
+    heroImageAlt: 'Case study — project hero',
+    stats: [
+      { number: '01', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '02', description: 'Lorem ipsum dolor sit amet.' },
+      { number: '03', description: 'Lorem ipsum.' },
+    ],
+    executiveSummary:   [],
+    contextTagline:     '',
+    contextItems:       [],
+    gallery:            [],
+    scrollCardsTagline: '',
+    scrollCards:        [],
+  },
 };
 
 // ─── Testimonials ─────────────────────────────────────────────────────────────

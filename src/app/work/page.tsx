@@ -11,20 +11,6 @@ type CaseStudy = (typeof workPage.caseStudies)[number];
 
 const HOVER_BG_URL = 'https://res.cloudinary.com/drd6p33en/image/upload/v1779141549/Hover_state_background_1_r6em3n.png';
 
-// Mobile: single circle position used for all cards
-const MOBILE_CIRCLE = 'left-[190px] top-[171px]';
-
-// Desktop: per-card positions (with md: prefix so they override mobile at ≥768px).
-// Values are relative to the card's own top-left corner — Frame 19 offset (x=20, y=189)
-// has already been added so the circle is positioned correctly as a direct child of the Link.
-const DESKTOP_CIRCLE_POSITIONS = [
-  'md:left-[-29px] md:top-[298px]',   // 0: row 1, col 1 — bottom-left arc
-  'md:left-[278px] md:top-[332px]',   // 1: row 1, col 2 — bottom-right arc
-  'md:left-[278px] md:top-[298px]',   // 2: row 1, col 3 — bottom-right arc
-  'md:left-[-29px] md:top-[138px]',   // 3: row 2, col 1 — left-side arc
-  'md:left-[-29px] md:top-[-22px]',   // 4: row 2, col 2 — top-left arc
-  'md:left-[288px] md:top-[-52px]',   // 5: row 2, col 3 — top-right arc
-] as const;
 
 // ── View toggle indicator ─────────────────────────────────────────────────────
 
@@ -59,7 +45,6 @@ function ViewToggle({
 // ── Grid card ────────────────────────────────────────────────────────────────
 
 function GridCard({ study, index }: { study: CaseStudy; index: number }) {
-  const desktopCircle = DESKTOP_CIRCLE_POSITIONS[index % DESKTOP_CIRCLE_POSITIONS.length];
 
   return (
     // Mobile: pb-4 pr-4 reveals the Cloudinary background in a 16px strip at
@@ -79,38 +64,36 @@ function GridCard({ study, index }: { study: CaseStudy; index: number }) {
       />
 
       <Link
-        href={study.href}
+        href={`/work/${study.slug}`}
         className={[
-          'relative flex flex-col aspect-square overflow-hidden',
-          'bg-bg-primary px-[20px] py-[40px]',
-          // Border: full on mobile; right+bottom only on desktop (top+left from grid container).
+          'relative flex flex-col overflow-hidden',
+          'bg-bg-primary',
           'border border-text-primary',
           'md:border-t-0 md:border-l-0',
           'md:group-hover:border-t md:group-hover:border-l',
-          // Mobile: margin gap reveals background strip at right/bottom.
-          // Desktop: no margin — card fully covers background in idle; translate reveals it on hover.
           'mb-4 mr-4 md:mb-0 md:mr-0',
           'md:group-hover:-translate-x-4 md:group-hover:-translate-y-4',
           'transition-transform duration-300 ease-out',
         ].join(' ')}
       >
-        {/* Decorative circle — mobile position overridden per-card on desktop */}
-        <div className={`absolute size-[210px] pointer-events-none ${MOBILE_CIRCLE} ${desktopCircle}`}>
-          <Image
-            src="/circle-decoration.svg"
-            alt=""
-            aria-hidden
-            width={210}
-            height={210}
-            className="size-full"
-          />
+        {/* Thumbnail */}
+        <div className="relative w-full aspect-[3/2]">
+          {study.thumbnailSrc ? (
+            <Image
+              src={study.thumbnailSrc}
+              alt={study.thumbnailAlt}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-[#d9d9d9]" />
+          )}
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 justify-center">
-          {/* Title: smaller on mobile, full size on desktop */}
+        {/* Text content */}
+        <div className="flex flex-col gap-xl px-[20px] pt-[20px] pb-[28px]">
           <p
-            className="font-heading font-semibold text-heading-s leading-[28px] md:text-heading-l md:leading-[44px] uppercase text-text-primary"
+            className="font-heading font-semibold text-heading-s leading-[28px] md:text-heading-m md:leading-[28px] uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {study.title}
@@ -119,7 +102,7 @@ function GridCard({ study, index }: { study: CaseStudy; index: number }) {
           {/* Description + CTA: always visible on mobile, expands on hover on desktop */}
           <div className="grid grid-rows-[1fr] md:grid-rows-[0fr] md:group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out">
             <div className="overflow-hidden">
-              <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 md:delay-100 mt-xl flex flex-col gap-xl">
+              <div className="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 md:delay-100 flex flex-col gap-xl">
                 <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
                   {study.description}
                 </p>
@@ -140,8 +123,18 @@ function GridCard({ study, index }: { study: CaseStudy; index: number }) {
 function ListItem({ study }: { study: CaseStudy }) {
   return (
     <div className="border-b border-border-primary pt-lg pb-4xl flex flex-col lg:flex-row gap-5xl items-start">
+
+      {/* Thumbnail */}
+      <div className="relative shrink-0 w-full aspect-[3/2] lg:w-[240px]">
+        {study.thumbnailSrc ? (
+          <Image src={study.thumbnailSrc} alt={study.thumbnailAlt} fill className="object-cover" />
+        ) : (
+          <div className="absolute inset-0 bg-[#d9d9d9]" />
+        )}
+      </div>
+
       {/* Left col — title + number */}
-      <div className="flex flex-col justify-between self-stretch shrink-0 w-full lg:w-[384px] gap-xl lg:gap-0">
+      <div className="flex flex-col justify-between self-stretch shrink-0 w-full lg:w-[240px] gap-xl lg:gap-0">
         <p
           className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
@@ -158,7 +151,7 @@ function ListItem({ study }: { study: CaseStudy }) {
         <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
           {study.description}
         </p>
-        <Link href={study.href} className="text-link font-body not-italic text-base text-text-primary self-start">
+        <Link href={`/work/${study.slug}`} className="text-link font-body not-italic text-base text-text-primary self-start">
           Read the story
         </Link>
       </div>

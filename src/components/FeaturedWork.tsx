@@ -88,7 +88,7 @@ export default function FeaturedWork() {
 
         {/* Featured project 01 */}
         {/* Mobile: stacked (number → thumbnail → text/CTA) | Desktop: two-column row */}
-        <Link href={FEATURED.href} className="flex flex-col lg:flex-row gap-gutter items-start w-full border-b border-border-primary pb-6xl lg:border-b-0 lg:pb-0 cursor-pointer">
+        <Link href={`/work/${FEATURED.slug}`} className="flex flex-col lg:flex-row gap-gutter items-start w-full border-b border-border-primary pb-6xl lg:border-b-0 lg:pb-0 cursor-pointer">
 
           {/* Number — mobile only, sits above thumbnail */}
           <p
@@ -99,13 +99,12 @@ export default function FeaturedWork() {
           </p>
 
           {/* Thumbnail — order 2 on mobile, right col on desktop */}
-          <div className="order-2 lg:order-last lg:border-b lg:border-border-primary lg:pb-7xl w-full lg:max-w-[585px]">
+          <div className="order-2 lg:order-last lg:border-b lg:border-border-primary lg:pb-7xl w-full lg:max-w-[585px] relative aspect-[3/2]">
             <Image
               src={FEATURED.thumbnailSrc}
               alt={FEATURED.thumbnailAlt}
-              width={1280}
-              height={720}
-              className="w-full"
+              fill
+              className="object-cover"
             />
           </div>
 
@@ -149,7 +148,7 @@ export default function FeaturedWork() {
             className="flex flex-row gap-4xl pl-margin lg:flex-col lg:gap-7xl lg:pl-0"
           >
             {PROJECTS.map((project) => (
-              <Link key={project.number} href={project.href} className="flex flex-col gap-xl shrink-0 w-[311px] lg:w-full cursor-pointer">
+              <Link key={project.number} href={`/work/${project.slug}`} className="flex flex-col gap-xl shrink-0 w-[311px] lg:w-full cursor-pointer">
                 <p
                   className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
                   style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
