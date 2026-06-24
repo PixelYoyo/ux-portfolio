@@ -8,6 +8,7 @@ import DesignSection from './DesignSection';
 import ImageGridSection from './ImageGridSection';
 import TestimonialsSection from './TestimonialsSection';
 import ReflectionSection from './ReflectionSection';
+import DetailsSection from './DetailsSection';
 
 const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
 
@@ -52,6 +53,9 @@ export default async function CaseStudyPage({
         </>
       )}
       <SectionHeading label="The details" />
+      {(study.details.length > 0 || study.linkGroups.length > 0) && (
+        <DetailsSection details={study.details} linkGroups={study.linkGroups} />
+      )}
     </>
   );
 }

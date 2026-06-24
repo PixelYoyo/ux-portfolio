@@ -231,6 +231,16 @@ export type CaseStudyQuote = {
   attribution: string;
 };
 
+export type CaseStudyDetail = {
+  label: string;
+  value: string;
+};
+
+export type CaseStudyLinkGroup = {
+  category: string;
+  links:    { label: string; href: string }[];
+};
+
 export type CaseStudyPage = {
   slug:                string;
   title:               string;
@@ -254,6 +264,8 @@ export type CaseStudyPage = {
   quotes:              CaseStudyQuote[];
   reflectionTagline:   string;
   reflectionItems:     CaseStudyContextItem[];
+  details:             CaseStudyDetail[];
+  linkGroups:          CaseStudyLinkGroup[];
 };
 
 export const caseStudyPages: Record<string, CaseStudyPage> = {
@@ -392,6 +404,43 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
         attribution: '— Digital Marketing Manager, Dexus',
       },
     ],
+    details: [
+      { label: 'Name',               value: 'Dexus Digital Transformation.' },
+      { label: 'Date',               value: '2025.' },
+      { label: 'My role',            value: 'UX Designer, Team Ogilvy.' },
+      { label: 'Key skills applied', value: 'Workshop facilitation, user research, IA architecture, user flows, design system, UI design' },
+      { label: 'Team',               value: 'Project Manager, Junior UX Designer, Product Owner, Business Analyst, Tech Lead.' },
+      { label: 'Platform',           value: 'Adobe Experience Manager' },
+      { label: 'Tools',              value: 'Figma, Miro, Jira.' },
+    ],
+    linkGroups: [
+      {
+        category: 'Dexus corporate site',
+        links: [
+          { label: 'dexus.com', href: 'https://www.dexus.com' },
+        ],
+      },
+      {
+        category: 'Selected retail microsites',
+        links: [
+          { label: 'Indooroopilly',  href: '#' },
+          { label: '25 Martin Place', href: '#' },
+          { label: 'Gateway',        href: '#' },
+          { label: 'Casula Mall',    href: '#' },
+          { label: 'Royal Randwick', href: '#' },
+        ],
+      },
+      {
+        category: 'Selected commercial microsites',
+        links: [
+          { label: 'Australia Square',    href: '#' },
+          { label: '33 Alfred',           href: '#' },
+          { label: '1 Bligh',             href: '#' },
+          { label: 'Alluvian',            href: '#' },
+          { label: 'Waterfront Brisbane', href: '#' },
+        ],
+      },
+    ],
     reflectionTagline: 'A closing reflection.',
     reflectionItems: [
       {
@@ -444,6 +493,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     quotes:             [],
     reflectionTagline:  '',
     reflectionItems:    [],
+    details:            [],
+    linkGroups:         [],
   },
   'case-study-3': {
     slug:         'case-study-3',
@@ -472,6 +523,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     quotes:             [],
     reflectionTagline:  '',
     reflectionItems:    [],
+    details:            [],
+    linkGroups:         [],
   },
   'case-study-4': {
     slug:         'case-study-4',
@@ -500,6 +553,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     quotes:             [],
     reflectionTagline:  '',
     reflectionItems:    [],
+    details:            [],
+    linkGroups:         [],
   },
   'case-study-5': {
     slug:         'case-study-5',
@@ -528,6 +583,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     quotes:             [],
     reflectionTagline:  '',
     reflectionItems:    [],
+    details:            [],
+    linkGroups:         [],
   },
   'case-study-6': {
     slug:         'case-study-6',
@@ -556,6 +613,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     quotes:             [],
     reflectionTagline:  '',
     reflectionItems:    [],
+    details:            [],
+    linkGroups:         [],
   },
 };
 
