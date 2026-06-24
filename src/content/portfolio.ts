@@ -417,27 +417,27 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       {
         category: 'Dexus corporate site',
         links: [
-          { label: 'dexus.com', href: 'https://www.dexus.com' },
+          { label: 'dexus.com', href: 'https://www.dexus.com/' },
         ],
       },
       {
         category: 'Selected retail microsites',
         links: [
-          { label: 'Indooroopilly',  href: '#' },
-          { label: '25 Martin Place', href: '#' },
-          { label: 'Gateway',        href: '#' },
-          { label: 'Casula Mall',    href: '#' },
-          { label: 'Royal Randwick', href: '#' },
+          { label: 'Indooroopilly',  href: 'https://www.indooroopillyshopping.com.au/' },
+          { label: '25 Martin Place', href: 'https://www.25martinplace.com.au/' },
+          { label: 'Gateway',        href: 'https://www.gatewaysydney.com.au/' },
+          { label: 'Casula Mall',    href: 'https://www.casulamall.com.au/' },
+          { label: 'Royal Randwick', href: 'https://www.royalrandwick.com.au/' },
         ],
       },
       {
         category: 'Selected commercial microsites',
         links: [
-          { label: 'Australia Square',    href: '#' },
-          { label: '33 Alfred',           href: '#' },
-          { label: '1 Bligh',             href: '#' },
-          { label: 'Alluvian',            href: '#' },
-          { label: 'Waterfront Brisbane', href: '#' },
+          { label: 'Australia Square',    href: 'https://www.australiasquare.com.au/' },
+          { label: '33 Alfred',           href: 'https://www.33alfredstreet.com.au/' },
+          { label: '1 Bligh',             href: 'https://www.1bligh.com.au/' },
+          { label: 'Alluvion',            href: 'https://www.alluvion.com.au/' },
+          { label: 'Waterfront Brisbane', href: 'https://www.waterfrontbrisbane.com.au/' },
         ],
       },
     ],
