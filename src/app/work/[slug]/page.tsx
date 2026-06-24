@@ -5,6 +5,7 @@ import ContextSection from './ContextSection';
 import GallerySection from './GallerySection';
 import ScrollCardsSection from './ScrollCardsSection';
 import DesignSection from './DesignSection';
+import ImageGridSection from './ImageGridSection';
 
 const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
 
@@ -35,6 +36,9 @@ export default async function CaseStudyPage({
       <SectionHeading label="The design" />
       {study.designItems.length > 0 && (
         <DesignSection tagline={study.designTagline} items={study.designItems} />
+      )}
+      {study.imageGrid.length > 0 && (
+        <ImageGridSection images={study.imageGrid} />
       )}
     </>
   );

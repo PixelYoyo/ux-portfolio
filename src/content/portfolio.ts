@@ -221,6 +221,11 @@ export type CaseStudyDesignItem = {
   imageCaption: string;
 };
 
+export type CaseStudyGridImage = {
+  src: string;
+  alt: string;
+};
+
 export type CaseStudyPage = {
   slug:                string;
   title:               string;
@@ -240,6 +245,7 @@ export type CaseStudyPage = {
   scrollCards:         CaseStudyContextItem[];
   designTagline:       string;
   designItems:         CaseStudyDesignItem[];
+  imageGrid:           CaseStudyGridImage[];
 };
 
 export const caseStudyPages: Record<string, CaseStudyPage> = {
@@ -362,6 +368,16 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
         ],
       },
     ],
+    imageGrid: [
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329439/Dexus_image_grid_design_1_eh0xmi.png', alt: 'Dexus homepage redesign' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329437/Dexus_image_grid_design_2_w2ekvx.png', alt: 'Dexus investment platform design' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329437/Dexus_image_grid_design_3_k5nhuw.png', alt: 'Dexus property listing page' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329439/Dexus_image_grid_design_4_kaewbf.png', alt: 'Dexus retail site design' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329439/Dexus_image_grid_design_5_fexqul.png', alt: 'Dexus retailer portal' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329439/Dexus_image_grid_design_6_xsomcu.png', alt: 'Dexus commercial property site' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329440/Dexus_image_grid_design_7_oqtjp6.png', alt: 'Dexus premium property microsite' },
+      { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329441/Dexus_image_grid_design_8_xnlwwo.png', alt: 'Dexus One Bligh Sydney site' },
+    ],
   },
   frnsw: {
     slug:         'frnsw',
@@ -386,6 +402,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     scrollCards:        [],
     designTagline:      '',
     designItems:        [],
+    imageGrid:          [],
   },
   'case-study-3': {
     slug:         'case-study-3',
@@ -410,6 +427,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     scrollCards:        [],
     designTagline:      '',
     designItems:        [],
+    imageGrid:          [],
   },
   'case-study-4': {
     slug:         'case-study-4',
@@ -434,6 +452,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     scrollCards:        [],
     designTagline:      '',
     designItems:        [],
+    imageGrid:          [],
   },
   'case-study-5': {
     slug:         'case-study-5',
@@ -458,6 +477,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     scrollCards:        [],
     designTagline:      '',
     designItems:        [],
+    imageGrid:          [],
   },
   'case-study-6': {
     slug:         'case-study-6',
@@ -482,6 +502,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     scrollCards:        [],
     designTagline:      '',
     designItems:        [],
+    imageGrid:          [],
   },
 };
 
