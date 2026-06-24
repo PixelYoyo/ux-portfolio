@@ -6,6 +6,7 @@ import GallerySection from './GallerySection';
 import ScrollCardsSection from './ScrollCardsSection';
 import DesignSection from './DesignSection';
 import ImageGridSection from './ImageGridSection';
+import TestimonialsSection from './TestimonialsSection';
 
 const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
 
@@ -39,6 +40,9 @@ export default async function CaseStudyPage({
       )}
       {study.imageGrid.length > 0 && (
         <ImageGridSection images={study.imageGrid} />
+      )}
+      {study.quotes.length > 0 && (
+        <TestimonialsSection quotes={study.quotes} />
       )}
     </>
   );

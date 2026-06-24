@@ -226,6 +226,11 @@ export type CaseStudyGridImage = {
   alt: string;
 };
 
+export type CaseStudyQuote = {
+  text:        string;
+  attribution: string;
+};
+
 export type CaseStudyPage = {
   slug:                string;
   title:               string;
@@ -246,6 +251,7 @@ export type CaseStudyPage = {
   designTagline:       string;
   designItems:         CaseStudyDesignItem[];
   imageGrid:           CaseStudyGridImage[];
+  quotes:              CaseStudyQuote[];
 };
 
 export const caseStudyPages: Record<string, CaseStudyPage> = {
@@ -378,6 +384,12 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329440/Dexus_image_grid_design_7_oqtjp6.png', alt: 'Dexus premium property microsite' },
       { src: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329441/Dexus_image_grid_design_8_xnlwwo.png', alt: 'Dexus One Bligh Sydney site' },
     ],
+    quotes: [
+      {
+        text:        'What used to take me 2 weeks to update in the old retailer portal, now takes me 2 hours in the redesigned one.',
+        attribution: '— Digital Marketing Manager, Dexus',
+      },
+    ],
   },
   frnsw: {
     slug:         'frnsw',
@@ -403,6 +415,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designTagline:      '',
     designItems:        [],
     imageGrid:          [],
+    quotes:             [],
   },
   'case-study-3': {
     slug:         'case-study-3',
@@ -428,6 +441,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designTagline:      '',
     designItems:        [],
     imageGrid:          [],
+    quotes:             [],
   },
   'case-study-4': {
     slug:         'case-study-4',
@@ -453,6 +467,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designTagline:      '',
     designItems:        [],
     imageGrid:          [],
+    quotes:             [],
   },
   'case-study-5': {
     slug:         'case-study-5',
@@ -478,6 +493,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designTagline:      '',
     designItems:        [],
     imageGrid:          [],
+    quotes:             [],
   },
   'case-study-6': {
     slug:         'case-study-6',
@@ -503,6 +519,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designTagline:      '',
     designItems:        [],
     imageGrid:          [],
+    quotes:             [],
   },
 };
 
