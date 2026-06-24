@@ -7,6 +7,7 @@ import ScrollCardsSection from './ScrollCardsSection';
 import DesignSection from './DesignSection';
 import ImageGridSection from './ImageGridSection';
 import TestimonialsSection from './TestimonialsSection';
+import ReflectionSection from './ReflectionSection';
 
 const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
 
@@ -43,6 +44,9 @@ export default async function CaseStudyPage({
       )}
       {study.quotes.length > 0 && (
         <TestimonialsSection quotes={study.quotes} />
+      )}
+      {study.reflectionItems.length > 0 && (
+        <ReflectionSection tagline={study.reflectionTagline} items={study.reflectionItems} />
       )}
     </>
   );

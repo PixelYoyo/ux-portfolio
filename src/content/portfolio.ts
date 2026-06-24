@@ -252,6 +252,8 @@ export type CaseStudyPage = {
   designItems:         CaseStudyDesignItem[];
   imageGrid:           CaseStudyGridImage[];
   quotes:              CaseStudyQuote[];
+  reflectionTagline:   string;
+  reflectionItems:     CaseStudyContextItem[];
 };
 
 export const caseStudyPages: Record<string, CaseStudyPage> = {
@@ -390,6 +392,30 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
         attribution: '— Digital Marketing Manager, Dexus',
       },
     ],
+    reflectionTagline: 'A closing reflection.',
+    reflectionItems: [
+      {
+        icon:    'diagram',
+        heading: 'scope changes are design problems too.',
+        body: [
+          "Being told mid-project that the corporate design system also needed to serve 26 other sites was a significant constraint shift. The instinct is to treat that as a project management problem. It's actually a design problem: how do you make what you've built flexible enough to handle what you didn't know was coming? Retrofitting forced us to think more systematically about the token structure than we might have otherwise, and the system is more robust for it.",
+        ],
+      },
+      {
+        icon:    'nib',
+        heading: 'research has to make the case, not just inform it.',
+        body: [
+          "The three-nav decision was the right call, but it required convincing a large organisation to restructure something fundamental about how they present themselves online. Having the research findings consolidated into a clear, visual argument was what made that possible. Data alone doesn't move stakeholders. A narrative built from data does.",
+        ],
+      },
+      {
+        icon:    'lightbulb',
+        heading: 'educating the team is part of the work.',
+        body: [
+          "Getting visual designers comfortable with Figma variables wasn't a side task. It was what made the design system actually work across 26 sites. The hours spent on the learning board and practice sessions directly affected the quality and consistency of the output. In complex projects, the work you do to enable your team matters as much as the work you do yourself.",
+        ],
+      },
+    ],
   },
   frnsw: {
     slug:         'frnsw',
@@ -416,6 +442,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designItems:        [],
     imageGrid:          [],
     quotes:             [],
+    reflectionTagline:  '',
+    reflectionItems:    [],
   },
   'case-study-3': {
     slug:         'case-study-3',
@@ -442,6 +470,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designItems:        [],
     imageGrid:          [],
     quotes:             [],
+    reflectionTagline:  '',
+    reflectionItems:    [],
   },
   'case-study-4': {
     slug:         'case-study-4',
@@ -468,6 +498,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designItems:        [],
     imageGrid:          [],
     quotes:             [],
+    reflectionTagline:  '',
+    reflectionItems:    [],
   },
   'case-study-5': {
     slug:         'case-study-5',
@@ -494,6 +526,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designItems:        [],
     imageGrid:          [],
     quotes:             [],
+    reflectionTagline:  '',
+    reflectionItems:    [],
   },
   'case-study-6': {
     slug:         'case-study-6',
@@ -520,6 +554,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     designItems:        [],
     imageGrid:          [],
     quotes:             [],
+    reflectionTagline:  '',
+    reflectionItems:    [],
   },
 };
 
