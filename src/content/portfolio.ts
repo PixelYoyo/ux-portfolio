@@ -47,7 +47,7 @@ export const featuredWork = {
     title:        'Dexus digital transformation.',
     tags:         'Research · Information Architecture · Design Systems',
     description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
-    thumbnailSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778584285/Dexus_project_thumbnail_litcor.png',
+    thumbnailSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1782210430/Dexus_case_study_image_tpyxmq.png',
     thumbnailAlt: 'Dexus digital transformation project thumbnail',
     slug:         'dexus',
   },
@@ -142,7 +142,7 @@ export const workPage = {
       title:        'Dexus digital transformation.',
       tags:         'Research · Information Architecture · Design Systems',
       description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
-      thumbnailSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778584285/Dexus_project_thumbnail_litcor.png' as string | null,
+      thumbnailSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1782210430/Dexus_case_study_image_tpyxmq.png' as string | null,
       thumbnailAlt: 'Dexus digital transformation project thumbnail',
       slug:         'dexus',
     },
@@ -277,7 +277,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     year:         '2025',
     tags:         'Research · Information Architecture · Design Systems',
     description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
-    heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1778584285/Dexus_project_thumbnail_litcor.png',
+    heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto,f_auto/v1782210430/Dexus_case_study_image_tpyxmq.png',
     heroImageAlt: 'Dexus digital transformation — project hero',
     stats: [
       {
