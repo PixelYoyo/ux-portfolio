@@ -10,6 +10,7 @@ import TestimonialsSection from './TestimonialsSection';
 import ReflectionSection from './ReflectionSection';
 import DetailsSection from './DetailsSection';
 import AvailabilitySection from './AvailabilitySection';
+import NextSection from './NextSection';
 
 const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
 
@@ -25,6 +26,7 @@ export default async function CaseStudyPage({
   const { slug } = await params;
   const study = caseStudyPages[slug];
   if (!study) notFound();
+  const nextStudies = Object.values(caseStudyPages).filter(s => s.slug !== slug);
   return (
     <>
       <Hero study={study} />
@@ -60,6 +62,7 @@ export default async function CaseStudyPage({
       {study.linkGroups.length > 0 && (
         <AvailabilitySection linkGroups={study.linkGroups} />
       )}
+      <NextSection studies={nextStudies} />
     </>
   );
 }
