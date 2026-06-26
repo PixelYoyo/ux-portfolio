@@ -15,9 +15,6 @@ export default function DesignSection({
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Fire when a card enters the band from 50%–60% of the viewport height.
-    // This sits well below the sticky mobile image (~280px) on any phone size,
-    // so the switch only triggers once a card is genuinely readable.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -36,18 +33,18 @@ export default function DesignSection({
 
   return (
     <section className="bg-bg-primary py-4xl">
-      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-2xl lg:gap-5xl">
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-2xl md:gap-5xl">
 
       {/* Tagline */}
       <p
-        className="font-heading font-medium text-heading-m leading-[28px] uppercase text-text-primary lg:font-semibold lg:text-heading-l lg:leading-[44px]"
+        className="font-heading font-medium text-heading-m leading-[28px] uppercase text-text-primary md:font-semibold md:text-heading-l md:leading-[44px]"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
       >
         {tagline}
       </p>
 
-      {/* Mobile: sticky image + dots, scrolls away after tagline */}
-      <div className="lg:hidden sticky top-0 z-10 bg-bg-primary flex flex-col gap-lg">
+      {/* Mobile only: sticky image + dots */}
+      <div className="md:hidden sticky top-0 z-10 bg-bg-primary flex flex-col gap-lg">
         <div className="flex items-center gap-lg">
           {items.map((_, i) => (
             <div
@@ -71,11 +68,11 @@ export default function DesignSection({
         </p>
       </div>
 
-      {/* Two-column body */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+      {/* Two-column body — tablet+ */}
+      <div className="flex flex-col md:flex-row md:items-start md:justify-between md:gap-[20px] lg:gap-[40px]">
 
         {/* Left: scrolling content cards */}
-        <div className="flex flex-col lg:w-[572px] lg:py-[120px] lg:gap-[400px]">
+        <div className="flex flex-col md:flex-1 md:py-[80px] md:gap-[200px] lg:w-[572px] lg:flex-none lg:py-[120px] lg:gap-[400px]">
           {items.map((item, i) => (
             <div
               key={i}
@@ -100,8 +97,8 @@ export default function DesignSection({
           ))}
         </div>
 
-        {/* Right: sticky image — desktop only */}
-        <div className="hidden lg:block lg:w-[608px]">
+        {/* Right: sticky image — tablet+desktop */}
+        <div className="hidden md:block md:flex-1 lg:flex-none lg:w-[608px]">
           <div className="sticky top-[32px] flex flex-col gap-[24px]">
             <div className="relative w-full aspect-[3/2]">
               {items.map((item, i) => (
