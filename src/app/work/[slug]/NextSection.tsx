@@ -8,7 +8,7 @@ import type { CaseStudyPage } from '@/content/portfolio';
 function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) {
   const num = String(index + 1).padStart(2, '0');
   return (
-    <div className="border-b border-border-primary flex flex-col gap-4xl items-start pb-6xl w-[452px] shrink-0">
+    <div className="border-b border-border-primary flex flex-col gap-4xl items-start pb-6xl w-full md:flex-1 lg:w-[452px] lg:shrink-0">
       <p
         className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
@@ -90,11 +90,11 @@ export default function NextSection({ studies }: { studies: CaseStudyPage[] }) {
   const activeStudy = studies[activeIndex] ?? studies[0];
 
   return (
-    <section className="bg-bg-primary pt-4xl pb-7xl lg:pb-4xl">
+    <section className="bg-bg-primary pt-4xl pb-7xl md:pb-4xl">
       <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-[40px]">
 
       {/* ── Desktop ─────────────────────────────────────────────────────── */}
-      <div className="hidden lg:flex flex-col gap-[40px]">
+      <div className="hidden md:flex flex-col gap-[40px]">
         <div className="flex justify-end">
           <p
             className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
@@ -111,7 +111,7 @@ export default function NextSection({ studies }: { studies: CaseStudyPage[] }) {
       </div>
 
       {/* ── Mobile ──────────────────────────────────────────────────────── */}
-      <div className="flex flex-col gap-[40px] lg:hidden">
+      <div className="flex flex-col gap-[40px] md:hidden">
         <p
           className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}

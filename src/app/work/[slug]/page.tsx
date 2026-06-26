@@ -117,7 +117,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
       <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
         {/* Image */}
-        <div className="order-1 lg:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative">
+        <div className="order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative">
           {study.heroImageSrc ? (
             <Image
               src={study.heroImageSrc}
@@ -131,7 +131,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
         </div>
 
         {/* Stats */}
-        <div className="order-2 lg:order-first flex flex-col gap-[40px] w-full lg:flex-row lg:gap-[64px]">
+        <div className="order-2 md:order-first flex flex-col gap-[40px] w-full md:flex-row md:gap-[20px] lg:gap-[64px]">
           {study.stats.map((stat) => (
             <Stat key={stat.number} stat={stat} />
           ))}
