@@ -35,7 +35,8 @@ export default function DesignSection({
   const activeCaption = items[activeIndex]?.imageCaption ?? '';
 
   return (
-    <section className="bg-bg-primary px-margin py-4xl flex flex-col gap-2xl lg:gap-5xl">
+    <section className="bg-bg-primary py-4xl">
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-2xl lg:gap-5xl">
 
       {/* Tagline */}
       <p
@@ -118,6 +119,7 @@ export default function DesignSection({
           </div>
         </div>
 
+      </div>
       </div>
     </section>
   );

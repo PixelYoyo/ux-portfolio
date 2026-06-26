@@ -81,8 +81,9 @@ export default function TestimonialsSection({ quotes }: { quotes: CaseStudyQuote
   return (
     <>
       {/* ── Desktop ─────────────────────────────────────────────────────── */}
-      <section className="hidden lg:block relative bg-bg-primary pl-10xl pr-margin pt-7xl pb-10xl">
+      <section className="hidden lg:block bg-bg-primary pt-7xl">
 
+        <div className="relative pl-10xl pr-margin pb-10xl max-w-[1440px] mx-auto">
         <div
           aria-live="polite"
           aria-atomic="true"
@@ -124,6 +125,7 @@ export default function TestimonialsSection({ quotes }: { quotes: CaseStudyQuote
           </>
         )}
 
+        </div>
       </section>
 
       {/* ── Mobile ──────────────────────────────────────────────────────── */}

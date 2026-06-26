@@ -73,7 +73,7 @@ export default function ContextSection({
   return (
     <section
       ref={sectionRef}
-      className="bg-bg-primary px-margin pt-4xl pb-7xl lg:flex lg:items-start lg:justify-between lg:py-4xl"
+      className="bg-bg-primary pt-4xl pb-7xl lg:py-4xl"
     >
       <style>{`
         [data-fade] {
@@ -90,6 +90,7 @@ export default function ContextSection({
         }
       `}</style>
 
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col lg:flex-row lg:items-start lg:justify-between">
       {/* Tagline */}
       <p
         data-fade
@@ -127,6 +128,7 @@ export default function ContextSection({
             </div>
           );
         })}
+      </div>
       </div>
     </section>
   );

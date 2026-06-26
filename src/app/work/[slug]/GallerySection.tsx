@@ -70,10 +70,10 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
   const image = images[current];
 
   return (
-    <section className="bg-bg-primary px-margin pt-4xl pb-7xl lg:py-7xl flex flex-col gap-lg lg:gap-[20px]">
+    <section className="bg-bg-primary pt-4xl pb-7xl lg:py-7xl">
 
       {/* Image row: arrows flank on desktop, hidden on mobile */}
-      <div className="flex items-center lg:gap-[40px]">
+      <div className="px-margin max-w-[1440px] mx-auto flex items-center lg:gap-[40px]">
 
         {/* Desktop left arrow */}
         <div className="hidden lg:block">
@@ -113,7 +113,7 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
       </div>
 
       {/* Mobile: arrows + dots row */}
-      <div className="lg:hidden flex items-end justify-between">
+      <div className="px-margin max-w-[1440px] mx-auto lg:hidden flex items-end justify-between">
         <ArrowButton direction="prev" onClick={prev} disabled={current === 0} />
         <Dots count={images.length} current={current} />
         <ArrowButton direction="next" onClick={next} disabled={current === images.length - 1} />

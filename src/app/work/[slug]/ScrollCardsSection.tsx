@@ -107,7 +107,7 @@ export default function ScrollCardsSection({
   }, []);
 
   return (
-    <div ref={outerRef}>
+    <div ref={outerRef} className="max-w-[1440px] mx-auto">
       <section className="sticky top-0 overflow-hidden bg-bg-primary px-margin py-4xl flex flex-col gap-5xl">
 
         <p

@@ -109,12 +109,12 @@ function Hero({ study }: { study: CaseStudyPage }) {
       </div>
 
       {/* Credit line */}
-      <p className="px-margin font-body not-italic text-sm leading-[20px] text-text-primary text-right w-full">
+      <p className="px-margin max-w-[1440px] mx-auto w-full font-body not-italic text-sm leading-[20px] text-text-primary text-right">
         {study.role} · {study.company} · {study.year}
       </p>
 
       {/* Stats + image — image leads on mobile, trails on desktop */}
-      <div className="px-margin flex flex-col gap-[24px] items-end w-full lg:gap-[48px]">
+      <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
         {/* Image */}
         <div className="order-1 lg:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative">
@@ -168,13 +168,15 @@ function Stat({ stat }: { stat: CaseStudyStat }) {
 function SectionHeading({ label, id }: { label: string; id?: string }) {
   const body = label.endsWith('.') ? label.slice(0, -1) : label;
   return (
-    <section id={id} className="bg-bg-primary px-margin pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl">
+    <section id={id} className="bg-bg-primary pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl">
+      <div className="px-margin max-w-[1440px] mx-auto">
       <p
         className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
       >
         {body}<span className="text-text-brand">.</span>
       </p>
+      </div>
     </section>
   );
 }
@@ -192,8 +194,8 @@ function AnchorNav({ study }: { study: CaseStudyPage }) {
   ];
 
   return (
-    <section className="bg-bg-primary px-margin py-4xl border-t border-border-primary">
-      <div className="flex flex-col gap-[24px] lg:flex-row lg:items-center lg:justify-between">
+    <section className="bg-bg-primary py-4xl border-t border-border-primary">
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-[24px] lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap gap-[24px]">
           {links.map((link) => (
             <a
@@ -215,7 +217,8 @@ function AnchorNav({ study }: { study: CaseStudyPage }) {
 
 function ExecutiveSummary({ study }: { study: CaseStudyPage }) {
   return (
-    <section className="bg-bg-primary flex flex-col gap-6xl lg:gap-7xl pt-4xl pb-7xl px-margin lg:px-[118px]">
+    <section className="bg-bg-primary pt-4xl pb-7xl">
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-6xl lg:gap-7xl">
 
       {/* Heading */}
       <p
@@ -237,6 +240,7 @@ function ExecutiveSummary({ study }: { study: CaseStudyPage }) {
         ))}
       </div>
 
+      </div>
     </section>
   );
 }

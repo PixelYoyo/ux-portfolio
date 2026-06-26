@@ -79,7 +79,7 @@ export default function ReflectionSection({
   return (
     <section
       ref={sectionRef}
-      className="bg-bg-primary px-margin pt-4xl pb-7xl lg:flex lg:flex-row-reverse lg:items-start lg:justify-between lg:py-4xl"
+      className="bg-bg-primary pt-4xl pb-7xl lg:py-4xl"
     >
       <style>{`
         [data-fade] {
@@ -96,6 +96,7 @@ export default function ReflectionSection({
         }
       `}</style>
 
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col lg:flex-row-reverse lg:items-start lg:justify-between">
       {/* Tagline — first in DOM (mobile: top), right column on desktop */}
       <p
         data-fade
@@ -133,6 +134,7 @@ export default function ReflectionSection({
             </div>
           );
         })}
+      </div>
       </div>
     </section>
   );

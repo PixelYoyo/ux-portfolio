@@ -90,7 +90,8 @@ export default function NextSection({ studies }: { studies: CaseStudyPage[] }) {
   const activeStudy = studies[activeIndex] ?? studies[0];
 
   return (
-    <section className="bg-bg-primary px-margin pt-4xl pb-7xl lg:pb-4xl flex flex-col gap-[40px]">
+    <section className="bg-bg-primary pt-4xl pb-7xl lg:pb-4xl">
+      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-[40px]">
 
       {/* ── Desktop ─────────────────────────────────────────────────────── */}
       <div className="hidden lg:flex flex-col gap-[40px]">
@@ -134,6 +135,7 @@ export default function NextSection({ studies }: { studies: CaseStudyPage[] }) {
         )}
       </div>
 
+      </div>
     </section>
   );
 }
