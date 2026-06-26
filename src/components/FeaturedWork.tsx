@@ -92,7 +92,7 @@ export default function FeaturedWork() {
 
           {/* Number — mobile only, sits above thumbnail */}
           <p
-            className="lg:hidden font-heading font-bold text-heading-xl leading-none uppercase text-text-primary"
+            className="lg:hidden font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {FEATURED.number}<span className="text-text-brand">.</span>
@@ -113,7 +113,7 @@ export default function FeaturedWork() {
 
             {/* Number — desktop only */}
             <p
-              className="hidden lg:block font-heading font-bold text-heading-xl leading-none uppercase text-text-primary"
+              className="hidden lg:block font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
               style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
             >
               {FEATURED.number}<span className="text-text-brand">.</span>

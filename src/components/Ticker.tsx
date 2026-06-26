@@ -33,7 +33,7 @@ export default function Ticker({ text }: TickerProps) {
         aria-label={text}
       >
         <div
-          className="ticker-track flex whitespace-nowrap font-heading font-bold text-heading-xl leading-none uppercase text-text-primary"
+          className="ticker-track flex whitespace-nowrap font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         >
           {items}

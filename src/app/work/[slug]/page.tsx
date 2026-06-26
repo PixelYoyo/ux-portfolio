@@ -150,7 +150,7 @@ function Stat({ stat }: { stat: CaseStudyStat }) {
     <div className="flex flex-col gap-md flex-1">
       <div className="border-b border-border-primary pb-xl w-full">
         <p
-          className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:leading-normal"
+          className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         >
           {stat.number}
@@ -170,7 +170,7 @@ function SectionHeading({ label, id }: { label: string; id?: string }) {
   return (
     <section id={id} className="bg-bg-primary px-margin pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl">
       <p
-        className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:leading-normal"
+        className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
       >
         {body}<span className="text-text-brand">.</span>

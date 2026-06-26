@@ -9,7 +9,7 @@ export default function Values() {
         {values.items.map((value) => (
           <p
             key={value}
-            className="font-heading font-bold text-heading-l lg:text-heading-xl leading-none uppercase text-text-primary"
+            className="font-heading font-bold text-heading-l lg:text-heading-xl leading-none lg:tracking-impact uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {value}<span className="text-text-brand">.</span>

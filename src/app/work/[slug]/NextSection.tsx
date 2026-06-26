@@ -10,7 +10,7 @@ function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) 
   return (
     <div className="border-b border-border-primary flex flex-col gap-4xl items-start pb-6xl w-[452px] shrink-0">
       <p
-        className="font-heading font-bold text-heading-xl leading-none uppercase text-text-primary"
+        className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
       >
         {num}<span className="text-text-brand">.</span>
@@ -96,7 +96,7 @@ export default function NextSection({ studies }: { studies: CaseStudyPage[] }) {
       <div className="hidden lg:flex flex-col gap-[40px]">
         <div className="flex justify-end">
           <p
-            className="font-heading font-bold text-heading-xl leading-none uppercase text-text-primary"
+            className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             Next<span className="text-text-brand">.</span>
