@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import ButtonPrimary from '@/components/ButtonPrimary';
 import { caseStudyPages, type CaseStudyPage, type CaseStudyStat } from '@/content/portfolio';
+import AnchorNav from './AnchorNav';
 import ContextSection from './ContextSection';
 import GallerySection from './GallerySection';
 import ScrollCardsSection from './ScrollCardsSection';
@@ -181,43 +181,11 @@ function SectionHeading({ label, id }: { label: string; id?: string }) {
   );
 }
 
-// ─── Anchor Nav ───────────────────────────────────────────────────────────────
-
-function AnchorNav({ study }: { study: CaseStudyPage }) {
-  const links = [
-    { label: 'The context',   href: '#context'   },
-    { label: 'The design',    href: '#design'     },
-    ...(study.reflectionItems.length > 0
-      ? [{ label: 'The learnings', href: '#learnings' }]
-      : []),
-    { label: 'The details',   href: '#details'    },
-  ];
-
-  return (
-    <section className="bg-bg-primary py-4xl border-t border-border-primary">
-      <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-[24px] lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap gap-[24px]">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-link font-body not-italic text-sm leading-[20px] text-text-primary"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-        <ButtonPrimary label="Get in touch" href="mailto:yolandi.uxdesign@gmail.com" />
-      </div>
-    </section>
-  );
-}
-
 // ─── Executive Summary ────────────────────────────────────────────────────────
 
 function ExecutiveSummary({ study }: { study: CaseStudyPage }) {
   return (
-    <section className="bg-bg-primary pt-4xl pb-7xl">
+    <section id="summary" className="bg-bg-primary pt-4xl pb-7xl">
       <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-6xl lg:gap-7xl">
 
       {/* Heading */}
