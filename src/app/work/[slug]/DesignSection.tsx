@@ -12,25 +12,18 @@ export default function DesignSection({
   items: CaseStudyDesignItem[];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  // tracks which desktop text blocks are in the centre zone → opacity 1
-  const [visibleSet, setVisibleSet] = useState<Set<number>>(() => new Set<number>());
 
   const desktopCardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mobileCardRefs  = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Desktop: fire at the exact centre line of the viewport.
-    // With min-h-[100vh] items there is always exactly one item crossing
-    // the centre, so the handoff between items is seamless.
+    // Desktop: fire at centre line. With height:100vh items, exactly one
+    // item crosses the centre at any time — seamless handoff, no gap.
     const desktopObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const i = Number((entry.target as HTMLElement).dataset.index);
           if (entry.isIntersecting) {
-            setActiveIndex(i);
-            setVisibleSet((prev) => { const s = new Set(prev); s.add(i); return s; });
-          } else {
-            setVisibleSet((prev) => { const s = new Set(prev); s.delete(i); return s; });
+            setActiveIndex(Number((entry.target as HTMLElement).dataset.index));
           }
         });
       },
@@ -38,8 +31,7 @@ export default function DesignSection({
     );
     desktopCardRefs.current.forEach((el) => { if (el) desktopObserver.observe(el); });
 
-    // Mobile: wider zone so the image crossfades responsively as
-    // compact cards scroll into the middle third of the viewport.
+    // Mobile: wider zone for image crossfade
     const mobileObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -78,7 +70,7 @@ export default function DesignSection({
               {items.map((_, i) => (
                 <div
                   key={i}
-                  className={`size-[16px] border-[0.5px] border-solid border-text-primary transition-colors duration-500${
+                  className={`size-[16px] border-[0.5px] border-solid border-text-primary transition-colors duration-300${
                     i === activeIndex ? ' bg-bg-brand' : ''
                   }`}
                 />
@@ -88,9 +80,8 @@ export default function DesignSection({
               {items.map((item, i) => (
                 <div
                   key={i}
-                  className={`absolute inset-0 motion-safe:transition-opacity motion-safe:duration-700 ${
-                    i === activeIndex ? 'opacity-100' : 'opacity-0'
-                  }`}
+                  className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
+                  style={{ opacity: i === activeIndex ? 1 : 0 }}
                 >
                   <Image src={item.imageSrc} alt={item.imageAlt} fill className="object-cover" />
                 </div>
@@ -131,19 +122,19 @@ export default function DesignSection({
         {/* ── Tablet / Desktop ────────────────────────────────────────────── */}
         <div className="hidden md:flex md:items-start md:gap-[20px] lg:gap-[40px]">
 
-          {/* Left: tall scroll containers, one per item.
-              rootMargin -50%/-50% fires exactly as each block crosses the
-              viewport centre — with min-h-[100vh] containers, exactly one
-              block is in the zone at any moment, so there is no gap. */}
+          {/* Left: each item fills the viewport — active at opacity 1,
+              inactive dimmed to 0.4 (always readable). Opacity sits on the
+              outer container so heading and body dim together. */}
           <div className="flex-1 flex flex-col">
             {items.map((item, i) => (
-              <div key={i} className="min-h-[100vh] flex items-center">
-                <div
-                  ref={(el) => { desktopCardRefs.current[i] = el; }}
-                  data-index={i}
-                  className="w-full border-b border-border-primary pb-7xl flex flex-col gap-xl motion-safe:transition-opacity motion-safe:duration-700"
-                  style={{ opacity: visibleSet.has(i) ? 1 : 0 }}
-                >
+              <div
+                key={i}
+                ref={(el) => { desktopCardRefs.current[i] = el; }}
+                data-index={i}
+                className="h-[100vh] flex items-center motion-safe:transition-opacity motion-safe:duration-300"
+                style={{ opacity: i === activeIndex ? 1 : 0.4 }}
+              >
+                <div className="w-full border-b border-border-primary pb-7xl flex flex-col gap-xl">
                   <p
                     className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
                     style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
@@ -162,16 +153,15 @@ export default function DesignSection({
             ))}
           </div>
 
-          {/* Right: sticky image — sticks just below the sticky anchor nav */}
+          {/* Right: sticky image — sticks just below the anchor nav */}
           <div className="md:flex-1 lg:flex-none lg:w-[608px] shrink-0">
             <div className="sticky md:top-[86px] lg:top-[102px] flex flex-col gap-[24px]">
               <div className="relative w-full aspect-[3/2]">
                 {items.map((item, i) => (
                   <div
                     key={i}
-                    className={`absolute inset-0 motion-safe:transition-opacity motion-safe:duration-700 ${
-                      i === activeIndex ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
+                    style={{ opacity: i === activeIndex ? 1 : 0 }}
                   >
                     <Image src={item.imageSrc} alt={item.imageAlt} fill className="object-cover" />
                   </div>
