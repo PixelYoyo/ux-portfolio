@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import ButtonPrimary from '@/components/ButtonPrimary';
 import type { CaseStudyPage } from '@/content/portfolio';
 
 function NavLink({
@@ -127,23 +126,6 @@ export default function AnchorNav({ study }: { study: CaseStudyPage }) {
             </div>
           )}
         </div>
-
-        {/* Desktop + tablet: primary CTA */}
-        <div className="hidden md:block">
-          <ButtonPrimary
-            label="Get in touch"
-            href="mailto:yolandi.uxdesign@gmail.com"
-            className="md:px-2xl md:py-xl lg:px-4xl lg:py-3xl"
-          />
-        </div>
-
-        {/* Mobile: text-link CTA */}
-        <a
-          href="mailto:yolandi.uxdesign@gmail.com"
-          className="md:hidden shrink-0 text-link font-body not-italic text-[16px] leading-normal text-text-primary"
-        >
-          Get in touch
-        </a>
 
       </div>
     </section>
