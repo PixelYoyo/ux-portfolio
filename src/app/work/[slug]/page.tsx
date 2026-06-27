@@ -31,8 +31,8 @@ export default async function CaseStudyPage({
   return (
     <>
       <Hero study={study} />
-      {study.executiveSummary.length > 0 && <ExecutiveSummary study={study} />}
       <AnchorNav study={study} />
+      {study.executiveSummary.length > 0 && <ExecutiveSummary study={study} />}
       <SectionHeading label="The context" id="context" />
       {study.contextItems.length > 0 && (
         <ContextSection tagline={study.contextTagline} items={study.contextItems} />
