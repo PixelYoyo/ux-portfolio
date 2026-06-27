@@ -17,8 +17,8 @@ export default function DesignSection({
   const mobileCardRefs  = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Fires when each left block crosses the viewport centre line.
-    // h-[100vh] containers guarantee exactly one item is active at a time.
+    // Fires at the viewport centre line. h-[100vh] containers guarantee
+    // exactly one item crosses the centre at a time — no gap between transitions.
     const desktopObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -119,13 +119,13 @@ export default function DesignSection({
         </div>
 
         {/* ── Tablet / Desktop ────────────────────────────────────────────── */}
-        <div className="hidden md:flex md:items-start md:gap-[20px] lg:gap-[40px]">
+        {/* Grid (not flex) so the right cell inherits the full left-column
+            height (~3×100vh), giving position:sticky the parent room it
+            needs to scroll. align-items:start keeps both columns top-aligned. */}
+        <div className="hidden md:grid md:grid-cols-2 md:gap-[20px] lg:grid-cols-[1fr_608px] lg:gap-[40px] items-start">
 
-          {/* Left: each item fills the viewport height.
-              Active = opacity 1, inactive = opacity 0.4 (always readable).
-              The observer fires at the centre line so exactly one item is
-              active at a time, with no blackout gap between transitions. */}
-          <div className="flex-1 flex flex-col">
+          {/* Left: scrolling text blocks. Active = opacity 1, inactive = 0.4. */}
+          <div className="flex flex-col">
             {items.map((item, i) => (
               <div
                 key={i}
@@ -153,10 +153,10 @@ export default function DesignSection({
             ))}
           </div>
 
-          {/* Right: sticky at top-0, h-[100vh] so the image sits at the true
-              vertical centre of the viewport. The sticky nav (z-50) renders
-              on top, so the image appears centred in the visible area. */}
-          <div className="md:flex-1 lg:flex-none lg:w-[608px] shrink-0">
+          {/* Right: sticky image centred in the viewport.
+              top-0 + h-[100vh] + flex items-center places the image at 50vh.
+              The grid cell is the full section height so sticky has room to scroll. */}
+          <div>
             <div className="sticky top-0 h-[100vh] flex items-center">
               <div className="w-full flex flex-col gap-[24px]">
                 <div className="relative w-full aspect-[3/2]">
