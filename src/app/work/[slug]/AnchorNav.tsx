@@ -7,18 +7,16 @@ import type { CaseStudyPage } from '@/content/portfolio';
 function NavLink({
   link,
   active,
-  size,
 }: {
   link: { label: string; href: string };
   active: boolean;
-  size: 'lg' | 'md';
 }) {
   return (
     <a
       href={link.href}
-      className={`font-body not-italic whitespace-nowrap transition-colors duration-200 ${
-        size === 'lg' ? 'text-[24px] leading-[30px]' : 'text-[16px] leading-normal'
-      } ${active ? 'text-link text-text-primary' : 'anchor-nav-inactive text-[#696969]'}`}
+      className={`font-body not-italic text-[16px] leading-normal whitespace-nowrap transition-colors duration-200 ${
+        active ? 'text-link text-text-primary' : 'anchor-nav-inactive text-[#696969]'
+      }`}
     >
       {link.label}
     </a>
@@ -80,14 +78,14 @@ export default function AnchorNav({ study }: { study: CaseStudyPage }) {
         {/* Desktop links */}
         <div className="hidden lg:flex gap-[40px] items-center">
           {links.map(link => (
-            <NavLink key={link.href} link={link} active={activeId === link.href.slice(1)} size="lg" />
+            <NavLink key={link.href} link={link} active={activeId === link.href.slice(1)} />
           ))}
         </div>
 
         {/* Tablet links */}
         <div className="hidden md:flex lg:hidden gap-[16px] items-center">
           {links.map(link => (
-            <NavLink key={link.href} link={link} active={activeId === link.href.slice(1)} size="md" />
+            <NavLink key={link.href} link={link} active={activeId === link.href.slice(1)} />
           ))}
         </div>
 
