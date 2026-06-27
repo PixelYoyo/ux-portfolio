@@ -7,7 +7,7 @@ export default function AvailabilitySection({ linkGroups }: { linkGroups: CaseSt
 
         {/* Heading — top on mobile, right on desktop (flex-row-reverse) */}
         <p
-          className="font-heading font-medium text-heading-m leading-[28px] uppercase text-text-primary lg:font-semibold lg:text-heading-l lg:leading-[44px] lg:flex-1"
+          className="font-heading font-medium text-heading-m leading-[28px] uppercase text-text-primary lg:font-semibold lg:text-heading-l lg:leading-[44px] lg:flex-1 lg:text-right"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         >
           Availability<span className="text-text-brand">.</span>
