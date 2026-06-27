@@ -103,7 +103,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
           to   { opacity: 1; transform: translateY(0); }
         }
         .cs-hero-reveal {
-          animation: cs-hero-reveal 0.55s ease-out both;
+          animation: cs-hero-reveal 0.8s ease-out both;
         }
         @media (prefers-reduced-motion: reduce) {
           .cs-hero-ticker { animation: none; }
@@ -126,7 +126,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
       <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
         {/* Image */}
-        <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '450ms' }}>
+        <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '650ms' }}>
           {study.heroImageSrc ? (
             <Image
               src={study.heroImageSrc}
@@ -142,7 +142,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
         {/* Stats */}
         <div className="order-2 md:order-first flex flex-col gap-[40px] w-full md:flex-row md:gap-[20px] lg:gap-[64px]">
           {study.stats.map((stat, i) => (
-            <Stat key={stat.number} stat={stat} style={{ animationDelay: `${i * 150}ms` }} />
+            <Stat key={stat.number} stat={stat} style={{ animationDelay: `${i * 200}ms` }} />
           ))}
         </div>
 
