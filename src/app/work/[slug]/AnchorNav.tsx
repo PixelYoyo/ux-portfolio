@@ -73,7 +73,7 @@ export default function AnchorNav({ study }: { study: CaseStudyPage }) {
 
   return (
     <section className="sticky top-0 z-50 bg-bg-primary border-b border-border-primary">
-      <div className="px-margin max-w-[1440px] mx-auto py-lg md:py-xl flex items-center justify-between">
+      <div className="px-margin max-w-[1440px] mx-auto py-lg md:py-xl flex items-center gap-[20px] md:gap-0 md:justify-between">
 
         {/* Desktop links */}
         <div className="hidden lg:flex gap-[40px] items-center">
@@ -89,14 +89,14 @@ export default function AnchorNav({ study }: { study: CaseStudyPage }) {
           ))}
         </div>
 
-        {/* Mobile dropdown */}
-        <div ref={dropRef} className="md:hidden relative">
+        {/* Mobile dropdown — flex-1 fills space before CTA */}
+        <div ref={dropRef} className="md:hidden flex-1 relative">
           <button
             onClick={() => setOpen(v => !v)}
             aria-expanded={open}
-            className="border border-border-primary flex gap-xl items-center px-lg py-md"
+            className="border border-border-primary flex items-center justify-center gap-xl px-lg py-md w-full max-w-[240px]"
           >
-            <span className="font-body not-italic text-[16px] leading-normal text-text-primary">
+            <span className="flex-1 min-w-0 font-body not-italic text-[16px] leading-normal text-text-primary text-center">
               {activeLink.label}
             </span>
             <svg
@@ -140,7 +140,7 @@ export default function AnchorNav({ study }: { study: CaseStudyPage }) {
         {/* Mobile: text-link CTA */}
         <a
           href="mailto:yolandi.uxdesign@gmail.com"
-          className="md:hidden text-link font-body not-italic text-[16px] leading-normal text-text-primary"
+          className="md:hidden shrink-0 text-link font-body not-italic text-[16px] leading-normal text-text-primary"
         >
           Get in touch
         </a>
