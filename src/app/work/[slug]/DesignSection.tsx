@@ -17,8 +17,6 @@ export default function DesignSection({
   const mobileCardRefs  = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Desktop: fire at centre line. With height:100vh items, exactly one
-    // item crosses the centre at any time — seamless handoff, no gap.
     const desktopObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -31,7 +29,6 @@ export default function DesignSection({
     );
     desktopCardRefs.current.forEach((el) => { if (el) desktopObserver.observe(el); });
 
-    // Mobile: wider zone for image crossfade
     const mobileObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -122,9 +119,7 @@ export default function DesignSection({
         {/* ── Tablet / Desktop ────────────────────────────────────────────── */}
         <div className="hidden md:flex md:items-start md:gap-[20px] lg:gap-[40px]">
 
-          {/* Left: each item fills the viewport — active at opacity 1,
-              inactive dimmed to 0.4 (always readable). Opacity sits on the
-              outer container so heading and body dim together. */}
+          {/* Left: each item fills the viewport — active at opacity 1, inactive at 0.4 */}
           <div className="flex-1 flex flex-col">
             {items.map((item, i) => (
               <div
@@ -153,23 +148,25 @@ export default function DesignSection({
             ))}
           </div>
 
-          {/* Right: sticky image — sticks just below the anchor nav */}
+          {/* Right: sticky, vertically centred in the space below the anchor nav */}
           <div className="md:flex-1 lg:flex-none lg:w-[608px] shrink-0">
-            <div className="sticky md:top-[86px] lg:top-[102px] flex flex-col gap-[24px]">
-              <div className="relative w-full aspect-[3/2]">
-                {items.map((item, i) => (
-                  <div
-                    key={i}
-                    className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
-                    style={{ opacity: i === activeIndex ? 1 : 0 }}
-                  >
-                    <Image src={item.imageSrc} alt={item.imageAlt} fill className="object-cover" />
-                  </div>
-                ))}
+            <div className="sticky md:top-[86px] lg:top-[102px] md:h-[calc(100vh-86px)] lg:h-[calc(100vh-102px)] flex items-center">
+              <div className="w-full flex flex-col gap-[24px]">
+                <div className="relative w-full aspect-[3/2]">
+                  {items.map((item, i) => (
+                    <div
+                      key={i}
+                      className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
+                      style={{ opacity: i === activeIndex ? 1 : 0 }}
+                    >
+                      <Image src={item.imageSrc} alt={item.imageAlt} fill className="object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <p className="font-body not-italic text-sm leading-[20px] text-text-primary text-center">
+                  {activeCaption}
+                </p>
               </div>
-              <p className="font-body not-italic text-sm leading-[20px] text-text-primary text-center">
-                {activeCaption}
-              </p>
             </div>
           </div>
 
