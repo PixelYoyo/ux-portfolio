@@ -17,6 +17,8 @@ export default function DesignSection({
   const mobileCardRefs  = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    // Fires when each left block crosses the viewport centre line.
+    // h-[100vh] containers guarantee exactly one item is active at a time.
     const desktopObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -119,7 +121,10 @@ export default function DesignSection({
         {/* ── Tablet / Desktop ────────────────────────────────────────────── */}
         <div className="hidden md:flex md:items-start md:gap-[20px] lg:gap-[40px]">
 
-          {/* Left: each item fills the viewport — active at opacity 1, inactive at 0.4 */}
+          {/* Left: each item fills the viewport height.
+              Active = opacity 1, inactive = opacity 0.4 (always readable).
+              The observer fires at the centre line so exactly one item is
+              active at a time, with no blackout gap between transitions. */}
           <div className="flex-1 flex flex-col">
             {items.map((item, i) => (
               <div
@@ -148,9 +153,11 @@ export default function DesignSection({
             ))}
           </div>
 
-          {/* Right: sticky, vertically centred in the space below the anchor nav */}
+          {/* Right: sticky at top-0, h-[100vh] so the image sits at the true
+              vertical centre of the viewport. The sticky nav (z-50) renders
+              on top, so the image appears centred in the visible area. */}
           <div className="md:flex-1 lg:flex-none lg:w-[608px] shrink-0">
-            <div className="sticky md:top-[86px] lg:top-[102px] md:h-[calc(100vh-86px)] lg:h-[calc(100vh-102px)] flex items-center">
+            <div className="sticky top-0 h-[100vh] flex items-center">
               <div className="w-full flex flex-col gap-[24px]">
                 <div className="relative w-full aspect-[3/2]">
                   {items.map((item, i) => (
