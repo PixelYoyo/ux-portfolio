@@ -177,7 +177,7 @@ function Stat({ stat, style }: { stat: CaseStudyStat; style?: CSSProperties }) {
 function SectionHeading({ label, id }: { label: string; id?: string }) {
   const body = label.endsWith('.') ? label.slice(0, -1) : label;
   return (
-    <section id={id} className="bg-bg-primary pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl">
+    <section id={id} className="bg-bg-primary pt-4xl pb-3xl lg:pt-7xl lg:pb-4xl scroll-mt-[58px] md:scroll-mt-[86px] lg:scroll-mt-[102px]">
       <div className="px-margin max-w-[1440px] mx-auto">
       <p
         className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
@@ -194,7 +194,7 @@ function SectionHeading({ label, id }: { label: string; id?: string }) {
 
 function ExecutiveSummary({ study }: { study: CaseStudyPage }) {
   return (
-    <section id="summary" className="bg-bg-primary pt-4xl pb-7xl">
+    <section id="summary" className="bg-bg-primary pt-4xl pb-7xl scroll-mt-[58px] md:scroll-mt-[86px] lg:scroll-mt-[102px]">
       <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-6xl lg:gap-7xl">
 
       {/* Heading */}
