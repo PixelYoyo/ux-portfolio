@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { caseStudyPages, type CaseStudyPage, type CaseStudyStat } from '@/content/portfolio';
@@ -97,8 +98,16 @@ function Hero({ study }: { study: CaseStudyPage }) {
         @media (min-width: 1024px) {
           .cs-hero-ticker { font-variation-settings: 'opsz' 96, 'wdth' 100; }
         }
+        @keyframes cs-hero-reveal {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .cs-hero-reveal {
+          animation: cs-hero-reveal 0.55s ease-out both;
+        }
         @media (prefers-reduced-motion: reduce) {
           .cs-hero-ticker { animation: none; }
+          .cs-hero-reveal { animation: none; }
         }
       `}</style>
       <div className="overflow-hidden w-full" aria-label={study.title}>
@@ -117,7 +126,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
       <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
         {/* Image */}
-        <div className="order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative">
+        <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '450ms' }}>
           {study.heroImageSrc ? (
             <Image
               src={study.heroImageSrc}
@@ -132,8 +141,8 @@ function Hero({ study }: { study: CaseStudyPage }) {
 
         {/* Stats */}
         <div className="order-2 md:order-first flex flex-col gap-[40px] w-full md:flex-row md:gap-[20px] lg:gap-[64px]">
-          {study.stats.map((stat) => (
-            <Stat key={stat.number} stat={stat} />
+          {study.stats.map((stat, i) => (
+            <Stat key={stat.number} stat={stat} style={{ animationDelay: `${i * 150}ms` }} />
           ))}
         </div>
 
@@ -145,9 +154,9 @@ function Hero({ study }: { study: CaseStudyPage }) {
 
 // ─── Stat ─────────────────────────────────────────────────────────────────────
 
-function Stat({ stat }: { stat: CaseStudyStat }) {
+function Stat({ stat, style }: { stat: CaseStudyStat; style?: CSSProperties }) {
   return (
-    <div className="flex flex-col gap-md flex-1">
+    <div className="cs-hero-reveal flex flex-col gap-md flex-1" style={style}>
       <div className="border-b border-border-primary pb-xl w-full">
         <p
           className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
