@@ -32,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${spaceMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-bg-primary text-text-primary">
+    <html lang="en" className={`${bricolage.variable} ${spaceMono.variable} antialiased`}>
+      <body className="min-h-screen flex flex-col bg-bg-primary text-text-primary">
         <Navigation />
         <main className="flex-1">{children}</main>
         <Footer />
