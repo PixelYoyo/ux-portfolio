@@ -82,7 +82,7 @@ export default function DesignSection({
                   className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
                   style={{ opacity: i === activeIndex ? 1 : 0 }}
                 >
-                  <Image src={item.imageSrc} alt={item.imageAlt} fill className="object-cover" />
+                  <Image src={item.imageSrc} alt={item.imageAlt} fill quality={90} className="object-cover" />
                 </div>
               ))}
             </div>
@@ -166,7 +166,7 @@ export default function DesignSection({
                       className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
                       style={{ opacity: i === activeIndex ? 1 : 0 }}
                     >
-                      <Image src={item.imageSrc} alt={item.imageAlt} fill className="object-cover" />
+                      <Image src={item.imageSrc} alt={item.imageAlt} fill quality={90} className="object-cover" />
                     </div>
                   ))}
                 </div>

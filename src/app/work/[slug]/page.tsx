@@ -132,6 +132,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
               src={study.heroImageSrc}
               alt={study.heroImageAlt}
               fill
+              quality={90}
               className="object-cover"
             />
           ) : (

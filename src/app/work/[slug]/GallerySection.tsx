@@ -86,7 +86,7 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
           {/* Image */}
           <div className="relative w-full aspect-[3/2]">
             {image.src ? (
-              <Image src={image.src} alt={image.alt} fill className="object-cover" />
+              <Image src={image.src} alt={image.alt} fill quality={90} className="object-cover" />
             ) : (
               <div className="absolute inset-0 bg-[#c6c6c6]" />
             )}

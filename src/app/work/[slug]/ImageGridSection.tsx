@@ -4,7 +4,7 @@ import type { CaseStudyGridImage } from '@/content/portfolio';
 function GridImage({ src, alt }: CaseStudyGridImage) {
   return (
     <div className="relative w-full aspect-[3/2] border border-[rgba(105,105,105,0.2)]">
-      <Image src={src} alt={alt} fill className="object-cover" />
+      <Image src={src} alt={alt} fill quality={90} className="object-cover" />
     </div>
   );
 }

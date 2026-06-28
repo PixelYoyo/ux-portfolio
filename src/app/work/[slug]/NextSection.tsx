@@ -17,7 +17,7 @@ function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) 
       </p>
       <div className="relative w-full aspect-[3/2]">
         {study.heroImageSrc
-          ? <Image src={study.heroImageSrc} alt={study.heroImageAlt} fill className="object-cover" />
+          ? <Image src={study.heroImageSrc} alt={study.heroImageAlt} fill quality={90} className="object-cover" />
           : <div className="absolute inset-0 bg-[#d9d9d9]" />}
       </div>
       <div className="flex flex-col gap-4xl w-full">
@@ -55,7 +55,7 @@ function MobileCard({ study, index }: { study: CaseStudyPage; index: number }) {
       </p>
       <div className="relative w-[240px] h-[160px] shrink-0">
         {study.heroImageSrc
-          ? <Image src={study.heroImageSrc} alt={study.heroImageAlt} fill className="object-contain" />
+          ? <Image src={study.heroImageSrc} alt={study.heroImageAlt} fill quality={90} className="object-contain" />
           : <div className="absolute inset-0 bg-[#d9d9d9]" />}
       </div>
       <div className="flex flex-col gap-[24px] w-full">
