@@ -8,7 +8,7 @@ import type { CaseStudyPage } from '@/content/portfolio';
 function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) {
   const num = String(index + 1).padStart(2, '0');
   return (
-    <div className="border-b border-border-primary flex flex-col gap-4xl items-start pb-6xl w-full md:flex-1 lg:w-[452px] lg:shrink-0">
+    <div className="flex flex-col gap-4xl items-start pb-6xl w-full md:flex-1 lg:w-[452px] lg:shrink-0">
       <p
         className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
@@ -46,7 +46,7 @@ function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) 
 function MobileCard({ study, index }: { study: CaseStudyPage; index: number }) {
   const num = String(index + 1).padStart(2, '0');
   return (
-    <div className="border-b border-border-primary flex flex-col gap-[24px] items-start pb-6xl w-full">
+    <div className="flex flex-col gap-[24px] items-start pb-6xl w-full">
       <p
         className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
