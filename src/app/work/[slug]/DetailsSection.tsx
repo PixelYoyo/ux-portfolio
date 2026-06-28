@@ -1,4 +1,4 @@
-import type { CaseStudyDetail } from '@/content/portfolio';
+type CaseStudyDetail = { label: string; value: string };
 
 export default function DetailsSection({ details }: { details: CaseStudyDetail[] }) {
   return (

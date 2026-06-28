@@ -1,8 +1,14 @@
 import Image from 'next/image';
 import ScrollIndicator from '@/components/ScrollIndicator';
-import { hero } from '@/content/portfolio';
 
-export default function Hero() {
+type HeroProps = {
+  heading:         string;
+  bio:             string[];
+  profileImageSrc: string;
+  profileImageAlt: string;
+};
+
+export default function Hero({ heading, bio, profileImageSrc, profileImageAlt }: HeroProps) {
   return (
     <section
       id="hero"
@@ -18,14 +24,14 @@ export default function Hero() {
           className="font-heading font-bold text-[64px] lg:text-[80px] leading-none uppercase"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         >
-          {hero.heading}<span className="text-text-brand">.</span>
+          {heading}<span className="text-text-brand">.</span>
         </h1>
 
         <div className="font-body not-italic text-base lg:text-heading-s">
-          {hero.bio.map((para, i) => (
+          {bio.map((para, i) => (
             <p
               key={i}
-              className={`leading-normal lg:leading-[30px]${i < hero.bio.length - 1 ? ' mb-lg lg:mb-[28px]' : ''}`}
+              className={`leading-normal lg:leading-[30px]${i < bio.length - 1 ? ' mb-lg lg:mb-[28px]' : ''}`}
             >
               {para}
             </p>
@@ -44,8 +50,8 @@ export default function Hero() {
         "
       >
         <Image
-          src={hero.profileImageSrc}
-          alt={hero.profileImageAlt}
+          src={profileImageSrc}
+          alt={profileImageAlt}
           fill
           className="object-cover object-[center_top]"
           priority

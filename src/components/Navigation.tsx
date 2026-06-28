@@ -2,13 +2,18 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { nav } from '@/content/portfolio';
+type NavLink = { label: string; href: string };
 
-const logoSuffix = nav.logoName.slice(1);
+type NavProps = {
+  logoName: string;
+  links:    NavLink[];
+};
+
 const TYPE_MS   = 60;
 const DELETE_MS = 40;
 
-export default function Navigation() {
+export default function Navigation({ logoName, links }: NavProps) {
+  const logoSuffix = logoName.slice(1);
   const [count, setCount] = useState(0);
   const countRef = useRef(0);
   const dirRef   = useRef<'typing' | 'deleting' | 'idle'>('idle');
@@ -55,12 +60,12 @@ export default function Navigation() {
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        aria-label={`${nav.logoName} — home`}
+        aria-label={`${logoName} — home`}
       >
-        {nav.logoName[0]}{logoSuffix.slice(0, count)}<span className="text-text-brand">.</span>
+        {logoName[0]}{logoSuffix.slice(0, count)}<span className="text-text-brand">.</span>
       </Link>
       <div className="flex items-center gap-5xl shrink-0 font-body text-xs not-italic text-text-primary">
-        {nav.links.map((link) => (
+        {links.map((link) => (
           <Link key={link.href} href={link.href} className="relative isolate group">
             {link.label}
             <span aria-hidden="true" className="absolute left-0 -z-10 h-[6px] w-full origin-left scale-x-0 bg-text-brand transition-transform duration-300 ease-out group-hover:scale-x-100" style={{ top: 'calc(50% + 3px)' }} />

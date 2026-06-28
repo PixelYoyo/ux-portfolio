@@ -5,11 +5,31 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import ButtonPrimary from '@/components/ButtonPrimary';
 import ButtonSecondary from '@/components/ButtonSecondary';
-import { featuredWork } from '@/content/portfolio';
+type FeaturedProject = {
+  slug:         string;
+  number:       string;
+  title:        string;
+  tags:         string;
+  description:  string;
+  thumbnailSrc: string | null;
+  thumbnailAlt: string;
+};
 
-const { featured: FEATURED, projects: PROJECTS } = featuredWork;
+type Project = {
+  slug:        string;
+  number:      string;
+  title:       string;
+  tags:        string;
+  description: string;
+};
 
-export default function FeaturedWork() {
+type FeaturedWorkProps = {
+  featured:    FeaturedProject;
+  projects:    Project[];
+  seeAllHref:  string;
+};
+
+export default function FeaturedWork({ featured: FEATURED, projects: PROJECTS, seeAllHref }: FeaturedWorkProps) {
   const outerRef     = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null); // wrapper around the track
   const trackRef     = useRef<HTMLDivElement>(null);
@@ -100,12 +120,11 @@ export default function FeaturedWork() {
 
           {/* Thumbnail — order 2 on mobile, right col on desktop */}
           <div className="order-2 lg:order-last lg:border-b lg:border-border-primary lg:pb-7xl w-full lg:max-w-[585px] relative aspect-[3/2]">
-            <Image
-              src={FEATURED.thumbnailSrc}
-              alt={FEATURED.thumbnailAlt}
-              fill
-              className="object-cover"
-            />
+            {FEATURED.thumbnailSrc ? (
+              <Image src={FEATURED.thumbnailSrc} alt={FEATURED.thumbnailAlt} fill className="object-cover" />
+            ) : (
+              <div className="absolute inset-0 bg-[#d9d9d9]" />
+            )}
           </div>
 
           {/* Text + CTA — order 3 on mobile, left col on desktop */}
@@ -182,7 +201,7 @@ export default function FeaturedWork() {
         {/* SEE ALL CASE STUDIES */}
         {/* Mobile: full-width | Desktop: right-aligned within 585px column */}
         <div className="flex justify-end pt-3xl w-full lg:w-[585px]">
-          <ButtonSecondary label="See all case studies" href={featuredWork.seeAllHref} className="w-full lg:w-auto" />
+          <ButtonSecondary label="See all case studies" href={seeAllHref} className="w-full lg:w-auto" />
         </div>
 
       </section>

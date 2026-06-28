@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type { CaseStudyContextItem } from '@/content/portfolio';
+type CaseStudyContextItem = { icon: string; heading: string; body: string[] };
 
 // ── Inline SVG icons (FA Pro classic light/thin) ──────────────────────────────
 

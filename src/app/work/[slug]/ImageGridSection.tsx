@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import type { CaseStudyGridImage } from '@/content/portfolio';
+type CaseStudyGridImage = { src: string; alt: string };
 
 export default function ImageGridSection({ images }: { images: CaseStudyGridImage[] }) {
   const [visible, setVisible] = useState(false);

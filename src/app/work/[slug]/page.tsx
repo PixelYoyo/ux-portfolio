@@ -1,7 +1,14 @@
 import type { CSSProperties } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { caseStudyPages, type CaseStudyPage, type CaseStudyStat } from '@/content/portfolio';
+import { client } from '@/sanity/lib/client';
+import {
+  caseStudyBySlugQuery,
+  allCaseStudiesQuery,
+  caseStudySlugsQuery,
+} from '@/sanity/lib/queries';
+import type { CaseStudyDetail, CaseStudySummary } from '@/sanity/lib/types';
+import { caseStudyPages } from '@/content/portfolio';
 import AnchorNav from './AnchorNav';
 import ContextSection from './ContextSection';
 import GallerySection from './GallerySection';
@@ -14,9 +21,12 @@ import DetailsSection from './DetailsSection';
 import AvailabilitySection from './AvailabilitySection';
 import NextSection from './NextSection';
 
-const TICKER_REPEAT = 4; // copies per half — fills any viewport at both font sizes
+const TICKER_REPEAT = 4;
 
 export async function generateStaticParams() {
+  const slugs = await client.fetch<{ slug: string }[]>(caseStudySlugsQuery);
+  if (slugs.length > 0) return slugs;
+  // Fallback to portfolio.ts if Sanity is not yet populated
   return Object.keys(caseStudyPages).map((slug) => ({ slug }));
 }
 
@@ -26,9 +36,92 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const study = caseStudyPages[slug];
-  if (!study) notFound();
-  const nextStudies = Object.values(caseStudyPages).filter(s => s.slug !== slug);
+
+  // Try Sanity first
+  const [sanityStudy, allCaseStudies] = await Promise.all([
+    client.fetch<CaseStudyDetail | null>(caseStudyBySlugQuery, { slug }),
+    client.fetch<CaseStudySummary[]>(allCaseStudiesQuery),
+  ]);
+
+  if (sanityStudy) {
+    const nextStudies = allCaseStudies
+      .filter((cs) => cs.slug !== slug)
+      .map((cs) => ({
+        slug:         cs.slug,
+        title:        cs.title,
+        tags:         cs.tags,
+        description:  cs.description,
+        heroImageUrl: cs.heroImageUrl,
+        heroImageAlt: cs.heroImageAlt,
+      }));
+
+    return <StudyPage study={sanityStudy} nextStudies={nextStudies} />;
+  }
+
+  // Fallback to portfolio.ts
+  const portfolioStudy = caseStudyPages[slug];
+  if (!portfolioStudy) notFound();
+
+  const portfolioNextStudies = Object.values(caseStudyPages)
+    .filter((s) => s.slug !== slug)
+    .map((s) => ({
+      slug:         s.slug,
+      title:        s.title,
+      tags:         s.tags,
+      description:  s.description,
+      heroImageUrl: s.heroImageSrc ?? null,
+      heroImageAlt: s.heroImageAlt,
+    }));
+
+  // Convert portfolio.ts shape to CaseStudyDetail shape
+  const study: CaseStudyDetail = {
+    slug:                portfolioStudy.slug,
+    title:               portfolioStudy.title,
+    role:                portfolioStudy.role,
+    company:             portfolioStudy.company,
+    year:                portfolioStudy.year,
+    tags:                portfolioStudy.tags,
+    description:         portfolioStudy.description,
+    heroImageUrl:        portfolioStudy.heroImageSrc ?? null,
+    heroImageAlt:        portfolioStudy.heroImageAlt,
+    stats:               portfolioStudy.stats,
+    executiveSummary:    portfolioStudy.executiveSummary,
+    contextTagline:      portfolioStudy.contextTagline,
+    contextItems:        portfolioStudy.contextItems,
+    gallery:             portfolioStudy.gallery,
+    scrollCardsTagline:  portfolioStudy.scrollCardsTagline,
+    scrollCards:         portfolioStudy.scrollCards,
+    designTagline:       portfolioStudy.designTagline,
+    designItems:         portfolioStudy.designItems,
+    imageGrid:           portfolioStudy.imageGrid,
+    quotes:              portfolioStudy.quotes,
+    reflectionTagline:   portfolioStudy.reflectionTagline,
+    reflectionItems:     portfolioStudy.reflectionItems,
+    details:             portfolioStudy.details,
+    linkGroups:          portfolioStudy.linkGroups,
+  };
+
+  return <StudyPage study={study} nextStudies={portfolioNextStudies} />;
+}
+
+// ─── Unified page renderer ────────────────────────────────────────────────────
+
+type NextStudy = {
+  slug:         string;
+  title:        string;
+  tags:         string;
+  description:  string;
+  heroImageUrl: string | null;
+  heroImageAlt: string;
+};
+
+function StudyPage({
+  study,
+  nextStudies,
+}: {
+  study:       CaseStudyDetail;
+  nextStudies: NextStudy[];
+}) {
   return (
     <>
       <Hero study={study} />
@@ -72,20 +165,19 @@ export default async function CaseStudyPage({
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
-function Hero({ study }: { study: CaseStudyPage }) {
+function Hero({ study }: { study: CaseStudyDetail }) {
   const titleBody = study.title.endsWith('.') ? study.title.slice(0, -1) : study.title;
 
   const items = Array.from({ length: TICKER_REPEAT }, (_, i) => (
     <span key={i} className="shrink-0">
       {titleBody}<span className="text-text-brand">.</span>
-      {'  '}
+      {'  '}
     </span>
   ));
 
   return (
     <section className="bg-bg-primary flex flex-col pt-4xl pb-7xl gap-[32px] lg:pt-6xl lg:pb-4xl lg:gap-[40px]">
 
-      {/* Full-bleed scrolling ticker */}
       <style>{`
         @keyframes cs-hero-tick {
           from { transform: translateX(0); }
@@ -117,19 +209,16 @@ function Hero({ study }: { study: CaseStudyPage }) {
         </div>
       </div>
 
-      {/* Credit line */}
       <p className="px-margin max-w-[1440px] mx-auto w-full font-body not-italic text-sm leading-[20px] text-text-primary text-right">
         {study.role} · {study.company} · {study.year}
       </p>
 
-      {/* Stats + image — image leads on mobile, trails on desktop */}
       <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
-        {/* Image */}
         <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '650ms' }}>
-          {study.heroImageSrc ? (
+          {study.heroImageUrl ? (
             <Image
-              src={study.heroImageSrc}
+              src={study.heroImageUrl}
               alt={study.heroImageAlt}
               fill
               quality={90}
@@ -140,7 +229,6 @@ function Hero({ study }: { study: CaseStudyPage }) {
           )}
         </div>
 
-        {/* Stats */}
         <div className="order-2 md:order-first flex flex-col gap-[40px] w-full md:flex-row md:gap-[20px] lg:gap-[64px]">
           {study.stats.map((stat, i) => (
             <Stat key={stat.number} stat={stat} style={{ animationDelay: `${i * 200}ms` }} />
@@ -155,7 +243,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
 
 // ─── Stat ─────────────────────────────────────────────────────────────────────
 
-function Stat({ stat, style }: { stat: CaseStudyStat; style?: CSSProperties }) {
+function Stat({ stat, style }: { stat: { number: string; description: string }; style?: CSSProperties }) {
   return (
     <div className="cs-hero-reveal flex flex-col gap-md flex-1" style={style}>
       <div className="border-b border-border-primary pb-xl w-full">
@@ -193,12 +281,11 @@ function SectionHeading({ label, id }: { label: string; id?: string }) {
 
 // ─── Executive Summary ────────────────────────────────────────────────────────
 
-function ExecutiveSummary({ study }: { study: CaseStudyPage }) {
+function ExecutiveSummary({ study }: { study: CaseStudyDetail }) {
   return (
     <section id="summary" className="bg-bg-primary pt-4xl pb-7xl scroll-mt-[58px] md:scroll-mt-[86px] lg:scroll-mt-[102px]">
       <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-6xl lg:gap-7xl">
 
-      {/* Heading */}
       <p
         className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
@@ -206,7 +293,6 @@ function ExecutiveSummary({ study }: { study: CaseStudyPage }) {
         Executive summary<span className="text-text-brand">.</span>
       </p>
 
-      {/* Body — constrained reading width, border rule below */}
       <div className="border-b border-border-primary pb-7xl max-w-[720px] flex flex-col gap-[12px]">
         {study.executiveSummary.map((paragraph, i) => (
           <p

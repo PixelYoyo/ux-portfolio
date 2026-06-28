@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import type { CaseStudyGalleryImage } from '@/content/portfolio';
+type CaseStudyGalleryImage = { src: string; alt: string; caption: string };
 
 function ArrowLeftSvg() {
   return (

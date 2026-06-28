@@ -3,9 +3,16 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import ButtonPrimary from '@/components/ButtonPrimary';
-import type { CaseStudyPage } from '@/content/portfolio';
+type NextStudy = {
+  slug:         string;
+  title:        string;
+  tags:         string;
+  description:  string;
+  heroImageUrl: string | null;
+  heroImageAlt: string;
+};
 
-function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) {
+function DesktopCard({ study, index }: { study: NextStudy; index: number }) {
   const num = String(index + 1).padStart(2, '0');
   return (
     <div className="flex flex-col gap-4xl items-start pb-6xl w-full md:flex-1 lg:w-[452px] lg:shrink-0">
@@ -16,8 +23,8 @@ function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) 
         {num}<span className="text-text-brand">.</span>
       </p>
       <div className="relative w-full aspect-[3/2]">
-        {study.heroImageSrc
-          ? <Image src={study.heroImageSrc} alt={study.heroImageAlt} fill quality={90} className="object-cover" />
+        {study.heroImageUrl
+          ? <Image src={study.heroImageUrl} alt={study.heroImageAlt} fill quality={90} className="object-cover" />
           : <div className="absolute inset-0 bg-[#d9d9d9]" />}
       </div>
       <div className="flex flex-col gap-4xl w-full">
@@ -43,7 +50,7 @@ function DesktopCard({ study, index }: { study: CaseStudyPage; index: number }) 
   );
 }
 
-function MobileCard({ study, index }: { study: CaseStudyPage; index: number }) {
+function MobileCard({ study, index }: { study: NextStudy; index: number }) {
   const num = String(index + 1).padStart(2, '0');
   return (
     <div className="flex flex-col gap-[24px] items-start pb-6xl w-full">
@@ -54,8 +61,8 @@ function MobileCard({ study, index }: { study: CaseStudyPage; index: number }) {
         {num}<span className="text-text-brand">.</span>
       </p>
       <div className="relative w-[240px] h-[160px] shrink-0">
-        {study.heroImageSrc
-          ? <Image src={study.heroImageSrc} alt={study.heroImageAlt} fill quality={90} className="object-contain" />
+        {study.heroImageUrl
+          ? <Image src={study.heroImageUrl} alt={study.heroImageAlt} fill quality={90} className="object-contain" />
           : <div className="absolute inset-0 bg-[#d9d9d9]" />}
       </div>
       <div className="flex flex-col gap-[24px] w-full">
@@ -81,7 +88,7 @@ function MobileCard({ study, index }: { study: CaseStudyPage; index: number }) {
   );
 }
 
-export default function NextSection({ studies }: { studies: CaseStudyPage[] }) {
+export default function NextSection({ studies }: { studies: NextStudy[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   if (studies.length === 0) return null;

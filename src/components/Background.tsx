@@ -1,14 +1,30 @@
 import ButtonPrimary from '@/components/ButtonPrimary';
 import ButtonSecondary from '@/components/ButtonSecondary';
-import { background } from '@/content/portfolio';
 
-export default function Background() {
+type Job = {
+  company:     string;
+  logoSrc:     string;
+  logoAlt:     string;
+  logoWidth:   number;
+  logoHeight:  number;
+  title:       string;
+  period:      string;
+  description: string;
+};
+
+type BackgroundProps = {
+  jobs:         Job[];
+  resumeHref:   string;
+  linkedinHref: string;
+};
+
+export default function Background({ jobs, resumeHref, linkedinHref }: BackgroundProps) {
   return (
     <section className="bg-bg-primary px-margin pt-4xl pb-7xl flex flex-col items-end">
       <div className="flex flex-col gap-6xl lg:gap-7xl w-full lg:w-[690px]">
 
         {/* Job listings */}
-        {background.jobs.map((job) => (
+        {jobs.map((job) => (
           <div
             key={job.company}
             className="flex flex-col gap-2xl border-b border-border-primary pb-5xl"
@@ -49,12 +65,12 @@ export default function Background() {
         <div className="flex flex-col lg:flex-row gap-[12px] w-full lg:w-auto lg:self-end">
           <ButtonPrimary
             label="Download resume"
-            href={background.resumeHref}
+            href={resumeHref}
             className="w-full lg:w-auto"
           />
           <ButtonSecondary
             label="Visit LinkedIn profile"
-            href={background.linkedinHref}
+            href={linkedinHref}
             external
             className="w-full lg:w-auto"
           />

@@ -1,4 +1,4 @@
-import type { CaseStudyLinkGroup } from '@/content/portfolio';
+type CaseStudyLinkGroup = { category: string; links: { label: string; href: string }[] };
 
 export default function AvailabilitySection({ linkGroups }: { linkGroups: CaseStudyLinkGroup[] }) {
   return (

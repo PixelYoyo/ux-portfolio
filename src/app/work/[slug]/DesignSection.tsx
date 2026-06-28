@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import type { CaseStudyDesignItem } from '@/content/portfolio';
+type CaseStudyDesignItem = { heading: string; body: string[]; imageSrc: string; imageAlt: string; imageCaption: string };
 
 export default function DesignSection({
   tagline,

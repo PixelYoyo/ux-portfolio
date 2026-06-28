@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { CaseStudyQuote } from '@/content/portfolio';
+type CaseStudyQuote = { text: string; attribution: string };
 
 const CAROUSEL_MS = 4000;
 const FADE_MS     = 400;

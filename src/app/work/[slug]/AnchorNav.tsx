@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import type { CaseStudyPage } from '@/content/portfolio';
-
 function NavLink({
   link,
   active,
@@ -22,7 +20,7 @@ function NavLink({
   );
 }
 
-export default function AnchorNav({ study }: { study: CaseStudyPage }) {
+export default function AnchorNav({ study }: { study: { reflectionItems: unknown[] } }) {
   const [activeId, setActiveId] = useState('summary');
   const [open, setOpen] = useState(false);
   const dropRef = useRef<HTMLDivElement>(null);

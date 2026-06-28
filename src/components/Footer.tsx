@@ -4,9 +4,14 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faCode, faUser } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import { footer as content } from '@/content/portfolio';
+type FooterContent = {
+  name:      string;
+  currently: { role: string; location: string };
+  contact:   { linkedinLabel: string; linkedinHref: string; emailLabel: string; emailHref: string };
+  copyright: string;
+};
 
-export default function Footer() {
+export default function Footer({ content }: { content: FooterContent }) {
   return (
     <footer className="bg-bg-primary px-margin pt-4xl lg:pt-7xl pb-2xl flex flex-col gap-[40px]">
 

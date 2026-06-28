@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { testimonials as content } from '@/content/portfolio';
+type Quote = { text: string; name: string; role: string };
 
-const QUOTES      = content.quotes;
 const INTERVAL_MS = 4000;
 const FADE_MS     = 400;
 
@@ -41,7 +40,7 @@ function ArrowButton({ direction, onClick }: { direction: 'prev' | 'next'; onCli
   );
 }
 
-export default function Testimonials() {
+export default function Testimonials({ quotes: QUOTES }: { quotes: Quote[] }) {
   const [index, setIndex]     = useState(0);
   const [opacity, setOpacity] = useState(1);
   const indexRef = useRef(0);
