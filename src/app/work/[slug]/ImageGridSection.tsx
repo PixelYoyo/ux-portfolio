@@ -24,14 +24,11 @@ export default function ImageGridSection({ images }: { images: CaseStudyGridImag
     return () => observer.disconnect();
   }, []);
 
-  // Each image transitions from blur(8px)/opacity 0.6 → blur(0)/opacity 1.
-  // Delay is based on the image's position in the images array so desktop
-  // columns (even/odd indices) interleave naturally: 0s, 0.15s, 0.3s, …
   const imgStyle = (index: number): React.CSSProperties => ({
-    filter:           visible ? 'blur(0px)' : 'blur(8px)',
-    opacity:          visible ? 1 : 0.6,
-    transition:       'filter 0.8s ease, opacity 0.8s ease',
-    transitionDelay:  visible ? `${index * 0.15}s` : '0s',
+    filter:           visible ? 'blur(0px)' : 'blur(12px)',
+    opacity:          visible ? 1 : 0.4,
+    transition:       'filter 1.2s ease-out, opacity 1.2s ease-out',
+    transitionDelay:  visible ? `${index * 0.25}s` : '0s',
   });
 
   const col1 = images.filter((_, i) => i % 2 === 0);
