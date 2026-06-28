@@ -72,18 +72,20 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
   return (
     <section className="bg-bg-primary pt-4xl pb-7xl lg:py-7xl">
 
-      {/* Image row: arrows flank on desktop, hidden on mobile */}
-      <div className="px-margin max-w-[1440px] mx-auto flex items-center lg:gap-[40px]">
+      {/* Image row: 3-column grid on desktop so the centre slot is always the
+          same width regardless of whether arrows are shown. On mobile, the two
+          arrow-slot divs are hidden and the centre column is full-width. */}
+      <div className="px-margin max-w-[1440px] mx-auto lg:grid lg:grid-cols-[64px_1fr_64px] lg:gap-[40px] lg:items-center">
 
-        {/* Desktop left arrow */}
-        {images.length > 1 && (
-          <div className="hidden lg:block">
+        {/* Desktop left arrow slot — always in the grid, empty when single image */}
+        <div className="hidden lg:block">
+          {images.length > 1 && (
             <ArrowButton direction="prev" onClick={prev} disabled={current === 0} />
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Center column: image + captions/dots on desktop */}
-        <div className="flex-1 flex flex-col gap-lg lg:gap-[20px] lg:max-w-[1200px]">
+        {/* Centre column: image + captions/dots on desktop */}
+        <div className="flex flex-col gap-lg lg:gap-[20px]">
 
           {/* Image */}
           <div className="relative w-full aspect-[3/2]">
@@ -108,12 +110,12 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
           </div>
         </div>
 
-        {/* Desktop right arrow */}
-        {images.length > 1 && (
-          <div className="hidden lg:block">
+        {/* Desktop right arrow slot — always in the grid, empty when single image */}
+        <div className="hidden lg:block">
+          {images.length > 1 && (
             <ArrowButton direction="next" onClick={next} disabled={current === images.length - 1} />
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Mobile: arrows + dots row — hidden when only one image */}
