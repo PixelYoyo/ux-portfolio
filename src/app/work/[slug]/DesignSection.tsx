@@ -17,20 +17,21 @@ export default function DesignSection({
   const mobileCardRefs  = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Fires at the viewport centre line. h-[100vh] containers guarantee
-    // exactly one item crosses the centre at a time — no gap between transitions.
-    const desktopObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveIndex(Number((entry.target as HTMLElement).dataset.index));
-          }
-        });
-      },
-      { rootMargin: '-50% 0px -50% 0px', threshold: 0 },
-    );
-    desktopCardRefs.current.forEach((el) => { if (el) desktopObserver.observe(el); });
+    // Desktop: fires when the TOP of each h-[100vh] container crosses 50vh —
+    // the exact moment the centred text content reaches the centre of the screen
+    // (where the stationary image lives).
+    function updateDesktopActive() {
+      const mid = window.innerHeight / 2;
+      let next = 0;
+      desktopCardRefs.current.forEach((el, i) => {
+        if (el && el.getBoundingClientRect().top <= mid) next = i;
+      });
+      setActiveIndex(next);
+    }
+    window.addEventListener('scroll', updateDesktopActive, { passive: true });
+    updateDesktopActive();
 
+    // Mobile: fire when a card scrolls into the middle 40 % of the viewport.
     const mobileObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -43,7 +44,10 @@ export default function DesignSection({
     );
     mobileCardRefs.current.forEach((el) => { if (el) mobileObserver.observe(el); });
 
-    return () => { desktopObserver.disconnect(); mobileObserver.disconnect(); };
+    return () => {
+      window.removeEventListener('scroll', updateDesktopActive);
+      mobileObserver.disconnect();
+    };
   }, []);
 
   const activeCaption = items[activeIndex]?.imageCaption ?? '';
