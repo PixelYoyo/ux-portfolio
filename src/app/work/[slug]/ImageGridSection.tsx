@@ -25,10 +25,10 @@ export default function ImageGridSection({ images }: { images: CaseStudyGridImag
   }, []);
 
   const imgStyle = (index: number): React.CSSProperties => ({
-    filter:           visible ? 'blur(0px)' : 'blur(12px)',
-    opacity:          visible ? 1 : 0.4,
-    transition:       'filter 1.2s ease-out, opacity 1.2s ease-out',
-    transitionDelay:  visible ? `${index * 0.25}s` : '0s',
+    opacity:          visible ? 1 : 0,
+    transform:        visible ? 'translateY(0)' : 'translateY(30px)',
+    transition:       'opacity 0.7s ease-out, transform 0.7s ease-out',
+    transitionDelay:  visible ? `${index * 0.2}s` : '0s',
   });
 
   const col1 = images.filter((_, i) => i % 2 === 0);
