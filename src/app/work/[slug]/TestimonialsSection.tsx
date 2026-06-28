@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { CaseStudyQuote } from '@/content/portfolio';
 
-const INTERVAL_MS = 4000;
+const CAROUSEL_MS = 4000;
 const FADE_MS     = 400;
+const TYPE_MS     = 30;
 
 function ThinArrow({ direction }: { direction: 'prev' | 'next' }) {
   return (
@@ -41,11 +42,53 @@ function ArrowButton({ direction, onClick }: { direction: 'prev' | 'next'; onCli
 }
 
 export default function TestimonialsSection({ quotes }: { quotes: CaseStudyQuote[] }) {
-  const [index, setIndex]     = useState(0);
-  const [opacity, setOpacity] = useState(1);
-  const indexRef = useRef(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [index, setIndex]           = useState(0);
+  const [opacity, setOpacity]       = useState(1);
+  const [started, setStarted]       = useState(false);
+  const [typedCount, setTypedCount] = useState(0);
+  const [typingDone, setTypingDone] = useState(false);
 
+  const indexRef   = useRef(0);
+  const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null);
+  const typingRef  = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Trigger typewriter once when section scrolls into view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Type out the first quote character by character
+  useEffect(() => {
+    if (!started || !quotes[0]) return;
+    const fullText = `“${quotes[0].text}”`;
+    let count = 0;
+    typingRef.current = setInterval(() => {
+      count += 1;
+      setTypedCount(count);
+      if (count >= fullText.length) {
+        clearInterval(typingRef.current!);
+        typingRef.current = null;
+        setTypingDone(true);
+      }
+    }, TYPE_MS);
+    return () => { if (typingRef.current) clearInterval(typingRef.current); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [started]);
+
+  // Start carousel rotation only after typing finishes
   function fadeTo(next: number) {
     if (next === indexRef.current) return;
     setOpacity(0);
@@ -60,7 +103,7 @@ export default function TestimonialsSection({ quotes }: { quotes: CaseStudyQuote
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       fadeTo((indexRef.current + 1) % quotes.length);
-    }, INTERVAL_MS);
+    }, CAROUSEL_MS);
   }
 
   function goTo(i: number) { fadeTo(i); startTimer(); }
@@ -68,109 +111,127 @@ export default function TestimonialsSection({ quotes }: { quotes: CaseStudyQuote
   function goNext() { goTo((indexRef.current + 1) % quotes.length); }
 
   useEffect(() => {
-    if (quotes.length > 1) startTimer();
+    if (typingDone && quotes.length > 1) startTimer();
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quotes.length]);
+  }, [typingDone]);
 
   const quote = quotes[index];
   if (!quote) return null;
 
   const showNav = quotes.length > 1;
 
+  // What to render as the quote body
+  const fullText   = quotes[0] ? `“${quotes[0].text}”` : '';
+  const isTyping   = started && !typingDone;
+  const quoteBody  = isTyping
+    ? <>{fullText.slice(0, typedCount)}<span className="typewriter-cursor" aria-hidden="true">|</span></>
+    : <>&ldquo;{quote.text}&rdquo;</>;
+
+  // Attribution fades in after typing completes; stays hidden during typing
+  const attrStyle: React.CSSProperties = {
+    opacity:    typingDone ? 1 : 0,
+    transition: typingDone ? 'opacity 0.6s ease' : 'none',
+  };
+
   return (
     <>
-      {/* ── Desktop ─────────────────────────────────────────────────────── */}
-      <section className="hidden lg:block bg-bg-primary pt-7xl">
+      <style>{`
+        @keyframes tw-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .typewriter-cursor { animation: tw-blink 0.8s step-end infinite; }
+      `}</style>
 
-        <div className="relative pl-10xl pr-margin pb-10xl max-w-[1440px] mx-auto">
-        <div
-          aria-live="polite"
-          aria-atomic="true"
-          style={{ opacity, transition: `opacity ${FADE_MS}ms ease` }}
-          className="flex flex-col gap-xl max-w-[777px]"
-        >
-          <p className="font-body not-italic text-[48px] leading-[52px] text-text-primary">
-            &ldquo;{quote.text}&rdquo;
-          </p>
-          <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
-            {quote.attribution}
-          </p>
-        </div>
+      <div ref={sectionRef}>
 
-        {showNav && (
-          <>
-            <div className="absolute bottom-[116px] left-[16px] right-[24px] flex items-center justify-between">
+        {/* ── Desktop ─────────────────────────────────────────────────────── */}
+        <section className="hidden lg:block bg-bg-primary pt-7xl">
+          <div className="relative pl-10xl pr-margin pb-10xl max-w-[1440px] mx-auto">
+            <div
+              aria-live="polite"
+              aria-atomic="true"
+              style={{ opacity, transition: `opacity ${FADE_MS}ms ease` }}
+              className="flex flex-col gap-xl max-w-[777px]"
+            >
+              <p className="font-body not-italic text-[48px] leading-[52px] text-text-primary">
+                {quoteBody}
+              </p>
+              <p className="font-body not-italic text-sm leading-[20px] text-text-primary" style={attrStyle}>
+                {quote.attribution}
+              </p>
+            </div>
+
+            {showNav && (
+              <>
+                <div className="absolute bottom-[116px] left-[16px] right-[24px] flex items-center justify-between">
+                  <ArrowButton direction="prev" onClick={goPrev} />
+                  <ArrowButton direction="next" onClick={goNext} />
+                </div>
+                <div
+                  className="absolute bottom-[64px] left-1/2 -translate-x-1/2 flex gap-lg items-center"
+                  role="tablist"
+                  aria-label="Testimonial navigation"
+                >
+                  {quotes.map((_, i) => (
+                    <button
+                      key={i}
+                      role="tab"
+                      aria-selected={i === index}
+                      aria-label={`Testimonial ${i + 1}`}
+                      onClick={() => goTo(i)}
+                      className={`size-[16px] border-[0.5px] border-text-primary cursor-pointer transition-colors duration-200 ${
+                        i === index ? 'bg-bg-brand' : 'bg-transparent'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+
+        {/* ── Mobile ──────────────────────────────────────────────────────── */}
+        <section className="lg:hidden relative bg-bg-primary px-margin pt-7xl pb-[128px]">
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            style={{ opacity, transition: `opacity ${FADE_MS}ms ease` }}
+            className="flex flex-col gap-xl w-full min-h-[220px]"
+          >
+            <p className="font-body not-italic text-[24px] leading-[30px] text-text-primary">
+              {quoteBody}
+            </p>
+            <p className="font-body not-italic text-sm leading-[20px] text-text-primary" style={attrStyle}>
+              {quote.attribution}
+            </p>
+          </div>
+
+          {showNav && (
+            <div className="absolute bottom-7xl left-margin right-margin flex gap-md items-center justify-end">
+              <div
+                className="absolute left-0 top-1/2 -translate-y-1/2 flex gap-lg items-center"
+                role="tablist"
+                aria-label="Testimonial navigation"
+              >
+                {quotes.map((_, i) => (
+                  <button
+                    key={i}
+                    role="tab"
+                    aria-selected={i === index}
+                    aria-label={`Testimonial ${i + 1}`}
+                    onClick={() => goTo(i)}
+                    className={`size-[16px] border-[0.5px] border-text-primary cursor-pointer transition-colors duration-200 ${
+                      i === index ? 'bg-bg-brand' : 'bg-transparent'
+                    }`}
+                  />
+                ))}
+              </div>
               <ArrowButton direction="prev" onClick={goPrev} />
               <ArrowButton direction="next" onClick={goNext} />
             </div>
-            <div
-              className="absolute bottom-[64px] left-1/2 -translate-x-1/2 flex gap-lg items-center"
-              role="tablist"
-              aria-label="Testimonial navigation"
-            >
-              {quotes.map((_, i) => (
-                <button
-                  key={i}
-                  role="tab"
-                  aria-selected={i === index}
-                  aria-label={`Testimonial ${i + 1}`}
-                  onClick={() => goTo(i)}
-                  className={`size-[16px] border-[0.5px] border-text-primary cursor-pointer transition-colors duration-200 ${
-                    i === index ? 'bg-bg-brand' : 'bg-transparent'
-                  }`}
-                />
-              ))}
-            </div>
-          </>
-        )}
+          )}
+        </section>
 
-        </div>
-      </section>
-
-      {/* ── Mobile ──────────────────────────────────────────────────────── */}
-      <section className="lg:hidden relative bg-bg-primary px-margin pt-7xl pb-[128px]">
-
-        <div
-          aria-live="polite"
-          aria-atomic="true"
-          style={{ opacity, transition: `opacity ${FADE_MS}ms ease` }}
-          className="flex flex-col gap-xl w-full min-h-[220px]"
-        >
-          <p className="font-body not-italic text-[24px] leading-[30px] text-text-primary">
-            &ldquo;{quote.text}&rdquo;
-          </p>
-          <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
-            {quote.attribution}
-          </p>
-        </div>
-
-        {showNav && (
-          <div className="absolute bottom-7xl left-margin right-margin flex gap-md items-center justify-end">
-            <div
-              className="absolute left-0 top-1/2 -translate-y-1/2 flex gap-lg items-center"
-              role="tablist"
-              aria-label="Testimonial navigation"
-            >
-              {quotes.map((_, i) => (
-                <button
-                  key={i}
-                  role="tab"
-                  aria-selected={i === index}
-                  aria-label={`Testimonial ${i + 1}`}
-                  onClick={() => goTo(i)}
-                  className={`size-[16px] border-[0.5px] border-text-primary cursor-pointer transition-colors duration-200 ${
-                    i === index ? 'bg-bg-brand' : 'bg-transparent'
-                  }`}
-                />
-              ))}
-            </div>
-            <ArrowButton direction="prev" onClick={goPrev} />
-            <ArrowButton direction="next" onClick={goNext} />
-          </div>
-        )}
-
-      </section>
+      </div>
     </>
   );
 }
