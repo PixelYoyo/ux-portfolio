@@ -108,7 +108,7 @@ export default function ScrollCardsSection({
 
   return (
     <div ref={outerRef} className="max-w-[1440px] mx-auto">
-      <section className="sticky top-0 overflow-hidden bg-bg-primary px-margin py-4xl flex flex-col gap-5xl">
+      <section className="sticky top-0 bg-bg-primary px-margin py-4xl flex flex-col gap-5xl">
 
         <p
           className="font-heading font-medium text-heading-m leading-[28px] uppercase text-text-primary lg:font-semibold lg:text-heading-l lg:leading-[44px]"
