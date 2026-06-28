@@ -110,7 +110,7 @@ function Hero({ study }: { study: CaseStudyPage }) {
           .cs-hero-reveal { animation: none; }
         }
       `}</style>
-      <div className="overflow-x-hidden w-full" aria-label={study.title}>
+      <div className="overflow-x-clip w-full" aria-label={study.title}>
         <div className="cs-hero-ticker flex whitespace-nowrap font-heading font-bold text-[80px] leading-none uppercase text-text-primary lg:font-extrabold lg:text-impact lg:tracking-impact">
           {items}
           <span aria-hidden="true" className="contents">{items}</span>
