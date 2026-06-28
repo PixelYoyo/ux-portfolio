@@ -76,9 +76,11 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
       <div className="px-margin max-w-[1440px] mx-auto flex items-center lg:gap-[40px]">
 
         {/* Desktop left arrow */}
-        <div className="hidden lg:block">
-          <ArrowButton direction="prev" onClick={prev} disabled={current === 0} />
-        </div>
+        {images.length > 1 && (
+          <div className="hidden lg:block">
+            <ArrowButton direction="prev" onClick={prev} disabled={current === 0} />
+          </div>
+        )}
 
         {/* Center column: image + captions/dots on desktop */}
         <div className="flex-1 flex flex-col gap-lg lg:gap-[20px] lg:max-w-[1200px]">
@@ -99,7 +101,7 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
 
           {/* Desktop: dots (left) + caption (right) */}
           <div className="hidden lg:flex items-center justify-between">
-            <Dots count={images.length} current={current} />
+            {images.length > 1 && <Dots count={images.length} current={current} />}
             <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
               {image.caption}
             </p>
@@ -107,17 +109,21 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
         </div>
 
         {/* Desktop right arrow */}
-        <div className="hidden lg:block">
-          <ArrowButton direction="next" onClick={next} disabled={current === images.length - 1} />
-        </div>
+        {images.length > 1 && (
+          <div className="hidden lg:block">
+            <ArrowButton direction="next" onClick={next} disabled={current === images.length - 1} />
+          </div>
+        )}
       </div>
 
-      {/* Mobile: arrows + dots row */}
-      <div className="px-margin max-w-[1440px] mx-auto lg:hidden flex items-end justify-between">
-        <ArrowButton direction="prev" onClick={prev} disabled={current === 0} />
-        <Dots count={images.length} current={current} />
-        <ArrowButton direction="next" onClick={next} disabled={current === images.length - 1} />
-      </div>
+      {/* Mobile: arrows + dots row — hidden when only one image */}
+      {images.length > 1 && (
+        <div className="px-margin max-w-[1440px] mx-auto lg:hidden flex items-end justify-between">
+          <ArrowButton direction="prev" onClick={prev} disabled={current === 0} />
+          <Dots count={images.length} current={current} />
+          <ArrowButton direction="next" onClick={next} disabled={current === images.length - 1} />
+        </div>
+      )}
 
     </section>
   );

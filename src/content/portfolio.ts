@@ -299,9 +299,11 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     ],
     contextTagline: 'One website. Two audiences. None of them finding what they needed.',
     gallery: [
-      { src: '', alt: 'Gallery image 1', caption: 'Caption placeholder.' },
-      { src: '', alt: 'Gallery image 2', caption: 'Caption placeholder.' },
-      { src: '', alt: 'Gallery image 3', caption: 'Caption placeholder.' },
+      {
+        src:     'https://res.cloudinary.com/drd6p33en/image/upload/q_auto:best,f_auto/v1782614097/Dexus_wireframes_htcmwt.png?v=2',
+        alt:     'Early wireframes of the new dexus.com',
+        caption: 'early wireframes of the new dexus.com',
+      },
     ],
     designTagline: 'a $51.5 billion portfolio deserved a digital presence to match.',
     designItems: [
