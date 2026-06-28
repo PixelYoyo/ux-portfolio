@@ -43,10 +43,11 @@ export default function ImageGridSection({ images }: { images: CaseStudyGridImag
           {[...col1, ...col2].map((img, displayIdx) => (
             <div
               key={displayIdx}
-              className="relative w-full aspect-[3/2]"
+              className="relative w-full aspect-[3/2] overflow-hidden"
               style={imgStyle(displayIdx)}
             >
               <Image src={img.src} alt={img.alt} fill quality={90} className="object-cover" />
+              <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 0 2px var(--color-bg-primary)' }} />
             </div>
           ))}
         </div>
@@ -57,7 +58,7 @@ export default function ImageGridSection({ images }: { images: CaseStudyGridImag
             {col1.map((img, i) => (
               <div
                 key={i}
-                className="relative w-full aspect-[3/2]"
+                className="relative w-full aspect-[3/2] overflow-hidden"
                 style={imgStyle(i * 2)}
               >
                 <Image src={img.src} alt={img.alt} fill quality={90} className="object-cover" />
@@ -68,7 +69,7 @@ export default function ImageGridSection({ images }: { images: CaseStudyGridImag
             {col2.map((img, i) => (
               <div
                 key={i}
-                className="relative w-full aspect-[3/2]"
+                className="relative w-full aspect-[3/2] overflow-hidden"
                 style={imgStyle(i * 2 + 1)}
               >
                 <Image src={img.src} alt={img.alt} fill quality={90} className="object-cover" />
