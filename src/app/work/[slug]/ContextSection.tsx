@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-type CaseStudyContextItem = { icon: string; heading: string; body: string[] };
+type CaseStudyContextItem = { icon: string; iconUrl?: string | null; iconAlt?: string; heading: string; body: string[] };
 
 // ── Inline SVG icons (FA Pro classic light/thin) ──────────────────────────────
 
@@ -111,7 +111,11 @@ export default function ContextSection({
               style={{ transitionDelay: `${i * 120}ms` }}
               className="border-b border-border-primary pb-4xl flex flex-col gap-xl"
             >
-              <IconStrip>{Icon && <Icon />}</IconStrip>
+              <IconStrip>
+                {item.iconUrl
+                  ? <img src={item.iconUrl} alt={item.iconAlt ?? ''} className="size-[48px]" />
+                  : Icon && <Icon />}
+              </IconStrip>
               <p
                 className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
                 style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
