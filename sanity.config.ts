@@ -6,12 +6,14 @@ import { schemaTypes } from './src/sanity/schemas';
 export default defineConfig({
   name: 'ux-portfolio',
   title: 'UX Portfolio',
+  basePath: '/studio',
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset:   process.env.NEXT_PUBLIC_SANITY_DATASET!,
 
   plugins: [
     structureTool({
+      name: 'structure',
       structure: (S) =>
         S.list()
           .title('Content')

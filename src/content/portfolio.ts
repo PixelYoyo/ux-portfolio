@@ -203,6 +203,7 @@ export type CaseStudyStat = {
 
 export type CaseStudyContextItem = {
   icon:    string;
+  iconUrl: string;
   heading: string;
   body:    string[];
 };
@@ -343,6 +344,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     scrollCards: [
       {
         icon:    'people',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782298722/People_lavbim.svg',
         heading: 'the research pointed to a structural problem, not a content problem.',
         body: [
           'The temptation in a project like this is to fix the content. Write clearer copy. Add more information. Surface the PDFs. But the research kept pointing to something deeper. The navigation labels were internally logical but externally meaningless. "Asset Portfolio" triggered investment associations for leasing audiences. "ESG" meant nothing to first-time investors trying to understand what Dexus stood for. Forcing two distinct audiences with completely different mental models into shared pathways was the root cause of most usability failures.',
@@ -350,6 +352,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       },
       {
         icon:    'hand',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782298722/Hand_rsimvv.svg',
         heading: 'two ways to fix it. one clear recommendation.',
         body: [
           'I consolidated the findings and led the IA process, presenting two structural options to the client. A static navigation: a single fixed menu serving all audiences, simpler to build and maintain. Or a contextual navigation: a dynamic structure where the experience shifts based on whether the user is here to invest or here to lease, used by firms like BlackRock, Vanguard, and Morgan Stanley.',
@@ -358,6 +361,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       },
       {
         icon:    'warning',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782298722/Warning_bjrljh.svg',
         heading: 'three contexts. one domain.',
         body: [
           'The result was three distinct navigation experiences within a single website. Each has its own terminology, pathways, and calls to action. A financial advisor looking for fund performance lands in a completely different experience to a commercial tenant searching for office space. Same domain. No shared confusion.',
@@ -367,6 +371,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     contextItems: [
       {
         icon:    'gear',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782297832/Gear_torym9.svg',
         heading: 'The site was structured around Dexus, not around its users.',
         body: [
           "Dexus's existing website mixed investor information, leasing content, and corporate communications into a single navigation. A financial advisor looking for fund performance data had to navigate the same menus as a commercial tenant searching for office space in Sydney's CBD. Neither could find what they needed quickly, and both were leaving to find it elsewhere.",
@@ -375,6 +380,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       },
       {
         icon:    'shapes',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782297847/shapes_pssqgy.svg',
         heading: 'We went to the source.',
         body: [
           'We ran two separate research streams: investor interviews exploring how financial advisors and institutional investors discovered, evaluated, and acted on fund information, and leasing research covering how commercial tenants found and assessed properties. Stakeholder workshops brought Dexus\'s internal teams in to align on what the site needed to achieve for the business.',
@@ -383,6 +389,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       },
       {
         icon:    'thinking',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782297631/thinking_xsnwnt.svg',
         heading: 'The site architecture was the problem, not the content.',
         body: [
           'A card sorting exercise and stakeholder workshop revealed that the underlying information architecture was forcing unrelated audiences into the same pathways. The navigation labels were internally logical but externally meaningless. Terms like "Asset Portfolio" meant investment to one audience and property listing to another. "ESG" meant nothing to a first-time investor who just wanted to understand what Dexus stood for.',
@@ -447,6 +454,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     reflectionItems: [
       {
         icon:    'diagram',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329959/diagram_wvgrev.svg',
         heading: 'scope changes are design problems too.',
         body: [
           "Being told mid-project that the corporate design system also needed to serve 26 other sites was a significant constraint shift. The instinct is to treat that as a project management problem. It's actually a design problem: how do you make what you've built flexible enough to handle what you didn't know was coming? Retrofitting forced us to think more systematically about the token structure than we might have otherwise, and the system is more robust for it.",
@@ -454,6 +462,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       },
       {
         icon:    'nib',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329959/font-awesome_ksetol.svg',
         heading: 'research has to make the case, not just inform it.',
         body: [
           "The three-nav decision was the right call, but it required convincing a large organisation to restructure something fundamental about how they present themselves online. Having the research findings consolidated into a clear, visual argument was what made that possible. Data alone doesn't move stakeholders. A narrative built from data does.",
@@ -461,6 +470,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
       },
       {
         icon:    'lightbulb',
+        iconUrl: 'https://res.cloudinary.com/drd6p33en/image/upload/v1782329960/Lightbulb_mb6tsd.svg',
         heading: 'educating the team is part of the work.',
         body: [
           "Getting visual designers comfortable with Figma variables wasn't a side task. It was what made the design system actually work across 26 sites. The hours spent on the learning board and practice sessions directly affected the quality and consistency of the output. In complex projects, the work you do to enable your team matters as much as the work you do yourself.",

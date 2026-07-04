@@ -4,9 +4,13 @@ export type SiteSettings = {
   logoName:            string;
   navLinks:            { label: string; href: string }[];
   heroHeading:         string;
+  heroSubheadline:     string;
   heroBio:             string[];
+  heroImageUrl:        string | null;
   profileImageUrl:     string;
   profileImageAlt:     string;
+  scrollIndicatorAlt:  string;
+  values:              { title: string; description: string }[];
   valueItems:          string[];
   valueDescriptions:   string[];
   tickerFeaturedWork:  string;
@@ -49,7 +53,7 @@ export type CaseStudyDetail = {
   stats:               { number: string; description: string }[];
   executiveSummary:    string[];
   contextTagline:      string;
-  contextItems:        { icon: string; heading: string; body: string[] }[];
+  contextItems:        { icon: string; iconUrl: string | null; iconAlt: string; heading: string; body: string[] }[];
   gallery:             { src: string; alt: string; caption: string }[];
   scrollCardsTagline:  string;
   scrollCards:         { icon: string; heading: string; body: string[] }[];
@@ -58,7 +62,7 @@ export type CaseStudyDetail = {
   imageGrid:           { src: string; alt: string }[];
   quotes:              { text: string; attribution: string }[];
   reflectionTagline:   string;
-  reflectionItems:     { icon: string; heading: string; body: string[] }[];
+  reflectionItems:     { icon: string; iconUrl: string | null; iconAlt: string; heading: string; body: string[] }[];
   details:             { label: string; value: string }[];
   linkGroups:          { category: string; links: { label: string; href: string }[] }[];
 };

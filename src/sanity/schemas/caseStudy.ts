@@ -14,6 +14,8 @@ const contentItem = (name: string, title: string) =>
     type: 'object',
     fields: [
       defineField({ name: 'icon', title: 'Icon key', type: 'string' }),
+      defineField({ name: 'iconUrl', title: 'Icon URL (Cloudinary SVG)', type: 'url' }),
+      defineField({ name: 'iconAlt', title: 'Icon alt text', type: 'string' }),
       defineField({ name: 'heading', title: 'Heading', type: 'string' }),
       bodyParagraphs,
     ],

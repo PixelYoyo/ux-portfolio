@@ -24,16 +24,37 @@ export default defineType({
 
     // ── Hero ────────────────────────────────────────────────────
     defineField({ name: 'heroHeading', title: 'Hero heading', type: 'string' }),
+    defineField({ name: 'heroSubheadline', title: 'Hero subheadline / tagline', type: 'string' }),
     defineField({
       name: 'heroBio',
       title: 'Hero bio paragraphs',
       type: 'array',
       of: [defineArrayMember({ type: 'text' })],
     }),
+    defineField({ name: 'heroImageUrl', title: 'Hero image URL (Cloudinary)', type: 'url' }),
     defineField({ name: 'profileImageUrl', title: 'Profile image URL (Cloudinary)', type: 'url' }),
     defineField({ name: 'profileImageAlt', title: 'Profile image alt text', type: 'string' }),
+    defineField({ name: 'scrollIndicatorAlt', title: 'Scroll indicator alt text', type: 'string' }),
 
     // ── Values ──────────────────────────────────────────────────
+    defineField({
+      name: 'values',
+      title: 'Values (max 4)',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({ name: 'title', title: 'Title', type: 'string', validation: (r) => r.required() }),
+            defineField({ name: 'description', title: 'Description', type: 'text', rows: 3, validation: (r) => r.required() }),
+          ],
+          preview: {
+            select: { title: 'title', subtitle: 'description' },
+          },
+        }),
+      ],
+      validation: (r) => r.max(4),
+    }),
     defineField({
       name: 'valueItems',
       title: 'Value keywords',
