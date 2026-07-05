@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 const ICON_HUMAN = 'https://res.cloudinary.com/drd6p33en/image/upload/v1783227463/Icon_human_bthk5q.svg';
-const ICON_CLAUDE = 'https://res.cloudinary.com/drd6p33en/image/upload/v1783227463/Icon_human_bthk5q.svg';
+const ICON_CLAUDE = 'https://res.cloudinary.com/drd6p33en/image/upload/v1783227471/Claude_icon_guxocg.svg';
 type FooterContent = {
   name:      string;
   currently: { role: string; location: string };
