@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 type CaseStudyContextItem = { icon: string; iconUrl?: string | null; iconAlt?: string; heading: string; body: string[] };
 
 // ── Inline SVG icons (FA Pro classic light/thin) ──────────────────────────────
@@ -103,7 +104,7 @@ export default function ContextSection({
       {/* Content blocks */}
       <div className="flex flex-col gap-[64px] lg:max-w-[572px] lg:w-[45%] lg:shrink-0">
         {items.map((item, i) => {
-          const Icon = ICON_COMPONENTS[item.icon];
+          const Icon = ICON_COMPONENTS[item.icon] ?? ICON_COMPONENTS[item.icon?.toLowerCase()];
           return (
             <div
               key={i}
@@ -112,9 +113,11 @@ export default function ContextSection({
               className="border-b border-border-primary pb-4xl flex flex-col gap-xl"
             >
               <IconStrip>
-                {item.iconUrl
-                  ? <img src={item.iconUrl} alt={item.iconAlt ?? ''} className="size-[48px]" />
-                  : Icon && <Icon />}
+                {Icon
+                  ? <Icon />
+                  : item.iconUrl
+                    ? <Image src={item.iconUrl} alt={item.iconAlt ?? ''} width={48} height={48} />
+                    : null}
               </IconStrip>
               <p
                 className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"

@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-type CaseStudyContextItem = { icon: string; heading: string; body: string[] };
+import Image from 'next/image';
+type CaseStudyContextItem = { icon: string; iconUrl?: string | null; iconAlt?: string; heading: string; body: string[] };
 
 function DiagramIcon() {
   return (
@@ -109,7 +110,7 @@ export default function ReflectionSection({
       {/* Content cards — left column on desktop */}
       <div className="flex flex-col gap-[64px] lg:max-w-[572px] lg:w-[45%] lg:shrink-0">
         {items.map((item, i) => {
-          const Icon = ICON_COMPONENTS[item.icon];
+          const Icon = ICON_COMPONENTS[item.icon] ?? ICON_COMPONENTS[item.icon?.toLowerCase()];
           return (
             <div
               key={i}
@@ -117,7 +118,13 @@ export default function ReflectionSection({
               style={{ transitionDelay: `${i * 120}ms` }}
               className="border-b border-border-primary pb-4xl flex flex-col gap-xl"
             >
-              <IconStrip>{Icon && <Icon />}</IconStrip>
+              <IconStrip>
+                {Icon
+                  ? <Icon />
+                  : item.iconUrl
+                    ? <Image src={item.iconUrl} alt={item.iconAlt ?? ''} width={48} height={48} />
+                    : null}
+              </IconStrip>
               <p
                 className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
                 style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
