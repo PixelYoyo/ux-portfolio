@@ -58,7 +58,7 @@ export default async function Home() {
 
   if (caseStudies.length > 0) {
     const featured = caseStudies.find((cs) => cs.isFeatured) ?? caseStudies[0];
-    const projects = caseStudies.filter((cs) => cs.slug !== featured.slug);
+    const projects = caseStudies.filter((cs) => cs.slug !== featured.slug).slice(0, 2);
 
     const fmt = (n: number) => String(n).padStart(2, '0');
 
