@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faCode, faUser } from '@fortawesome/free-solid-svg-icons';
-import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+
+const ICON_HUMAN = 'https://res.cloudinary.com/drd6p33en/image/upload/v1783227463/Icon_human_bthk5q.svg';
+const ICON_CLAUDE = 'https://res.cloudinary.com/drd6p33en/image/upload/v1783227463/Icon_human_bthk5q.svg';
 type FooterContent = {
   name:      string;
   currently: { role: string; location: string };
@@ -49,17 +49,15 @@ export default function Footer({ content }: { content: FooterContent }) {
               href={content.contact.linkedinHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-[8px] font-body not-italic text-base text-text-primary self-start"
+              className="font-body not-italic text-base text-text-primary self-start text-link"
             >
-              <FontAwesomeIcon icon={faLinkedinIn} className="flex-shrink-0" />
-              <span className="text-link">{content.contact.linkedinLabel}</span>
+              {content.contact.linkedinLabel}
             </Link>
             <a
               href={content.contact.emailHref}
-              className="flex items-center gap-[8px] font-body not-italic text-base text-text-primary self-start"
+              className="font-body not-italic text-base text-text-primary self-start text-link"
             >
-              <FontAwesomeIcon icon={faEnvelope} className="flex-shrink-0" />
-              <span className="text-link">{content.contact.emailLabel}</span>
+              {content.contact.emailLabel}
             </a>
           </div>
         </div>
@@ -71,11 +69,11 @@ export default function Footer({ content }: { content: FooterContent }) {
       {/* Mobile: stacked column */}
       <div className="flex flex-col gap-[12px] pt-[48px] lg:hidden">
         <div className="flex items-center gap-[8px]">
-          <FontAwesomeIcon icon={faCode} className="size-[16px] text-text-primary" />
+          <img src={ICON_CLAUDE} alt="" className="size-[16px] shrink-0" />
           <p className="font-body not-italic text-xs text-text-primary">Developed with Claude Code</p>
         </div>
         <div className="flex items-center gap-[4px]">
-          <FontAwesomeIcon icon={faUser} className="size-[16px] text-text-primary" />
+          <img src={ICON_HUMAN} alt="" className="size-[16px] shrink-0" />
           <p className="font-body not-italic text-xs text-text-primary">Content &amp; design by a human</p>
         </div>
         <p className="font-body not-italic text-xs text-text-primary">{content.copyright}</p>
@@ -84,11 +82,11 @@ export default function Footer({ content }: { content: FooterContent }) {
       {/* Desktop: left / center (absolute) / right */}
       <div className="hidden lg:flex items-center justify-between relative pt-[120px]">
         <div className="flex items-center gap-[8px]">
-          <FontAwesomeIcon icon={faCode} className="size-[16px] text-text-primary" />
+          <img src={ICON_CLAUDE} alt="" className="size-[16px] shrink-0" />
           <p className="font-body not-italic text-xs text-text-primary">Developed with Claude Code</p>
         </div>
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-[4px]">
-          <FontAwesomeIcon icon={faUser} className="size-[16px] text-text-primary" />
+          <img src={ICON_HUMAN} alt="" className="size-[16px] shrink-0" />
           <p className="font-body not-italic text-xs text-text-primary">Content &amp; design by a human</p>
         </div>
         <p className="font-body not-italic text-xs text-text-primary text-right">{content.copyright}</p>
