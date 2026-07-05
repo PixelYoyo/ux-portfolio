@@ -1,6 +1,5 @@
 import Hero from '@/components/Hero';
 import Values from '@/components/Values';
-import Ticker from '@/components/Ticker';
 import FeaturedWork from '@/components/FeaturedWork';
 import Background from '@/components/Background';
 import Testimonials from '@/components/Testimonials';
@@ -17,7 +16,6 @@ import type { SiteSettings, CaseStudySummary, Testimonial, Experience } from '@/
 import {
   hero,
   values,
-  ticker,
   background as bgContent,
   featuredWork as featuredWorkContent,
   testimonials as testimonialsContent,
@@ -51,9 +49,9 @@ export default async function Home() {
     ? { items: settings.valueItems, description: settings.valueDescriptions }
     : { items: [...values.items] as string[], description: [...values.description] };
 
-  // ── Ticker labels ───────────────────────────────────────────────────────────
-  const tickerFeaturedWork = settings?.tickerFeaturedWork ?? ticker.featuredWork;
-  const tickerBackground   = settings?.tickerBackground   ?? ticker.background;
+  // ── Section heading labels ──────────────────────────────────────────────────
+  const headingFeaturedWork = settings?.tickerFeaturedWork ?? 'Featured work';
+  const headingBackground   = settings?.tickerBackground   ?? 'Background';
 
   // ── Featured work ───────────────────────────────────────────────────────────
   let featuredProps: React.ComponentProps<typeof FeaturedWork>;
@@ -146,9 +144,23 @@ export default async function Home() {
     <>
       <Hero {...heroProps} />
       <Values {...valuesProps} />
-      <Ticker text={tickerFeaturedWork} />
+      <section className="bg-bg-primary px-margin pt-7xl pb-4xl">
+        <h2
+          className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
+          style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
+        >
+          {headingFeaturedWork}<span className="text-text-brand">.</span>
+        </h2>
+      </section>
       <FeaturedWork {...featuredProps} />
-      <Ticker text={tickerBackground} />
+      <section className="bg-bg-primary px-margin pt-7xl pb-4xl">
+        <h2
+          className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
+          style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
+        >
+          {headingBackground}<span className="text-text-brand">.</span>
+        </h2>
+      </section>
       <Background {...bgProps} />
       <Testimonials quotes={testimonialQuotes} />
     </>
