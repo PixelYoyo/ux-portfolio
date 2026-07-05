@@ -191,7 +191,7 @@ function Lightbox({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black flex flex-col"
+      className="fixed inset-0 z-50 bg-bg-primary flex flex-col"
       role="dialog"
       aria-modal="true"
       aria-label="Fullscreen image viewer"
@@ -201,7 +201,7 @@ function Lightbox({
         <button
           onClick={onClose}
           aria-label="Close fullscreen"
-          className="size-[48px] text-white flex items-center justify-center"
+          className="size-[48px] text-icon-primary flex items-center justify-center"
         >
           <CloseSvg />
         </button>
@@ -227,7 +227,7 @@ function Lightbox({
           {image.src ? (
             <Image src={image.src} alt={image.alt} fill className="object-contain" />
           ) : (
-            <div className="absolute inset-0 bg-zinc-800" />
+            <div className="absolute inset-0 bg-[#c6c6c6]" />
           )}
         </div>
       </div>
@@ -235,9 +235,9 @@ function Lightbox({
       {/* Bottom controls */}
       {images.length > 1 && (
         <div className="shrink-0 flex items-center justify-between px-margin py-lg">
-          <ArrowButton direction="prev" onClick={onPrev} light />
-          <Dots count={images.length} current={current} light />
-          <ArrowButton direction="next" onClick={onNext} light />
+          <ArrowButton direction="prev" onClick={onPrev} />
+          <Dots count={images.length} current={current} />
+          <ArrowButton direction="next" onClick={onNext} />
         </div>
       )}
     </div>
