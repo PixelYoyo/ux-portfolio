@@ -4,7 +4,7 @@ export const nav = {
   logoName: 'Yolandi Lehner',
   links: [
     { label: 'Work',    href: '/work'    },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Contact', href: 'mailto:yolandi.uxdesign@gmail.com' },
   ],
 } as const;
 
