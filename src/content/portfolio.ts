@@ -13,7 +13,7 @@ export const nav = {
 export const hero = {
   heading: 'Hello',
   bio: [
-    "I'm Yolandi - a Senior product designer with a genuine obsession with why people do what they do, and a habit of turning that into design that works.",
+    "I'm Yolandi - a senior product designer with a methodical, systems-first approach, applying behavioural design to connect business goals with what people actually need.",
     "Welcome to my portfolio; schön, dass du da bist - good to have you.",
   ],
   profileImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto:best,f_auto/v1778497163/Profile_photo_sfjaho.png?v=2',
