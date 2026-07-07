@@ -112,7 +112,7 @@ export default function FeaturedWork({ featured: FEATURED, projects: PROJECTS, s
 
           {/* Number — mobile only, sits above thumbnail */}
           <p
-            className="lg:hidden font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
+            className="lg:hidden font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {FEATURED.number}<span className="text-text-brand">.</span>
@@ -132,7 +132,7 @@ export default function FeaturedWork({ featured: FEATURED, projects: PROJECTS, s
 
             {/* Number — desktop only */}
             <p
-              className="hidden lg:block font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
+              className="hidden lg:block font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
               style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
             >
               {FEATURED.number}<span className="text-text-brand">.</span>
