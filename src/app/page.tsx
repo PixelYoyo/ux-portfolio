@@ -2,6 +2,7 @@ import Hero from '@/components/Hero';
 import Values from '@/components/Values';
 import FeaturedWork from '@/components/FeaturedWork';
 import Background from '@/components/Background';
+import LogoTicker from '@/components/LogoTicker';
 import Testimonials from '@/components/Testimonials';
 import { client } from '@/sanity/lib/client';
 import {
@@ -162,6 +163,7 @@ export default async function Home() {
         </h2>
       </section>
       <Background {...bgProps} />
+      <LogoTicker />
       <Testimonials quotes={testimonialQuotes} />
     </>
   );
