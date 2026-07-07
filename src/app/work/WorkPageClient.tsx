@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
 import ButtonSecondary from '@/components/ButtonSecondary';
@@ -140,14 +139,7 @@ function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
 function ListItem({ study }: { study: WorkCaseStudy }) {
   return (
     <div className="border-b border-border-primary pt-lg pb-4xl flex flex-col lg:flex-row gap-5xl items-start">
-      <div className="relative shrink-0 w-full aspect-[3/2] lg:w-[240px]">
-        {study.thumbnailSrc ? (
-          <Image src={study.thumbnailSrc} alt={study.thumbnailAlt} fill className="object-cover" />
-        ) : (
-          <div className="absolute inset-0 bg-[#d9d9d9]" />
-        )}
-      </div>
-      <div className="flex flex-col justify-between self-stretch shrink-0 w-full lg:w-[240px] gap-xl lg:gap-0">
+<div className="flex flex-col justify-between self-stretch shrink-0 w-full lg:w-[240px] gap-xl lg:gap-0">
         <p
           className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
