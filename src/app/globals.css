@@ -162,7 +162,8 @@
   pointer-events: none;
   z-index: -1;
 }
-.text-link:hover::after {
+.text-link:hover::after,
+.group:hover .text-link::after {
   animation: text-link-draw 0.3s ease-out;
 }
 
