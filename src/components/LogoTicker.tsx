@@ -57,7 +57,7 @@ export default function LogoTicker() {
           Brands I&apos;ve worked with
         </p>
 
-        <div className="logo-ticker-track flex items-center">
+        <div className="logo-ticker-track flex items-center w-max">
           <LogoStrip />
           <LogoStrip hidden />
         </div>
