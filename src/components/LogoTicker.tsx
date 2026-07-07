@@ -42,7 +42,7 @@ export default function LogoTicker() {
           to   { transform: translateX(-50%); }
         }
         .logo-ticker-track {
-          animation: logo-ticker 40s linear infinite;
+          animation: logo-ticker 28s linear infinite;
         }
         @media (prefers-reduced-motion: reduce) {
           .logo-ticker-track { animation: none; }

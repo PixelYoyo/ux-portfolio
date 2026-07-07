@@ -145,6 +145,7 @@ export default async function Home() {
     <>
       <Hero {...heroProps} />
       <Values {...valuesProps} />
+      <LogoTicker />
       <section className="bg-bg-primary px-margin pt-7xl pb-4xl">
         <h2
           className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
@@ -163,7 +164,6 @@ export default async function Home() {
         </h2>
       </section>
       <Background {...bgProps} />
-      <LogoTicker />
       <Testimonials quotes={testimonialQuotes} />
     </>
   );
