@@ -82,25 +82,31 @@ export default function Testimonials({ quotes: QUOTES }: { quotes: Quote[] }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const quote = QUOTES[index];
-
   return (
     <>
       {/* ── Desktop ─────────────────────────────────────────────────────── */}
       <section className="hidden lg:block relative bg-bg-primary pl-10xl pr-margin pt-7xl pb-10xl">
 
-        <div
-          aria-live="polite"
-          aria-atomic="true"
-          style={{ opacity, transition: `opacity ${FADE_MS}ms ease` }}
-          className="flex flex-col gap-xl max-w-[777px]"
-        >
-          <p className="font-body not-italic text-[48px] leading-[52px] text-text-primary">
-            &ldquo;{quote.text}&rdquo;
-          </p>
-          <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
-            {quote.name}, {quote.role}
-          </p>
+        {/* Grid-stack: all quotes share the same cell so height = tallest quote */}
+        <div aria-live="polite" aria-atomic="true" className="grid max-w-[777px]">
+          {QUOTES.map((q, i) => (
+            <div
+              key={i}
+              className="col-start-1 row-start-1 flex flex-col gap-xl"
+              style={{
+                opacity:       i === index ? opacity : 0,
+                transition:    `opacity ${FADE_MS}ms ease`,
+                pointerEvents: i === index ? 'auto' : 'none',
+              }}
+            >
+              <p className="font-body not-italic text-[48px] leading-[52px] text-text-primary">
+                &ldquo;{q.text}&rdquo;
+              </p>
+              <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
+                {q.name}, {q.role}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Arrows */}
@@ -134,19 +140,26 @@ export default function Testimonials({ quotes: QUOTES }: { quotes: Quote[] }) {
       {/* ── Mobile ──────────────────────────────────────────────────────── */}
       <section className="lg:hidden relative bg-bg-primary px-margin pt-7xl pb-[128px]">
 
-        {/* min-h covers the longest quote so the section height stays consistent */}
-        <div
-          aria-live="polite"
-          aria-atomic="true"
-          style={{ opacity, transition: `opacity ${FADE_MS}ms ease` }}
-          className="flex flex-col gap-xl w-full min-h-[220px]"
-        >
-          <p className="font-body not-italic text-[24px] leading-[30px] text-text-primary">
-            &ldquo;{quote.text}&rdquo;
-          </p>
-          <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
-            {quote.name}, {quote.role}
-          </p>
+        {/* Grid-stack: all quotes share the same cell so height = tallest quote */}
+        <div aria-live="polite" aria-atomic="true" className="grid w-full">
+          {QUOTES.map((q, i) => (
+            <div
+              key={i}
+              className="col-start-1 row-start-1 flex flex-col gap-xl"
+              style={{
+                opacity:       i === index ? opacity : 0,
+                transition:    `opacity ${FADE_MS}ms ease`,
+                pointerEvents: i === index ? 'auto' : 'none',
+              }}
+            >
+              <p className="font-body not-italic text-[24px] leading-[30px] text-text-primary">
+                &ldquo;{q.text}&rdquo;
+              </p>
+              <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
+                {q.name}, {q.role}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Nav row: absolutely positioned so quote height never shifts it */}
