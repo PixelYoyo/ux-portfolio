@@ -63,6 +63,7 @@ const CIRCLE_VARIANTS = [
 
 function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
   const { left, top, size } = CIRCLE_VARIANTS[index % 6];
+  const title = study.title.replace(/\.+$/, '');
 
   return (
     <div className={`relative group hover:z-10${index >= 4 ? ' hidden md:block' : ''}`}>
@@ -111,7 +112,7 @@ function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
             ].join(' ')}
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
-            {study.title}<span className="text-text-brand">.</span>
+            {title}<span className="text-text-brand">.</span>
           </p>
 
           {/* Body + link: visible on mobile, slides in on desktop hover */}
