@@ -51,18 +51,18 @@ function ViewToggle({
 
 // ── Grid card ────────────────────────────────────────────────────────────────
 
-// Circle centre positions as % of card width/height (derived from Figma: 210×210 circle in 400×400 card)
-const CIRCLE_POSITIONS = [
-  { left: '19%',   top: '92.5%' },
-  { left: '19%',   top: '52.5%' },
-  { left: '94%',   top: '50%'   },
-  { left: '19%',   top: '12.5%' },
-  { left: '79%',   top: '92.5%' },
-  { left: '82%',   top: '5%'    },
+// Circle variants — different size + position per card slot (cycles every 6)
+const CIRCLE_VARIANTS = [
+  { left: '19%',   top: '92.5%', size: '52%' },
+  { left: '19%',   top: '52.5%', size: '72%' },
+  { left: '94%',   top: '50%',   size: '44%' },
+  { left: '19%',   top: '12.5%', size: '64%' },
+  { left: '79%',   top: '92.5%', size: '38%' },
+  { left: '82%',   top: '5%',    size: '58%' },
 ];
 
 function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
-  const { left, top } = CIRCLE_POSITIONS[index % 6];
+  const { left, top, size } = CIRCLE_VARIANTS[index % 6];
 
   return (
     <div className={`relative group hover:z-10${index >= 4 ? ' hidden md:block' : ''}`}>
@@ -86,41 +86,48 @@ function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
           'transition-transform duration-300 ease-out',
         ].join(' ')}
       >
-        {/* Circle — 52.5% of card width, centre positioned per Figma, clipped by overflow-hidden */}
+        {/* Circle — size + position unique per card slot, clipped by overflow-hidden */}
         <div
-          className="absolute w-[52.5%] aspect-square -translate-x-1/2 -translate-y-1/2 text-text-brand pointer-events-none"
-          style={{ left, top }}
+          className="absolute aspect-square -translate-x-1/2 -translate-y-1/2 text-text-brand pointer-events-none"
+          style={{ left, top, width: size }}
           aria-hidden
         >
-          <svg viewBox="0 0 210 210" fill="none" className="w-full h-full">
-            <circle cx="105" cy="105" r="103" stroke="currentColor" strokeWidth="1.5" />
+          <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
+            <circle cx="50" cy="50" r="48.5" stroke="currentColor" strokeWidth="1.5" />
           </svg>
         </div>
 
-        {/* Idle layer: large heading at ~39% from top — hidden on mobile (no hover), visible on desktop */}
-        <div className="absolute left-5 right-5 top-[39%] opacity-0 md:opacity-100 md:group-hover:opacity-0 transition-opacity duration-200">
-          <p
-            className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
-            style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
-          >
-            {study.title}<span className="text-text-brand">.</span>
-          </p>
-        </div>
+        {/* Single content area — heading animates in place between idle and hover states */}
+        <div className="absolute inset-5 flex flex-col overflow-hidden">
 
-        {/* Hover layer: small heading + body + link — always visible on mobile, fades in on desktop hover */}
-        <div className="absolute inset-5 flex flex-col gap-xl md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200 md:delay-150">
+          {/* Heading: sits at ~38% from top on desktop idle, slides to top and shrinks on hover */}
           <p
-            className="font-heading font-semibold text-heading-s leading-[28px] uppercase text-text-primary"
+            className={[
+              'font-heading font-semibold uppercase text-text-primary shrink-0',
+              'text-heading-s leading-[28px] mt-0',
+              'md:text-heading-l md:leading-[44px] md:mt-[38%]',
+              'md:group-hover:text-heading-s md:group-hover:leading-[28px] md:group-hover:mt-0',
+              'transition-[font-size,line-height,margin-top] duration-300 ease-out',
+            ].join(' ')}
             style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
           >
             {study.title}<span className="text-text-brand">.</span>
           </p>
-          <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
-            {study.description}
-          </p>
-          <span className="text-link font-body not-italic text-base text-text-primary self-start mt-auto">
-            Read the story
-          </span>
+
+          {/* Body + link: visible on mobile, slides in on desktop hover */}
+          <div className="grid grid-rows-[1fr] md:grid-rows-[0fr] md:group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-300 md:delay-100">
+            <div className="overflow-hidden">
+              <div className="pt-xl flex flex-col gap-xl">
+                <p className="font-body not-italic text-sm leading-[20px] text-text-primary">
+                  {study.description}
+                </p>
+                <span className="text-link font-body not-italic text-base text-text-primary self-start">
+                  Read the story
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </Link>
     </div>
