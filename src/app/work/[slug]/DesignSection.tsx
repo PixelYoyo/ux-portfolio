@@ -159,8 +159,9 @@ export default function DesignSection({
 
           {/* Right: sticky image centred in the viewport.
               top-0 + h-[100vh] + flex items-center places the image at 50vh.
-              The grid cell is the full section height so sticky has room to scroll. */}
-          <div>
+              self-stretch overrides items-start so this cell fills the full grid
+              track height (N×100vh), giving the sticky element room to scroll. */}
+          <div className="self-stretch">
             <div className="sticky top-0 h-[100vh] flex items-center">
               <div className="w-full flex flex-col gap-[24px]">
                 <div className="relative w-full aspect-[3/2]">
