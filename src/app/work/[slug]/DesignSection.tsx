@@ -14,14 +14,10 @@ export default function DesignSection({
   const [activeIndex, setActiveIndex] = useState(0);
 
   const desktopCardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const mobileCardRefs  = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Desktop: fires when the TOP of each h-[100vh] container crosses 50vh —
-    // the exact moment the centred text content reaches the centre of the screen
-    // (where the stationary image lives).
     function updateDesktopActive() {
-      if (window.innerWidth < 768) return; // desktop handler only — mobile uses IntersectionObserver
+      if (window.innerWidth < 768) return;
       const mid = window.innerHeight / 2;
       let next = 0;
       desktopCardRefs.current.forEach((el, i) => {
@@ -32,22 +28,8 @@ export default function DesignSection({
     window.addEventListener('scroll', updateDesktopActive, { passive: true });
     updateDesktopActive();
 
-    // Mobile: fire when a card scrolls into the middle 40 % of the viewport.
-    const mobileObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveIndex(Number((entry.target as HTMLElement).dataset.index));
-          }
-        });
-      },
-      { rootMargin: '-30% 0px -30% 0px', threshold: 0 },
-    );
-    mobileCardRefs.current.forEach((el) => { if (el) mobileObserver.observe(el); });
-
     return () => {
       window.removeEventListener('scroll', updateDesktopActive);
-      mobileObserver.disconnect();
     };
   }, []);
 
@@ -65,62 +47,34 @@ export default function DesignSection({
           {tagline}
         </p>
 
-        {/* ── Mobile ──────────────────────────────────────────────────────── */}
-        <div className="md:hidden flex flex-col gap-2xl">
-
-          {/* Sticky image + dots */}
-          <div className="sticky top-0 z-10 bg-bg-primary flex flex-col gap-lg pb-xl">
-            <div className="flex items-center gap-lg">
-              {items.map((_, i) => (
-                <div
-                  key={i}
-                  className={`size-[16px] border-[0.5px] border-solid border-text-primary transition-colors duration-300${
-                    i === activeIndex ? ' bg-bg-brand' : ''
-                  }`}
-                />
-              ))}
-            </div>
-            <div className="relative w-full aspect-[3/2]">
-              {items.map((item, i) => (
-                <div
-                  key={i}
-                  className="absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300"
-                  style={{ opacity: i === activeIndex ? 1 : 0 }}
-                >
-                  <Image src={item.imageSrc} alt={item.imageAlt} fill quality={90} className="object-cover" />
-                </div>
-              ))}
-            </div>
-            <p className="font-body not-italic text-sm leading-[20px] text-text-primary text-center">
-              {activeCaption}
-            </p>
-          </div>
-
-          {/* Content cards */}
-          <div className="flex flex-col">
-            {items.map((item, i) => (
-              <div
-                key={i}
-                ref={(el) => { mobileCardRefs.current[i] = el; }}
-                data-index={i}
-                className="border-b border-border-primary pb-7xl flex flex-col gap-xl"
-              >
-                <p
-                  className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
-                  style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
-                >
-                  {item.heading}
-                </p>
-                <div className="flex flex-col gap-[12px]">
-                  {item.body.map((para, j) => (
-                    <p key={j} className="font-body not-italic text-sm leading-[20px] text-text-primary">
-                      {para}
-                    </p>
-                  ))}
-                </div>
+        {/* ── Mobile: stacked image → caption → heading → body ────────── */}
+        <div className="md:hidden flex flex-col">
+          {items.map((item, i) => (
+            <div
+              key={i}
+              className={`flex flex-col gap-xl border-b border-border-primary pb-7xl${i > 0 ? ' pt-5xl' : ''}`}
+            >
+              <div className="relative w-full aspect-[3/2]">
+                <Image src={item.imageSrc} alt={item.imageAlt} fill quality={90} className="object-cover" />
               </div>
-            ))}
-          </div>
+              <p className="font-body not-italic text-sm leading-[20px] text-text-primary text-center">
+                {item.imageCaption}
+              </p>
+              <p
+                className="font-heading font-medium text-heading-s leading-[28px] uppercase text-text-primary"
+                style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
+              >
+                {item.heading}
+              </p>
+              <div className="flex flex-col gap-[12px]">
+                {item.body.map((para, j) => (
+                  <p key={j} className="font-body not-italic text-sm leading-[20px] text-text-primary">
+                    {para}
+                  </p>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* ── Tablet / Desktop ────────────────────────────────────────────── */}
