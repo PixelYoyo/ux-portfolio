@@ -21,6 +21,7 @@ export default function DesignSection({
     // the exact moment the centred text content reaches the centre of the screen
     // (where the stationary image lives).
     function updateDesktopActive() {
+      if (window.innerWidth < 768) return; // desktop handler only — mobile uses IntersectionObserver
       const mid = window.innerHeight / 2;
       let next = 0;
       desktopCardRefs.current.forEach((el, i) => {
