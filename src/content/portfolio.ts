@@ -87,7 +87,7 @@ export const background = {
       logoAlt:     'Ogilvy',
       logoWidth:   61,
       logoHeight:  24,
-      title:       'Senior Experience Designer',
+      title:       'Senior CX Consultant',
       period:      '2022–Present · Sydney',
       description: 'End-to-end experience design across a diverse portfolio of household names, including Spotify, Cadbury, KFC, and Lululemon. From CX strategy and design systems to gamifying competitions and website ecosystems, no two briefs or projects looked the same. Promoted to Senior during my tenure.',
     },
