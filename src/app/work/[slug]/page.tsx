@@ -216,19 +216,21 @@ function Hero({ study }: { study: CaseStudyDetail }) {
 
       <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
-        <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '650ms' }}>
-          {study.heroImageUrl && study.showHeroImage ? (
-            <Image
-              src={study.heroImageUrl}
-              alt={study.heroImageAlt}
-              fill
-              quality={90}
-              className="object-cover"
-            />
-          ) : (
-            <div className="absolute inset-0 bg-[#d9d9d9]" />
-          )}
-        </div>
+        {study.showHeroImage && (
+          <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '650ms' }}>
+            {study.heroImageUrl ? (
+              <Image
+                src={study.heroImageUrl}
+                alt={study.heroImageAlt}
+                fill
+                quality={90}
+                className="object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-[#d9d9d9]" />
+            )}
+          </div>
+        )}
 
         <div className="order-2 md:order-first flex flex-col gap-[40px] w-full md:flex-row md:gap-[20px] lg:gap-[64px]">
           {study.stats.map((stat, i) => (
