@@ -40,7 +40,7 @@ async function main() {
     process.exit(1);
   }
 
-  const slug = 'aware-super';
+  const slug: string = 'aware-super';
   const study = caseStudyPages[slug];
   const wp = workPage.caseStudies.find((cs) => cs.slug === slug);
   const orderNumber = wp ? parseInt(wp.number, 10) : 99;
