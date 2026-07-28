@@ -10,6 +10,7 @@ import {
 import type { CaseStudyDetail, CaseStudySummary } from '@/sanity/lib/types';
 import { caseStudyPages } from '@/content/portfolio';
 import AnchorNav from './AnchorNav';
+import VideoSection from './VideoSection';
 import ContextSection from './ContextSection';
 import GallerySection from './GallerySection';
 import ScrollCardsSection from './ScrollCardsSection';
@@ -85,6 +86,8 @@ export default async function CaseStudyPage({
     heroImageUrl:        portfolioStudy.heroImageSrc ?? null,
     heroImageAlt:        portfolioStudy.heroImageAlt,
     showHeroImage:       portfolioStudy.showHeroImage,
+    videoUrl:            portfolioStudy.videoSrc ?? null,
+    showVideo:           portfolioStudy.showVideo,
     stats:               portfolioStudy.stats,
     executiveSummary:    portfolioStudy.executiveSummary,
     contextTagline:      portfolioStudy.contextTagline,
@@ -126,6 +129,7 @@ function StudyPage({
   return (
     <>
       <Hero study={study} />
+      {study.showVideo && study.videoUrl && <VideoSection src={study.videoUrl} />}
       <AnchorNav study={study} />
       {study.executiveSummary.length > 0 && <ExecutiveSummary study={study} />}
       <SectionHeading label="The context" id="context" />

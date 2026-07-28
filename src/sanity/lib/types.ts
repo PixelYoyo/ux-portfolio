@@ -51,6 +51,8 @@ export type CaseStudyDetail = {
   heroImageUrl:        string | null;
   heroImageAlt:        string;
   showHeroImage:       boolean;
+  videoUrl:            string | null;
+  showVideo:           boolean;
   stats:               { number: string; description: string }[];
   executiveSummary:    string[];
   contextTagline:      string;

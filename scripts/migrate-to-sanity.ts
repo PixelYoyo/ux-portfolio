@@ -114,6 +114,8 @@ async function migrateCaseStudies() {
       heroImageUrl: study.heroImageSrc ?? undefined,
       heroImageAlt: study.heroImageAlt,
       showHeroImage: study.showHeroImage,
+      videoUrl:     study.videoSrc ?? undefined,
+      showVideo:    study.showVideo,
       thumbnailUrl: wp?.thumbnailSrc ?? undefined,
       thumbnailAlt: wp?.thumbnailAlt ?? '',
 

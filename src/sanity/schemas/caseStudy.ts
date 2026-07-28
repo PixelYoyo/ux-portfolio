@@ -54,6 +54,16 @@ export default defineType({
       initialValue: true,
     }),
 
+    // ── Video section ────────────────────────────────────────────
+    defineField({ name: 'videoUrl', title: 'Video URL (Cloudinary/MP4)', type: 'url' }),
+    defineField({
+      name: 'showVideo',
+      title: 'Show video section',
+      description: 'Full-width 16:9 video below the hero. Autoplays muted, no controls, when scrolled into view. Hidden by default.',
+      type: 'boolean',
+      initialValue: false,
+    }),
+
     // ── Work-page thumbnail ───────────────────────────────────────
     defineField({ name: 'thumbnailUrl', title: 'Thumbnail URL (Cloudinary)', type: 'url' }),
     defineField({ name: 'thumbnailAlt', title: 'Thumbnail alt text', type: 'string' }),

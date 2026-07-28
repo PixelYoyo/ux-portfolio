@@ -254,6 +254,8 @@ export type CaseStudyPage = {
   heroImageSrc:        string | null;
   heroImageAlt:        string;
   showHeroImage:       boolean;
+  videoSrc:            string | null;
+  showVideo:           boolean;
   stats:               CaseStudyStat[];
   executiveSummary:    string[];
   contextTagline:      string;
@@ -283,6 +285,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto:best,f_auto/v1782210430/Dexus_case_study_image_tpyxmq.png?v=2',
     heroImageAlt: 'Dexus digital transformation — project hero',
     showHeroImage: true,
+    videoSrc:     null,
+    showVideo:    false,
     stats: [
       {
         number:      '01',
@@ -501,6 +505,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     heroImageSrc: null,
     heroImageAlt: 'FRNSW Service booking system — project hero',
     showHeroImage: true,
+    videoSrc:     null,
+    showVideo:    false,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
@@ -532,6 +538,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/v1783749758/Aware_Super_case_study_image_yke1iu.png',
     heroImageAlt: 'Aware Super design system — project hero',
     showHeroImage: false,
+    videoSrc:     null,
+    showVideo:    false,
     stats: [
       {
         number:      '01',
@@ -677,6 +685,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     heroImageSrc: null,
     heroImageAlt: 'Case study — project hero',
     showHeroImage: true,
+    videoSrc:     null,
+    showVideo:    false,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
@@ -708,6 +718,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     heroImageSrc: null,
     heroImageAlt: 'Case study — project hero',
     showHeroImage: true,
+    videoSrc:     null,
+    showVideo:    false,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
@@ -739,6 +751,8 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     heroImageSrc: null,
     heroImageAlt: 'Case study — project hero',
     showHeroImage: true,
+    videoSrc:     null,
+    showVideo:    false,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
