@@ -84,6 +84,7 @@ export default async function CaseStudyPage({
     description:         portfolioStudy.description,
     heroImageUrl:        portfolioStudy.heroImageSrc ?? null,
     heroImageAlt:        portfolioStudy.heroImageAlt,
+    showHeroImage:       portfolioStudy.showHeroImage,
     stats:               portfolioStudy.stats,
     executiveSummary:    portfolioStudy.executiveSummary,
     contextTagline:      portfolioStudy.contextTagline,
@@ -216,7 +217,7 @@ function Hero({ study }: { study: CaseStudyDetail }) {
       <div className="px-margin max-w-[1440px] mx-auto w-full flex flex-col gap-[24px] items-end lg:gap-[48px]">
 
         <div className="cs-hero-reveal order-1 md:order-last w-full aspect-[3/2] lg:aspect-[1400/788] relative" style={{ animationDelay: '650ms' }}>
-          {study.heroImageUrl ? (
+          {study.heroImageUrl && study.showHeroImage ? (
             <Image
               src={study.heroImageUrl}
               alt={study.heroImageAlt}

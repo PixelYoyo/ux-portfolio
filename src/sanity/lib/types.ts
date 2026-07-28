@@ -50,6 +50,7 @@ export type CaseStudyDetail = {
   description:         string;
   heroImageUrl:        string | null;
   heroImageAlt:        string;
+  showHeroImage:       boolean;
   stats:               { number: string; description: string }[];
   executiveSummary:    string[];
   contextTagline:      string;

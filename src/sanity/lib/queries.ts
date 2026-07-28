@@ -59,6 +59,7 @@ export const caseStudyBySlugQuery = groq`
     description,
     heroImageUrl,
     heroImageAlt,
+    showHeroImage,
     stats[] { number, description },
     executiveSummary,
     contextTagline,

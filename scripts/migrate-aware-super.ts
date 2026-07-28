@@ -59,6 +59,7 @@ async function main() {
     isFeatured:   slug === featuredWork.featured.slug,
     heroImageUrl: study.heroImageSrc ?? undefined,
     heroImageAlt: study.heroImageAlt,
+    showHeroImage: study.showHeroImage,
     thumbnailUrl: wp?.thumbnailSrc ?? undefined,
     thumbnailAlt: wp?.thumbnailAlt ?? '',
 

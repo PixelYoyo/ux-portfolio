@@ -113,6 +113,7 @@ async function migrateCaseStudies() {
       isFeatured:   slug === featuredSlug,
       heroImageUrl: study.heroImageSrc ?? undefined,
       heroImageAlt: study.heroImageAlt,
+      showHeroImage: study.showHeroImage,
       thumbnailUrl: wp?.thumbnailSrc ?? undefined,
       thumbnailAlt: wp?.thumbnailAlt ?? '',
 

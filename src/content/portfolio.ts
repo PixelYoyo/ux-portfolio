@@ -253,6 +253,7 @@ export type CaseStudyPage = {
   description:         string;
   heroImageSrc:        string | null;
   heroImageAlt:        string;
+  showHeroImage:       boolean;
   stats:               CaseStudyStat[];
   executiveSummary:    string[];
   contextTagline:      string;
@@ -281,6 +282,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     description:  "A $51.5 billion real estate portfolio. A website that couldn't tell an investor from a tenant.",
     heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/q_auto:best,f_auto/v1782210430/Dexus_case_study_image_tpyxmq.png?v=2',
     heroImageAlt: 'Dexus digital transformation — project hero',
+    showHeroImage: true,
     stats: [
       {
         number:      '01',
@@ -498,6 +500,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     description:  'The work that prevents fire emergencies before they happen was being tracked in personal diaries.',
     heroImageSrc: null,
     heroImageAlt: 'FRNSW Service booking system — project hero',
+    showHeroImage: true,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
@@ -526,8 +529,9 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     year:         '2024–2025',
     tags:         'Design Systems · Audit · Governance',
     description:  'Two design libraries pulling in different directions, and no one owning the whole system. I built the audit and documentation framework that unified them.',
-    heroImageSrc: null,
+    heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/v1783749758/Aware_Super_case_study_image_yke1iu.png',
     heroImageAlt: 'Aware Super design system — project hero',
+    showHeroImage: false,
     stats: [
       {
         number:      '01',
@@ -672,6 +676,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
     heroImageSrc: null,
     heroImageAlt: 'Case study — project hero',
+    showHeroImage: true,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
@@ -702,6 +707,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
     heroImageSrc: null,
     heroImageAlt: 'Case study — project hero',
+    showHeroImage: true,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },
@@ -732,6 +738,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     description:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
     heroImageSrc: null,
     heroImageAlt: 'Case study — project hero',
+    showHeroImage: true,
     stats: [
       { number: '01', description: 'Lorem ipsum dolor sit amet.' },
       { number: '02', description: 'Lorem ipsum dolor sit amet.' },

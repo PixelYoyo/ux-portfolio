@@ -46,6 +46,13 @@ export default defineType({
     // ── Hero ─────────────────────────────────────────────────────
     defineField({ name: 'heroImageUrl', title: 'Hero image URL (Cloudinary)', type: 'url' }),
     defineField({ name: 'heroImageAlt', title: 'Hero image alt text', type: 'string' }),
+    defineField({
+      name: 'showHeroImage',
+      title: 'Show hero image',
+      description: 'Toggle off to hide the hero image on the case study page without deleting the URL.',
+      type: 'boolean',
+      initialValue: true,
+    }),
 
     // ── Work-page thumbnail ───────────────────────────────────────
     defineField({ name: 'thumbnailUrl', title: 'Thumbnail URL (Cloudinary)', type: 'url' }),
