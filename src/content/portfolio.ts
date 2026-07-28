@@ -526,7 +526,7 @@ export const caseStudyPages: Record<string, CaseStudyPage> = {
     year:         '2024–2025',
     tags:         'Design Systems · Audit · Governance',
     description:  'Two design libraries pulling in different directions, and no one owning the whole system. I built the audit and documentation framework that unified them.',
-    heroImageSrc: 'https://res.cloudinary.com/drd6p33en/image/upload/v1783749758/Aware_Super_case_study_image_yke1iu.png',
+    heroImageSrc: null,
     heroImageAlt: 'Aware Super design system — project hero',
     stats: [
       {
