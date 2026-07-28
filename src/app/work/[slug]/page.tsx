@@ -294,7 +294,7 @@ function ExecutiveSummary({ study }: { study: CaseStudyDetail }) {
       <div className="px-margin max-w-[1440px] mx-auto flex flex-col gap-6xl lg:gap-7xl">
 
       <p
-        className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary"
+        className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
         style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
       >
         Executive summary<span className="text-text-brand">.</span>
