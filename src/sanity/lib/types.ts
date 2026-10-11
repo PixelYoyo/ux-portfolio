@@ -30,6 +30,7 @@ export type SiteSettings = {
 export type CaseStudySummary = {
   slug:         string;
   title:        string;
+  year:         string | null;
   tags:         string;
   description:  string;
   thumbnailUrl: string | null;

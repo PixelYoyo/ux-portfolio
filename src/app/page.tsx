@@ -11,6 +11,7 @@ import {
   testimonialsQuery,
   experienceQuery,
 } from '@/sanity/lib/queries';
+import { sortByMostRecent } from '@/sanity/lib/caseStudies';
 import type { SiteSettings, CaseStudySummary, Testimonial, Experience } from '@/sanity/lib/types';
 
 // Fallback data from portfolio.ts — used until Sanity is populated
@@ -23,12 +24,14 @@ import {
 } from '@/content/portfolio';
 
 export default async function Home() {
-  const [settings, caseStudies, quotes, jobs] = await Promise.all([
+  const [settings, unsortedCaseStudies, quotes, jobs] = await Promise.all([
     client.fetch<SiteSettings | null>(siteSettingsQuery),
     client.fetch<CaseStudySummary[]>(allCaseStudiesQuery),
     client.fetch<Testimonial[]>(testimonialsQuery),
     client.fetch<Experience[]>(experienceQuery),
   ]);
+
+  const caseStudies = sortByMostRecent(unsortedCaseStudies);
 
   // ── Hero props ──────────────────────────────────────────────────────────────
   const heroProps = settings
@@ -61,12 +64,13 @@ export default async function Home() {
     const featured = caseStudies.find((cs) => cs.isFeatured) ?? caseStudies[0];
     const projects = caseStudies.filter((cs) => cs.slug !== featured.slug).slice(0, 2);
 
-    const fmt = (n: number) => String(n).padStart(2, '0');
+    // Numbered by position in the most-recent-first order, matching the work page
+    const fmt = (cs: CaseStudySummary) => String(caseStudies.indexOf(cs) + 1).padStart(2, '0');
 
     featuredProps = {
       featured: {
         slug:         featured.slug,
-        number:       fmt(featured.orderNumber),
+        number:       fmt(featured),
         title:        featured.title,
         tags:         featured.tags,
         description:  featured.description,
@@ -75,7 +79,7 @@ export default async function Home() {
       },
       projects: projects.map((cs) => ({
         slug:        cs.slug,
-        number:      fmt(cs.orderNumber),
+        number:      fmt(cs),
         title:       cs.title,
         tags:        cs.tags,
         description: cs.description,

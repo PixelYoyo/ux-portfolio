@@ -5,9 +5,10 @@ interface Props {
   href?: string;
   external?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
-export default function ButtonSecondary({ label, href, external, className = '' }: Props) {
+export default function ButtonSecondary({ label, href, external, className = '', onClick }: Props) {
   const cls = `btn-secondary flex items-center justify-center px-4xl py-3xl ${className}`;
 
   const inner = (
@@ -28,6 +29,13 @@ export default function ButtonSecondary({ label, href, external, className = '' 
       >
         {inner}
       </Link>
+    );
+  }
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={`${cls} cursor-pointer bg-transparent`}>
+        {inner}
+      </button>
     );
   }
   return <div className={cls}>{inner}</div>;

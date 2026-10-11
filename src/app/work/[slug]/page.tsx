@@ -7,6 +7,7 @@ import {
   allCaseStudiesQuery,
   caseStudySlugsQuery,
 } from '@/sanity/lib/queries';
+import { sortByMostRecent } from '@/sanity/lib/caseStudies';
 import type { CaseStudyDetail, CaseStudySummary } from '@/sanity/lib/types';
 import { caseStudyPages } from '@/content/portfolio';
 import AnchorNav from './AnchorNav';
@@ -45,7 +46,7 @@ export default async function CaseStudyPage({
   ]);
 
   if (sanityStudy) {
-    const nextStudies = allCaseStudies
+    const nextStudies = sortByMostRecent(allCaseStudies)
       .filter((cs) => cs.slug !== slug)
       .map((cs) => ({
         slug:         cs.slug,

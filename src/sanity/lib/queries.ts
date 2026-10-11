@@ -35,10 +35,18 @@ export const siteSettingsQuery = groq`
 // Array fields are coalesced to [] so a case study with an unfilled section in
 // Sanity renders without that section instead of failing the build.
 
+// Listing used on every page: only case studies with real body content
+// (placeholders that have just a title and stats are left out). Sort the result
+// with sortByMostRecent from ./caseStudies.
 export const allCaseStudiesQuery = groq`
-  *[_type == "caseStudy"] | order(orderNumber asc) {
+  *[_type == "caseStudy" && (
+    count(executiveSummary) > 0 ||
+    count(contextItems) > 0 ||
+    count(designItems) > 0
+  )] | order(orderNumber asc) {
     "slug": slug.current,
     title,
+    year,
     tags,
     description,
     thumbnailUrl,

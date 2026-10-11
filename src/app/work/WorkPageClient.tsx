@@ -16,6 +16,8 @@ export type WorkCaseStudy = {
   thumbnailAlt: string;
 };
 
+const PAGE_SIZE = 6;
+
 const HOVER_BG_URL = 'https://res.cloudinary.com/drd6p33en/image/upload/v1779141549/Hover_state_background_1_r6em3n.png';
 
 // ── View toggle indicator ─────────────────────────────────────────────────────
@@ -166,6 +168,10 @@ function ListItem({ study }: { study: WorkCaseStudy }) {
 
 export default function WorkPageClient({ studies }: { studies: WorkCaseStudy[] }) {
   const [view, setView] = useState<View>('grid');
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const visibleStudies = studies.slice(0, visibleCount);
+  const hasMore = studies.length > visibleCount;
 
   return (
     <section className="bg-bg-primary px-margin pt-4xl pb-[80px] flex flex-col gap-4xl">
@@ -177,23 +183,25 @@ export default function WorkPageClient({ studies }: { studies: WorkCaseStudy[] }
 
       {view === 'grid' && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-text-primary">
-          {studies.map((study, index) => (
-            <GridCard key={study.number} study={study} index={index} />
+          {visibleStudies.map((study, index) => (
+            <GridCard key={study.slug} study={study} index={index} />
           ))}
         </div>
       )}
 
       {view === 'list' && (
         <div className="flex flex-col">
-          {studies.map((study) => (
-            <ListItem key={study.number} study={study} />
+          {visibleStudies.map((study) => (
+            <ListItem key={study.slug} study={study} />
           ))}
         </div>
       )}
 
-      <div className="flex justify-center pt-3xl">
-        <ButtonSecondary label="Load more" />
-      </div>
+      {hasMore && (
+        <div className="flex justify-center pt-3xl">
+          <ButtonSecondary label="Load more" onClick={() => setVisibleCount((n) => n + PAGE_SIZE)} />
+        </div>
+      )}
 
     </section>
   );
