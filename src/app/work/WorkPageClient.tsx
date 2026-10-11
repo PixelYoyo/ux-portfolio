@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import ButtonSecondary from '@/components/ButtonSecondary';
 
@@ -18,6 +18,15 @@ export type WorkCaseStudy = {
 
 const PAGE_SIZE = 6;
 
+// Below Tailwind's md breakpoint the list view is the default; grid from md up
+const MOBILE_QUERY = '(max-width: 767px)';
+
+function subscribeToMobile(onChange: () => void) {
+  const mql = window.matchMedia(MOBILE_QUERY);
+  mql.addEventListener('change', onChange);
+  return () => mql.removeEventListener('change', onChange);
+}
+
 const HOVER_BG_URL = 'https://res.cloudinary.com/drd6p33en/image/upload/v1779141549/Hover_state_background_1_r6em3n.png';
 
 // ── View toggle indicator ─────────────────────────────────────────────────────
@@ -25,10 +34,12 @@ const HOVER_BG_URL = 'https://res.cloudinary.com/drd6p33en/image/upload/v1779141
 function ViewToggle({
   label,
   active,
+  indicatorClass,
   onClick,
 }: {
   label: string;
   active: boolean;
+  indicatorClass: string;
   onClick: () => void;
 }) {
   return (
@@ -39,9 +50,7 @@ function ViewToggle({
       aria-pressed={active}
     >
       <span
-        className={`size-[24px] border-[0.5px] border-text-primary shrink-0 transition-colors duration-200 ${
-          active ? 'bg-bg-brand' : 'bg-transparent'
-        }`}
+        className={`size-[24px] border-[0.5px] border-text-primary shrink-0 transition-colors duration-200 ${indicatorClass}`}
       />
       <span className="font-body not-italic text-sm leading-[20px] text-text-primary">
         {label}
@@ -167,7 +176,20 @@ function ListItem({ study }: { study: WorkCaseStudy }) {
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function WorkPageClient({ studies }: { studies: WorkCaseStudy[] }) {
-  const [view, setView] = useState<View>('grid');
+  // null until the visitor picks a view; the default is then decided by CSS
+  // breakpoints (list on mobile, grid from md up) so there is no flash on load
+  const [chosenView, setView] = useState<View | null>(null);
+  const isMobile = useSyncExternalStore(
+    subscribeToMobile,
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false,
+  );
+  const view = chosenView ?? (isMobile ? 'list' : 'grid');
+
+  const on = 'bg-bg-brand';
+  const off = 'bg-transparent';
+  const gridIndicator = chosenView ? (chosenView === 'grid' ? on : off) : 'bg-transparent md:bg-bg-brand';
+  const listIndicator = chosenView ? (chosenView === 'list' ? on : off) : 'bg-bg-brand md:bg-transparent';
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const visibleStudies = studies.slice(0, visibleCount);
@@ -177,20 +199,20 @@ export default function WorkPageClient({ studies }: { studies: WorkCaseStudy[] }
     <section className="bg-bg-primary px-margin pt-4xl pb-[80px] flex flex-col gap-4xl">
 
       <div className="flex gap-3xl items-center">
-        <ViewToggle label="Grid" active={view === 'grid'} onClick={() => setView('grid')} />
-        <ViewToggle label="List" active={view === 'list'} onClick={() => setView('list')} />
+        <ViewToggle label="Grid" active={view === 'grid'} indicatorClass={gridIndicator} onClick={() => setView('grid')} />
+        <ViewToggle label="List" active={view === 'list'} indicatorClass={listIndicator} onClick={() => setView('list')} />
       </div>
 
-      {view === 'grid' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-text-primary">
+      {chosenView !== 'list' && (
+        <div className={`${chosenView ? 'grid' : 'hidden md:grid'} grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-text-primary`}>
           {visibleStudies.map((study, index) => (
             <GridCard key={study.slug} study={study} index={index} />
           ))}
         </div>
       )}
 
-      {view === 'list' && (
-        <div className="flex flex-col">
+      {chosenView !== 'grid' && (
+        <div className={`${chosenView ? 'flex' : 'flex md:hidden'} flex-col`}>
           {visibleStudies.map((study) => (
             <ListItem key={study.slug} study={study} />
           ))}
