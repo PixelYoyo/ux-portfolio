@@ -32,6 +32,8 @@ export const siteSettingsQuery = groq`
 `;
 
 // ── Case studies ──────────────────────────────────────────────────────────────
+// Array fields are coalesced to [] so a case study with an unfilled section in
+// Sanity renders without that section instead of failing the build.
 
 export const allCaseStudiesQuery = groq`
   *[_type == "caseStudy"] | order(orderNumber asc) {
@@ -62,21 +64,21 @@ export const caseStudyBySlugQuery = groq`
     showHeroImage,
     videoUrl,
     showVideo,
-    stats[] { number, description },
-    executiveSummary,
+    "stats": coalesce(stats[] { number, description }, []),
+    "executiveSummary": coalesce(executiveSummary, []),
     contextTagline,
-    contextItems[] { icon, iconUrl, iconAlt, heading, body },
-    gallery[] { src, alt, caption },
+    "contextItems": coalesce(contextItems[] { icon, iconUrl, iconAlt, heading, "body": coalesce(body, []) }, []),
+    "gallery": coalesce(gallery[] { src, "alt": coalesce(alt, ""), caption }, []),
     scrollCardsTagline,
-    scrollCards[] { icon, heading, body },
+    "scrollCards": coalesce(scrollCards[] { icon, heading, "body": coalesce(body, []) }, []),
     designTagline,
-    designItems[] { heading, body, imageSrc, imageAlt, imageCaption },
-    imageGrid[] { src, alt },
-    quotes[] { text, attribution },
+    "designItems": coalesce(designItems[] { heading, "body": coalesce(body, []), imageSrc, "imageAlt": coalesce(imageAlt, ""), imageCaption }, []),
+    "imageGrid": coalesce(imageGrid[] { src, "alt": coalesce(alt, "") }, []),
+    "quotes": coalesce(quotes[] { text, attribution }, []),
     reflectionTagline,
-    reflectionItems[] { icon, iconUrl, iconAlt, heading, body },
-    details[] { label, value },
-    linkGroups[] { category, links[] { label, href } },
+    "reflectionItems": coalesce(reflectionItems[] { icon, iconUrl, iconAlt, heading, "body": coalesce(body, []) }, []),
+    "details": coalesce(details[] { label, value }, []),
+    "linkGroups": coalesce(linkGroups[] { category, "links": coalesce(links[] { label, href }, []) }, []),
   }
 `;
 
