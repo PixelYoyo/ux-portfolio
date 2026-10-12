@@ -61,18 +61,7 @@ function ViewToggle({
 
 // ── Grid card ────────────────────────────────────────────────────────────────
 
-// Circle variants — different size + position per card slot (cycles every 6)
-const CIRCLE_VARIANTS = [
-  { left: '19%',   top: '92.5%', size: '52%' },
-  { left: '19%',   top: '52.5%', size: '72%' },
-  { left: '94%',   top: '50%',   size: '44%' },
-  { left: '19%',   top: '12.5%', size: '64%' },
-  { left: '79%',   top: '92.5%', size: '38%' },
-  { left: '82%',   top: '5%',    size: '58%' },
-];
-
 function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
-  const { left, top, size } = CIRCLE_VARIANTS[index % 6];
   const title = study.title.replace(/\.+$/, '');
 
   return (
@@ -97,17 +86,6 @@ function GridCard({ study, index }: { study: WorkCaseStudy; index: number }) {
           'transition-transform duration-300 ease-out',
         ].join(' ')}
       >
-        {/* Circle — size + position unique per card slot, clipped by overflow-hidden */}
-        <div
-          className="absolute aspect-square -translate-x-1/2 -translate-y-1/2 text-text-brand pointer-events-none"
-          style={{ left, top, width: size }}
-          aria-hidden
-        >
-          <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
-            <circle cx="50" cy="50" r="48.5" stroke="currentColor" strokeWidth="1.5" />
-          </svg>
-        </div>
-
         {/* Single content area — heading animates in place between idle and hover states */}
         <div className="absolute inset-5 flex flex-col overflow-hidden">
 
