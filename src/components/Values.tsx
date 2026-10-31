@@ -5,7 +5,7 @@ type ValuesProps = {
 
 export default function Values({ items, description }: ValuesProps) {
   return (
-    <section className="bg-bg-primary px-margin lg:px-[128px] pt-7xl">
+    <section className="bg-bg-primary px-margin lg:px-[calc(128px_+_max(0px,(100%_-_1440px)_/_2))] pt-7xl">
 
       {/* Value words — right-aligned, full content width */}
       <div className="flex flex-col items-end">

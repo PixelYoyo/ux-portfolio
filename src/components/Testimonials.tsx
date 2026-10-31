@@ -85,7 +85,7 @@ export default function Testimonials({ quotes: QUOTES }: { quotes: Quote[] }) {
   return (
     <>
       {/* ── Desktop ─────────────────────────────────────────────────────── */}
-      <section className="hidden lg:block relative bg-bg-primary pl-10xl pr-margin pt-7xl pb-10xl">
+      <section className="hidden lg:block relative bg-bg-primary pl-[calc(var(--spacing-10xl)_+_max(0px,(100%_-_1440px)_/_2))] pr-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] pt-7xl pb-10xl">
 
         {/* Grid-stack: all quotes share the same cell so height = tallest quote */}
         <div aria-live="polite" aria-atomic="true" className="grid max-w-[777px]">
@@ -110,7 +110,7 @@ export default function Testimonials({ quotes: QUOTES }: { quotes: Quote[] }) {
         </div>
 
         {/* Arrows */}
-        <div className="absolute bottom-[116px] left-[16px] right-[24px] flex items-center justify-between">
+        <div className="absolute bottom-[116px] left-[calc(16px_+_max(0px,(100%_-_1440px)_/_2))] right-[calc(24px_+_max(0px,(100%_-_1440px)_/_2))] flex items-center justify-between">
           <ArrowButton direction="prev" onClick={goPrev} />
           <ArrowButton direction="next" onClick={goNext} />
         </div>

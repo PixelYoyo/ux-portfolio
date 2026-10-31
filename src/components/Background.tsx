@@ -20,7 +20,7 @@ type BackgroundProps = {
 
 export default function Background({ jobs, resumeHref, linkedinHref }: BackgroundProps) {
   return (
-    <section className="bg-bg-primary px-margin pt-4xl pb-7xl flex flex-col items-end">
+    <section className="bg-bg-primary px-margin lg:px-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] pt-4xl pb-7xl flex flex-col items-end">
       <div className="flex flex-col gap-6xl lg:gap-7xl w-full lg:w-[690px]">
 
         {/* Job listings */}

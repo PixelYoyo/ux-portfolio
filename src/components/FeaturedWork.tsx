@@ -104,7 +104,7 @@ export default function FeaturedWork({ featured: FEATURED, projects: PROJECTS, s
     <div ref={outerRef}>
       {/* sticky top-0 on mobile keeps the section pinned while the outer scrolls. */}
       {/* lg:static restores normal flow on desktop.                               */}
-      <section className="sticky top-0 lg:static bg-bg-primary px-margin pt-4xl pb-7xl lg:pb-10xl flex flex-col gap-[80px] items-end">
+      <section className="sticky top-0 lg:static bg-bg-primary px-margin lg:px-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] pt-4xl pb-7xl lg:pb-10xl flex flex-col gap-[80px] items-end">
 
         {/* Featured project 01 */}
         {/* Mobile: stacked (number → thumbnail → text/CTA) | Desktop: two-column row */}
