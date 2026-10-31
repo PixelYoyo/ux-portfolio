@@ -69,7 +69,10 @@ export default function AnchorNav({ study }: { study: { reflectionItems: unknown
   const activeLink = links.find(l => l.href === `#${activeId}`) ?? links[0];
 
   return (
-    <section className="sticky top-0 z-50 bg-bg-primary border-b border-border-primary">
+    <section
+      className="sticky z-40 bg-bg-primary border-b border-border-primary transition-[top] duration-300 ease-out motion-reduce:transition-none"
+      style={{ top: 'var(--top-nav-offset, 0px)' }}
+    >
       <div className="px-margin max-w-[1440px] mx-auto py-lg md:py-xl flex items-center gap-[20px] md:gap-0 md:justify-between">
 
         {/* Desktop links */}
