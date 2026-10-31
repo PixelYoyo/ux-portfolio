@@ -30,13 +30,13 @@ export const metadata: Metadata = {
   description: 'UX portfolio of Yolandi Lehner',
 };
 
-// Make sure the nav always has a Home link, placed right after Work
+// Make sure the nav always has a Home link, placed right before Work
 function withHomeLink(links: { label: string; href: string }[]) {
   if (links.some((l) => l.href === '/')) return links;
   const home = { label: 'Home', href: '/' };
   const workIndex = links.findIndex((l) => l.href === '/work');
   if (workIndex === -1) return [home, ...links];
-  return [...links.slice(0, workIndex + 1), home, ...links.slice(workIndex + 1)];
+  return [...links.slice(0, workIndex), home, ...links.slice(workIndex)];
 }
 
 export default async function RootLayout({
