@@ -25,14 +25,6 @@ function ArrowRightSvg() {
   );
 }
 
-function ExpandSvg() {
-  return (
-    <svg viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
-      <path d="M17.25 3C17.625 3 18 3.375 18 3.75C18 4.21875 17.625 4.5 17.25 4.5H4.5V17.25C4.5 17.7188 4.125 18 3.75 18C3.28125 18 3 17.7188 3 17.25V3.75C3 3.375 3.28125 3 3.75 3H17.25ZM44.25 3C44.625 3 45 3.375 45 3.75V17.25C45 17.7188 44.625 18 44.25 18C43.7812 18 43.5 17.7188 43.5 17.25V4.5H30.75C30.2812 4.5 30 4.21875 30 3.75C30 3.375 30.2812 3 30.75 3H44.25ZM44.25 30C44.625 30 45 30.375 45 30.75V44.25C45 44.7188 44.625 45 44.25 45H30.75C30.2812 45 30 44.7188 30 44.25C30 43.875 30.2812 43.5 30.75 43.5H43.5V30.75C43.5 30.375 43.7812 30 44.25 30ZM17.25 43.5C17.625 43.5 18 43.875 18 44.25C18 44.7188 17.625 45 17.25 45H3.75C3.28125 45 3 44.7188 3 44.25V30.75C3 30.375 3.28125 30 3.75 30C4.125 30 4.5 30.375 4.5 30.75V43.5H17.25Z" />
-    </svg>
-  );
-}
-
 function CloseSvg() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="size-6">
@@ -273,15 +265,9 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
               )}
               <button
                 onClick={() => setLightboxOpen(true)}
-                aria-label="View fullscreen"
-                className="absolute top-3 right-3 h-[56px] w-[64px] text-icon-primary"
+                className="absolute top-3 right-3 z-10 text-link font-body not-italic text-base text-text-primary cursor-pointer"
               >
-                <div className="absolute bottom-0 left-0 right-0 h-[27px] bg-bg-brand" />
-                <div className="absolute top-0 left-[8px] bottom-[8px] w-[48px] flex items-center justify-center">
-                  <div className="size-[48px]">
-                    <ExpandSvg />
-                  </div>
-                </div>
+                Expand gallery
               </button>
             </div>
 
