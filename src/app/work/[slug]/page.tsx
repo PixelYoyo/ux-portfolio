@@ -252,6 +252,8 @@ function Hero({ study }: { study: CaseStudyDetail }) {
 // ─── Stat ─────────────────────────────────────────────────────────────────────
 
 function Stat({ stat, style }: { stat: { number: string; description: string }; style?: CSSProperties }) {
+  const hasStop = stat.number.endsWith('.');
+  const numberBody = hasStop ? stat.number.slice(0, -1) : stat.number;
   return (
     <div className="cs-hero-reveal flex flex-col gap-md flex-1" style={style}>
       <div className="border-b border-border-primary pb-xl w-full">
@@ -259,7 +261,8 @@ function Stat({ stat, style }: { stat: { number: string; description: string }; 
           className="font-heading font-semibold text-heading-l leading-[44px] uppercase text-text-primary lg:font-bold lg:text-heading-xl lg:tracking-impact lg:leading-normal"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
         >
-          {stat.number}
+          {numberBody}
+          {hasStop && <span className="text-text-brand">.</span>}
         </p>
       </div>
       <p className="font-body not-italic text-sm leading-[20px] text-text-primary lg:text-base">
