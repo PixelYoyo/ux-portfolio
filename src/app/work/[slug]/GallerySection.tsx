@@ -256,19 +256,21 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
 
           <div className="flex flex-col gap-lg lg:gap-[20px]">
 
-            {/* Image with expand button */}
-            <div className="relative w-full aspect-[3/2]">
-              {image.src ? (
-                <Image src={image.src} alt={image.alt} fill quality={90} className="object-cover" />
-              ) : (
-                <div className="absolute inset-0 bg-[#c6c6c6]" />
-              )}
+            {/* Image with expand link above */}
+            <div className="flex flex-col items-end gap-3 w-full">
               <button
                 onClick={() => setLightboxOpen(true)}
-                className="absolute top-3 right-3 z-10 text-link font-body not-italic text-base text-text-primary cursor-pointer"
+                className="text-link font-body not-italic text-base text-text-primary cursor-pointer"
               >
                 Expand gallery
               </button>
+              <div className="relative w-full aspect-[3/2]">
+                {image.src ? (
+                  <Image src={image.src} alt={image.alt} fill quality={90} className="object-cover" />
+                ) : (
+                  <div className="absolute inset-0 bg-[#c6c6c6]" />
+                )}
+              </div>
             </div>
 
             <p className="lg:hidden font-body not-italic text-sm leading-[20px] text-text-primary text-center w-full">
