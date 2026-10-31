@@ -174,7 +174,7 @@ export default function WorkPageClient({ studies }: { studies: WorkCaseStudy[] }
   const hasMore = studies.length > visibleCount;
 
   return (
-    <section className="bg-bg-primary px-margin pt-4xl pb-[80px] flex flex-col gap-4xl">
+    <section className="bg-bg-primary px-margin lg:px-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] pt-4xl pb-[80px] flex flex-col gap-4xl">
 
       <div className="flex gap-3xl items-center">
         <ViewToggle label="Grid" active={view === 'grid'} indicatorClass={gridIndicator} onClick={() => setView('grid')} />
