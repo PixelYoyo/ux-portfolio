@@ -52,6 +52,8 @@ function PinchSvg() {
 
 // ── Rotation helpers ──────────────────────────────────────────────────────────
 
+const ROTATE_TRANSITION = 'transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1), width 450ms cubic-bezier(0.2, 0.8, 0.2, 1), height 450ms cubic-bezier(0.2, 0.8, 0.2, 1)';
+
 const MOBILE_QUERY = '(max-width: 1023px) and (pointer: coarse)';
 
 const isMobile = () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches;
@@ -78,13 +80,37 @@ function usePhysicalRotation(enabled: boolean) {
     // re-learnt whenever the phone is clearly upright.
     let ySign = /iP(hone|ad|od)/.test(navigator.userAgent) ? -1 : 1;
     let current: 0 | 90 | -90 = 0;
+    let pending: 0 | 90 | -90 | null = null;
+    let timer: number | undefined;
     const THRESHOLD = 7; // m/s², roughly 45° of tilt
+    // Wait before turning sideways so that, if the phone's own rotation is
+    // unlocked, the browser rotates the page first and we don't double up.
+    const TO_SIDEWAYS_DELAY = 600;
+    const TO_UPRIGHT_DELAY = 150;
+
+    const settle = (next: 0 | 90 | -90) => {
+      if (next === current) {
+        pending = null;
+        window.clearTimeout(timer);
+        return;
+      }
+      if (next === pending) return;
+      pending = next;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        pending = null;
+        if (next !== 0 && !isPortraitViewport()) return;
+        setAngle((current = next));
+      }, next === 0 ? TO_UPRIGHT_DELAY : TO_SIDEWAYS_DELAY);
+    };
 
     const onMotion = (e: DeviceMotionEvent) => {
       const g = e.accelerationIncludingGravity;
       if (!g || g.x == null || g.y == null) return;
       // The browser rotated the page itself, so no help is needed.
       if (!isPortraitViewport()) {
+        pending = null;
+        window.clearTimeout(timer);
         if (current !== 0) setAngle((current = 0));
         return;
       }
@@ -98,16 +124,20 @@ function usePhysicalRotation(enabled: boolean) {
         // Right edge down → turn content anticlockwise, left edge down → clockwise.
         next = x < 0 ? -90 : 90;
       }
-      if (next !== current) setAngle((current = next));
+      settle(next);
     };
 
     const onResize = () => {
-      if (!isPortraitViewport() && current !== 0) setAngle((current = 0));
+      if (isPortraitViewport()) return;
+      pending = null;
+      window.clearTimeout(timer);
+      if (current !== 0) setAngle((current = 0));
     };
 
     window.addEventListener('devicemotion', onMotion);
     window.addEventListener('resize', onResize);
     return () => {
+      window.clearTimeout(timer);
       window.removeEventListener('devicemotion', onMotion);
       window.removeEventListener('resize', onResize);
     };
@@ -367,16 +397,39 @@ function Lightbox({
   const isZoomed = zoom.scale !== 1 || zoom.x !== 0 || zoom.y !== 0;
   const image = images[current];
 
-  const rotatedStyle: React.CSSProperties | undefined = angle
+  // On mobile the viewer is always centred and sized explicitly, so turning
+  // sideways can animate the rotation and the size change together.
+  const rotatedStyle: React.CSSProperties | undefined = mobile
     ? {
         inset: 'auto',
         top: '50%',
         left: '50%',
-        width: '100dvh',
-        height: '100dvw',
+        width: angle ? '100dvh' : '100dvw',
+        height: angle ? '100dvw' : '100dvh',
         transform: `translate(-50%, -50%) rotate(${angle}deg)`,
+        transition: ROTATE_TRANSITION,
       }
     : undefined;
+
+  // When the browser itself rotates the page, skip our animation so the
+  // viewer doesn't lag behind the system rotation.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!mobile) return;
+    let frame = 0;
+    const onResize = () => {
+      const el = dialogRef.current;
+      if (!el) return;
+      el.style.transition = 'none';
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => requestAnimationFrame(() => { el.style.transition = ROTATE_TRANSITION; }));
+    };
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [mobile]);
 
   return (
     <>
@@ -396,7 +449,8 @@ function Lightbox({
       </div>
     )}
     <div
-      className="fixed inset-0 z-50 bg-bg-primary flex flex-col"
+      ref={dialogRef}
+      className="fixed inset-0 z-50 bg-bg-primary flex flex-col motion-reduce:!transition-none"
       style={rotatedStyle}
       role="dialog"
       aria-modal="true"
