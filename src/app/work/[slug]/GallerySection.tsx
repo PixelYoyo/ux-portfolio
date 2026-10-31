@@ -42,6 +42,14 @@ function RotateSvg() {
   );
 }
 
+function PinchSvg() {
+  return (
+    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" aria-hidden="true" className="shrink-0 text-icon-primary">
+      <path d="M12.8804 11.1588V6.75342C12.8804 6.05831 12.312 5.49496 11.6108 5.49496C10.9095 5.49496 10.3409 6.05831 10.3409 6.75342V16.8245C9.27875 14.1156 8.05988 13.6314 7.51927 13.5271C7.03701 13.4317 6.61232 13.5455 6.44668 13.7367C6.08348 14.4168 6.30904 15.0955 6.9729 15.9195C7.87776 17.0429 8.24619 18.1149 8.60259 19.1523C9.0388 20.4227 9.47055 21.6801 10.8744 22.9537C11.9318 23.8705 13.2894 24.3758 14.6943 24.375C18.247 24.375 20.5 21.3388 20.5 16.5506V13.6763C20.5 12.9811 19.9309 12.4175 19.2296 12.4175C18.5283 12.4175 17.9597 12.9811 17.9597 13.6763M12.8804 11.1588C12.8804 10.4637 13.4487 9.90009 14.15 9.90009C14.8513 9.90009 15.4199 10.4637 15.4199 11.1588V12.4178M12.8804 11.1588V14.3055M15.4199 12.4178C15.4199 11.7227 15.9885 11.1591 16.6898 11.1591C17.3911 11.1591 17.9597 11.7227 17.9597 12.4178V13.6763M15.4199 12.4178V14.3055M17.9597 13.6763V14.9438M9.13195 8.56382C8.73683 8.03523 8.52723 7.3964 8.52723 6.75342C8.52723 5.06492 9.90781 3.68975 11.6113 3.68975C13.3148 3.68975 14.7027 5.06492 14.7027 6.75342C14.7027 7.3964 14.4931 8.03523 14.0911 8.56382M9.13169 12.1564C8.60861 11.7805 7.9751 11.5785 7.33244 11.5785C5.62922 11.5785 4.2489 12.9469 4.2489 14.6351C4.2489 16.0671 5.25189 17.3067 6.6623 17.6171M13.6832 2.9355L15.0735 0.375M15.445 1.6013L15.0735 0.375L13.8363 0.743564M5.26131 18.4507L3.87445 21.012M5.10745 20.644L3.87445 21.012L3.5 19.7855" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 // ── Rotation helpers ──────────────────────────────────────────────────────────
 
 const MOBILE_QUERY = '(max-width: 1023px) and (pointer: coarse)';
@@ -108,9 +116,27 @@ function usePhysicalRotation(enabled: boolean) {
   return enabled ? angle : 0;
 }
 
-// ── Rotate tip ────────────────────────────────────────────────────────────────
+// ── Mobile tips ───────────────────────────────────────────────────────────────
 
-function RotateToast({ dismissed, onGone }: { dismissed: boolean; onGone: () => void }) {
+function Toast({
+  placement,
+  duration,
+  dismissed = false,
+  dismissOnOutsideTap = false,
+  dismissOnTurn = false,
+  onGone,
+  icon,
+  children,
+}: {
+  placement: 'top' | 'bottom';
+  duration: number;
+  dismissed?: boolean;
+  dismissOnOutsideTap?: boolean;
+  dismissOnTurn?: boolean;
+  onGone: () => void;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
   const [shown, setShown] = useState(false);
   const toastRef = useRef<HTMLDivElement>(null);
 
@@ -120,25 +146,25 @@ function RotateToast({ dismissed, onGone }: { dismissed: boolean; onGone: () => 
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const hide = () => setShown(false);
-
-  // Slide back up after 3s, on a tap outside, or when the phone turns
+  // Slide back out after the duration, plus any optional triggers
   useEffect(() => {
-    const timer = window.setTimeout(hide, 3000);
+    const hide = () => setShown(false);
+    const timer = window.setTimeout(hide, duration);
     const onPointer = (e: PointerEvent) => {
       if (!toastRef.current?.contains(e.target as Node)) hide();
     };
     const onResize = () => { if (!isPortraitViewport()) hide(); };
-    document.addEventListener('pointerdown', onPointer);
-    window.addEventListener('resize', onResize);
+    if (dismissOnOutsideTap) document.addEventListener('pointerdown', onPointer);
+    if (dismissOnTurn) window.addEventListener('resize', onResize);
     return () => {
       window.clearTimeout(timer);
       document.removeEventListener('pointerdown', onPointer);
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [duration, dismissOnOutsideTap, dismissOnTurn]);
 
   const visible = shown && !dismissed;
+  const hiddenOffset = placement === 'top' ? '-translate-y-[calc(100%+80px)]' : 'translate-y-[calc(100%+80px)]';
 
   return (
     <div
@@ -146,12 +172,16 @@ function RotateToast({ dismissed, onGone }: { dismissed: boolean; onGone: () => 
       role="status"
       aria-live="polite"
       onTransitionEnd={() => { if (!visible) onGone(); }}
-      className={`lg:hidden fixed left-margin right-margin z-[60] flex items-center justify-center gap-md bg-bg-brand px-xl py-lg transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : '-translate-y-[calc(100%+80px)]'}`}
-      style={{ top: 'calc(env(safe-area-inset-top) + 16px)' }}
+      className={`lg:hidden absolute left-margin right-margin z-[60] flex items-center justify-center gap-md bg-bg-brand px-xl py-lg pointer-events-none transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : hiddenOffset}`}
+      style={
+        placement === 'top'
+          ? { top: 'calc(env(safe-area-inset-top) + 16px)' }
+          : { bottom: 'calc(env(safe-area-inset-bottom) + 16px)' }
+      }
     >
-      <RotateSvg />
+      {icon}
       <p className="font-body not-italic text-sm leading-[20px] text-text-primary text-center">
-        Rotate your phone sideways
+        {children}
       </p>
     </div>
   );
@@ -238,6 +268,19 @@ function Lightbox({
   // Show the rotate tip on mobile when opened in portrait
   const [toastOpen, setToastOpen] = useState(() => mobile && isPortraitViewport());
 
+  // Pinch tip: appears shortly after the phone is turned or the rotate tip goes,
+  // and leaves after 4s or as soon as the user starts to zoom
+  const [pinchOpen, setPinchOpen] = useState(false);
+  const [pinchDone, setPinchDone] = useState(false);
+  const [pinchDismissed, setPinchDismissed] = useState(false);
+
+  useEffect(() => {
+    if (!mobile || pinchOpen || pinchDone || pinchDismissed) return;
+    if (toastOpen && angle === 0) return;
+    const timer = window.setTimeout(() => setPinchOpen(true), 600);
+    return () => window.clearTimeout(timer);
+  }, [mobile, toastOpen, angle, pinchOpen, pinchDone, pinchDismissed]);
+
   // Touch tracking refs
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
   const dragRef = useRef<{ startX: number; startY: number; originX: number; originY: number } | null>(null);
@@ -271,6 +314,7 @@ function Lightbox({
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 2) {
+      setPinchDismissed(true);
       pinchRef.current = { dist: getTouchDist(e.touches[0], e.touches[1]), scale: zoomRef.current.scale };
       dragRef.current = null;
     } else if (e.touches.length === 1) {
@@ -328,7 +372,21 @@ function Lightbox({
 
   return (
     <>
-    {toastOpen && <RotateToast dismissed={angle !== 0} onGone={() => setToastOpen(false)} />}
+    {toastOpen && (
+      <div className="fixed inset-0 z-[60] pointer-events-none">
+        <Toast
+          placement="top"
+          duration={3000}
+          dismissed={angle !== 0}
+          dismissOnOutsideTap
+          dismissOnTurn
+          onGone={() => setToastOpen(false)}
+          icon={<RotateSvg />}
+        >
+          Rotate your phone sideways
+        </Toast>
+      </div>
+    )}
     <div
       className="fixed inset-0 z-50 bg-bg-primary flex flex-col"
       style={rotatedStyle}
@@ -379,6 +437,19 @@ function Lightbox({
           <Dots count={images.length} current={current} />
           <ArrowButton direction="next" onClick={onNext} />
         </div>
+      )}
+
+      {/* Inside the viewer so it stays at the visual bottom when rotated */}
+      {pinchOpen && (
+        <Toast
+          placement="bottom"
+          duration={4000}
+          dismissed={pinchDismissed}
+          onGone={() => { setPinchOpen(false); setPinchDone(true); }}
+          icon={<PinchSvg />}
+        >
+          Pinch to zoom
+        </Toast>
       )}
     </div>
     </>
