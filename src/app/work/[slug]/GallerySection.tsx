@@ -36,7 +36,7 @@ function CloseSvg() {
 
 function RotateSvg() {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="size-5 shrink-0 text-icon-brand">
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="size-5 shrink-0 text-icon-primary">
       <path d="M18.75 1.32812C19.1406 1.48438 19.375 1.83594 19.375 2.22656V7.8125C19.375 8.32031 18.9453 8.75 18.3984 8.75H12.7734C12.4219 8.75 12.0703 8.55469 11.9141 8.16406C11.7969 7.8125 11.875 7.42188 12.1484 7.14844L14.6875 4.60938C13.3594 3.47656 11.6797 2.8125 9.92188 2.8125C6.36719 2.8125 3.35938 5.35156 2.77344 8.82812C2.77344 8.86719 2.69531 9.10156 2.42188 9.0625C2.26562 9.0625 2.14844 8.86719 2.1875 8.71094C2.8125 4.96094 6.09375 2.1875 9.92188 2.1875C11.8359 2.1875 13.6719 2.89062 15.1172 4.14062L17.6953 1.5625C18.0078 1.28906 18.3984 1.21094 18.75 1.32812ZM18.75 7.8125V2.22656C18.75 1.91406 18.3594 1.79688 18.1641 1.99219L12.5781 7.57812C12.3828 7.77344 12.5 8.16406 12.8125 8.16406H18.3984C18.5938 8.16406 18.75 8.00781 18.75 7.8125ZM17.5391 10.9766C17.6953 10.9766 17.8125 11.1328 17.7734 11.3281C17.1484 15.0781 13.8672 17.8125 10.0391 17.8125C8.125 17.8125 6.28906 17.1484 4.84375 15.8984L2.26562 18.4766C1.95312 18.75 1.5625 18.8672 1.21094 18.7109C0.820312 18.5547 0.625 18.2031 0.625 17.8125V12.2266C0.625 11.7188 1.01562 11.2891 1.5625 11.25H7.14844C7.53906 11.2891 7.89062 11.4844 8.04688 11.8359C8.16406 12.2266 8.08594 12.6172 7.8125 12.8906L5.27344 15.4297C6.60156 16.5625 8.28125 17.1875 10.0391 17.1875C13.5938 17.1875 16.6016 14.6875 17.1875 11.2109C17.1875 11.0547 17.3828 10.9375 17.5391 10.9766ZM1.79688 18.0469L7.38281 12.4609C7.57812 12.2656 7.46094 11.875 7.14844 11.875H1.5625C1.36719 11.875 1.25 12.0312 1.25 12.2266V17.8125C1.25 18.125 1.60156 18.2422 1.79688 18.0469Z" />
     </svg>
   );
@@ -146,11 +146,11 @@ function RotateToast({ dismissed, onGone }: { dismissed: boolean; onGone: () => 
       role="status"
       aria-live="polite"
       onTransitionEnd={() => { if (!visible) onGone(); }}
-      className={`lg:hidden fixed left-margin right-margin z-[60] flex items-center justify-center gap-md bg-almost-ink px-xl py-lg transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : '-translate-y-[calc(100%+80px)]'}`}
+      className={`lg:hidden fixed left-margin right-margin z-[60] flex items-center justify-center gap-md bg-bg-brand px-xl py-lg transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : '-translate-y-[calc(100%+80px)]'}`}
       style={{ top: 'calc(env(safe-area-inset-top) + 16px)' }}
     >
       <RotateSvg />
-      <p className="font-body not-italic text-sm leading-[20px] text-paper-white text-center">
+      <p className="font-body not-italic text-sm leading-[20px] text-text-primary text-center">
         Rotate your phone sideways
       </p>
     </div>
