@@ -294,12 +294,16 @@ function Lightbox({
     applyZoom({ scale: 1, x: 0, y: 0 });
   }, [current]);
 
-  // Close on Escape
+  // Escape closes; left/right arrow keys move between images
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      else if (images.length > 1 && e.key === 'ArrowLeft') onPrev();
+      else if (images.length > 1 && e.key === 'ArrowRight') onNext();
+    };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [onClose]);
+  }, [onClose, onPrev, onNext, images.length]);
 
   // Lock body scroll
   useEffect(() => {
@@ -474,9 +478,40 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
 
   const image = images[current];
 
+  // Desktop: left/right arrow keys move through images while the gallery is on screen
+  const sectionRef = useRef<HTMLElement>(null);
+  const [onScreen, setOnScreen] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0.5 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!onScreen || lightboxOpen || images.length < 2) return;
+    const handler = (e: KeyboardEvent) => {
+      if (!window.matchMedia('(min-width: 1024px)').matches) return;
+      if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setCurrent((i) => (i - 1 + images.length) % images.length);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setCurrent((i) => (i + 1) % images.length);
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onScreen, lightboxOpen, images.length]);
+
   return (
     <>
-      <section className="bg-bg-primary pt-4xl pb-7xl lg:py-7xl">
+      <section ref={sectionRef} className="bg-bg-primary pt-4xl pb-7xl lg:py-7xl">
 
         <div className="px-margin max-w-[1440px] mx-auto lg:grid lg:grid-cols-[64px_1fr_64px] lg:gap-[40px] lg:items-center">
 
