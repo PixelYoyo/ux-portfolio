@@ -15,7 +15,7 @@ export default function Hero({ heading, bio, profileImageSrc, profileImageAlt }:
       className="
         relative flex flex-col overflow-hidden bg-bg-primary
         pt-3xl px-margin gap-3xl
-        lg:pt-6xl lg:pl-margin lg:pr-[651px] lg:pb-4xl lg:gap-0 lg:justify-between lg:min-h-[calc(100vh-52px)]
+        lg:pt-6xl lg:pl-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] lg:pr-[calc(651px_+_max(0px,(100%_-_1440px)_/_2))] lg:pb-4xl lg:gap-0 lg:justify-between lg:min-h-[calc(100vh-52px)]
       "
     >
       {/* Text block */}
@@ -46,7 +46,7 @@ export default function Hero({ heading, bio, profileImageSrc, profileImageAlt }:
       <div
         className="
           relative w-full aspect-[399/374] shrink-0 overflow-hidden
-          lg:aspect-auto lg:absolute lg:bottom-0 lg:right-0 lg:h-[610px] lg:w-[651px]
+          lg:aspect-auto lg:absolute lg:bottom-0 lg:right-[max(0px,(100%_-_1440px)_/_2)] lg:h-[610px] lg:w-[651px]
         "
       >
         <Image

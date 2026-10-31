@@ -150,7 +150,7 @@ export default async function Home() {
       <Hero {...heroProps} />
       <Values {...valuesProps} />
       <LogoTicker />
-      <section className="bg-bg-primary px-margin pt-7xl pb-4xl">
+      <section className="bg-bg-primary px-margin lg:px-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] pt-7xl pb-4xl">
         <h2
           className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}
@@ -159,7 +159,7 @@ export default async function Home() {
         </h2>
       </section>
       <FeaturedWork {...featuredProps} />
-      <section className="bg-bg-primary px-margin pt-7xl pb-4xl">
+      <section className="bg-bg-primary px-margin lg:px-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] pt-7xl pb-4xl">
         <h2
           className="font-heading font-bold text-heading-xl tracking-impact leading-none uppercase text-text-primary"
           style={{ fontVariationSettings: "'opsz' 14, 'wdth' 100" }}

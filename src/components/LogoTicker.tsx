@@ -53,7 +53,7 @@ export default function LogoTicker() {
         className="bg-bg-primary overflow-x-hidden py-[40px] lg:py-[64px] flex flex-col gap-[24px]"
         aria-label="Brands I've worked with"
       >
-        <p className="px-margin font-body font-bold not-italic text-xs uppercase text-text-primary shrink-0">
+        <p className="px-margin lg:px-[calc(var(--spacing-margin)_+_max(0px,(100%_-_1440px)_/_2))] font-body font-bold not-italic text-xs uppercase text-text-primary shrink-0">
           Brands I&apos;ve worked with
         </p>
 
