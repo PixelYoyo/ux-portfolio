@@ -146,12 +146,12 @@ function RotateToast({ dismissed, onGone }: { dismissed: boolean; onGone: () => 
       role="status"
       aria-live="polite"
       onTransitionEnd={() => { if (!visible) onGone(); }}
-      className={`lg:hidden fixed left-margin right-margin z-[60] flex items-center gap-md bg-almost-ink px-xl py-lg transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : '-translate-y-[calc(100%+80px)]'}`}
+      className={`lg:hidden fixed left-margin right-margin z-[60] flex items-center justify-center gap-md bg-almost-ink px-xl py-lg transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : '-translate-y-[calc(100%+80px)]'}`}
       style={{ top: 'calc(env(safe-area-inset-top) + 16px)' }}
     >
       <RotateSvg />
-      <p className="font-body not-italic text-sm leading-[20px] text-paper-white">
-        Rotate your phone sideways.
+      <p className="font-body not-italic text-sm leading-[20px] text-paper-white text-center">
+        Rotate your phone sideways
       </p>
     </div>
   );
