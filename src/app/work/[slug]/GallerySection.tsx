@@ -124,6 +124,8 @@ function Toast({
   dismissed = false,
   dismissOnOutsideTap = false,
   dismissOnTurn = false,
+  hug = false,
+  bottomOffset = 'calc(env(safe-area-inset-bottom) + 16px)',
   onGone,
   icon,
   children,
@@ -133,6 +135,8 @@ function Toast({
   dismissed?: boolean;
   dismissOnOutsideTap?: boolean;
   dismissOnTurn?: boolean;
+  hug?: boolean;
+  bottomOffset?: string;
   onGone: () => void;
   icon: React.ReactNode;
   children: React.ReactNode;
@@ -172,11 +176,11 @@ function Toast({
       role="status"
       aria-live="polite"
       onTransitionEnd={() => { if (!visible) onGone(); }}
-      className={`lg:hidden absolute left-margin right-margin z-[60] flex items-center justify-center gap-md bg-bg-brand px-xl py-lg pointer-events-none transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : hiddenOffset}`}
+      className={`lg:hidden absolute z-[60] flex ${hug ? 'left-1/2 -translate-x-1/2 w-max max-w-[calc(100%-40px)]' : 'left-margin right-margin'} items-center justify-center gap-md bg-bg-brand px-xl py-lg pointer-events-none transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : hiddenOffset}`}
       style={
         placement === 'top'
           ? { top: 'calc(env(safe-area-inset-top) + 16px)' }
-          : { bottom: 'calc(env(safe-area-inset-bottom) + 16px)' }
+          : { bottom: bottomOffset }
       }
     >
       {icon}
@@ -428,6 +432,21 @@ function Lightbox({
             <div className="absolute inset-0 bg-[#c6c6c6]" />
           )}
         </div>
+
+        {/* Inside the image area so it sits above the arrows and dots, and stays at the visual bottom when rotated */}
+        {pinchOpen && (
+          <Toast
+            placement="bottom"
+            hug
+            bottomOffset={images.length > 1 ? '16px' : undefined}
+            duration={4000}
+            dismissed={pinchDismissed}
+            onGone={() => { setPinchOpen(false); setPinchDone(true); }}
+            icon={<PinchSvg />}
+          >
+            Pinch to zoom
+          </Toast>
+        )}
       </div>
 
       {/* Bottom controls */}
@@ -439,18 +458,6 @@ function Lightbox({
         </div>
       )}
 
-      {/* Inside the viewer so it stays at the visual bottom when rotated */}
-      {pinchOpen && (
-        <Toast
-          placement="bottom"
-          duration={4000}
-          dismissed={pinchDismissed}
-          onGone={() => { setPinchOpen(false); setPinchDone(true); }}
-          icon={<PinchSvg />}
-        >
-          Pinch to zoom
-        </Toast>
-      )}
     </div>
     </>
   );
