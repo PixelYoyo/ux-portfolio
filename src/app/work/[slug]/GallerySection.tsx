@@ -34,6 +34,129 @@ function CloseSvg() {
   );
 }
 
+function RotateSvg() {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="size-5 shrink-0 text-icon-brand">
+      <path d="M18.75 1.32812C19.1406 1.48438 19.375 1.83594 19.375 2.22656V7.8125C19.375 8.32031 18.9453 8.75 18.3984 8.75H12.7734C12.4219 8.75 12.0703 8.55469 11.9141 8.16406C11.7969 7.8125 11.875 7.42188 12.1484 7.14844L14.6875 4.60938C13.3594 3.47656 11.6797 2.8125 9.92188 2.8125C6.36719 2.8125 3.35938 5.35156 2.77344 8.82812C2.77344 8.86719 2.69531 9.10156 2.42188 9.0625C2.26562 9.0625 2.14844 8.86719 2.1875 8.71094C2.8125 4.96094 6.09375 2.1875 9.92188 2.1875C11.8359 2.1875 13.6719 2.89062 15.1172 4.14062L17.6953 1.5625C18.0078 1.28906 18.3984 1.21094 18.75 1.32812ZM18.75 7.8125V2.22656C18.75 1.91406 18.3594 1.79688 18.1641 1.99219L12.5781 7.57812C12.3828 7.77344 12.5 8.16406 12.8125 8.16406H18.3984C18.5938 8.16406 18.75 8.00781 18.75 7.8125ZM17.5391 10.9766C17.6953 10.9766 17.8125 11.1328 17.7734 11.3281C17.1484 15.0781 13.8672 17.8125 10.0391 17.8125C8.125 17.8125 6.28906 17.1484 4.84375 15.8984L2.26562 18.4766C1.95312 18.75 1.5625 18.8672 1.21094 18.7109C0.820312 18.5547 0.625 18.2031 0.625 17.8125V12.2266C0.625 11.7188 1.01562 11.2891 1.5625 11.25H7.14844C7.53906 11.2891 7.89062 11.4844 8.04688 11.8359C8.16406 12.2266 8.08594 12.6172 7.8125 12.8906L5.27344 15.4297C6.60156 16.5625 8.28125 17.1875 10.0391 17.1875C13.5938 17.1875 16.6016 14.6875 17.1875 11.2109C17.1875 11.0547 17.3828 10.9375 17.5391 10.9766ZM1.79688 18.0469L7.38281 12.4609C7.57812 12.2656 7.46094 11.875 7.14844 11.875H1.5625C1.36719 11.875 1.25 12.0312 1.25 12.2266V17.8125C1.25 18.125 1.60156 18.2422 1.79688 18.0469Z" />
+    </svg>
+  );
+}
+
+// ── Rotation helpers ──────────────────────────────────────────────────────────
+
+const MOBILE_QUERY = '(max-width: 1023px) and (pointer: coarse)';
+
+const isMobile = () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches;
+const isPortraitViewport = () => window.innerHeight > window.innerWidth;
+
+// iOS only sends motion events after the user grants permission, and the
+// request has to come from a tap — so this runs when "Expand gallery" is tapped.
+function requestMotionPermission() {
+  const DM = (typeof window !== 'undefined' ? window.DeviceMotionEvent : undefined) as
+    | (typeof DeviceMotionEvent & { requestPermission?: () => Promise<string> })
+    | undefined;
+  if (DM?.requestPermission) DM.requestPermission().catch(() => {});
+}
+
+// Reads the motion sensor to tell when the phone is physically held sideways,
+// even if the screen itself won't rotate (orientation lock is on).
+// Returns the angle to rotate the viewer by: 0, 90 or -90.
+function usePhysicalRotation(enabled: boolean) {
+  const [angle, setAngle] = useState<0 | 90 | -90>(0);
+
+  useEffect(() => {
+    if (!enabled) return;
+    // iOS reports gravity with the opposite sign to Android; the sign is
+    // re-learnt whenever the phone is clearly upright.
+    let ySign = /iP(hone|ad|od)/.test(navigator.userAgent) ? -1 : 1;
+    let current: 0 | 90 | -90 = 0;
+    const THRESHOLD = 7; // m/s², roughly 45° of tilt
+
+    const onMotion = (e: DeviceMotionEvent) => {
+      const g = e.accelerationIncludingGravity;
+      if (!g || g.x == null || g.y == null) return;
+      // The browser rotated the page itself, so no help is needed.
+      if (!isPortraitViewport()) {
+        if (current !== 0) setAngle((current = 0));
+        return;
+      }
+      const x = g.x * ySign;
+      const y = g.y;
+      let next = current;
+      if (Math.abs(y) > THRESHOLD && Math.abs(y) > Math.abs(x)) {
+        if (Math.abs(y * ySign) > THRESHOLD) ySign = Math.sign(y) as 1 | -1;
+        next = 0;
+      } else if (Math.abs(x) > THRESHOLD && Math.abs(x) > Math.abs(y)) {
+        // Right edge down → turn content anticlockwise, left edge down → clockwise.
+        next = x < 0 ? -90 : 90;
+      }
+      if (next !== current) setAngle((current = next));
+    };
+
+    const onResize = () => {
+      if (!isPortraitViewport() && current !== 0) setAngle((current = 0));
+    };
+
+    window.addEventListener('devicemotion', onMotion);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('devicemotion', onMotion);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [enabled]);
+
+  return enabled ? angle : 0;
+}
+
+// ── Rotate tip ────────────────────────────────────────────────────────────────
+
+function RotateToast({ dismissed, onGone }: { dismissed: boolean; onGone: () => void }) {
+  const [shown, setShown] = useState(false);
+  const toastRef = useRef<HTMLDivElement>(null);
+
+  // Slide in on the frame after mounting so the transition runs
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  const hide = () => setShown(false);
+
+  // Slide back up after 3s, on a tap outside, or when the phone turns
+  useEffect(() => {
+    const timer = window.setTimeout(hide, 3000);
+    const onPointer = (e: PointerEvent) => {
+      if (!toastRef.current?.contains(e.target as Node)) hide();
+    };
+    const onResize = () => { if (!isPortraitViewport()) hide(); };
+    document.addEventListener('pointerdown', onPointer);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener('pointerdown', onPointer);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  const visible = shown && !dismissed;
+
+  return (
+    <div
+      ref={toastRef}
+      role="status"
+      aria-live="polite"
+      onTransitionEnd={() => { if (!visible) onGone(); }}
+      className={`lg:hidden fixed left-margin right-margin z-[60] flex items-center gap-md bg-almost-ink px-xl py-lg transition-transform duration-300 ease-out ${visible ? 'translate-y-0' : '-translate-y-[calc(100%+80px)]'}`}
+      style={{ top: 'calc(env(safe-area-inset-top) + 16px)' }}
+    >
+      <RotateSvg />
+      <p className="font-body not-italic text-sm leading-[20px] text-paper-white">
+        Rotate your phone sideways.
+      </p>
+    </div>
+  );
+}
+
 // ── Shared components ─────────────────────────────────────────────────────────
 
 function ArrowButton({
@@ -106,6 +229,15 @@ function Lightbox({
     setZoom(next);
   };
 
+  // Turn the viewer when the phone is held sideways, even with rotation locked
+  const [mobile] = useState(isMobile);
+  const angle = usePhysicalRotation(mobile);
+  const angleRef = useRef(angle);
+  useEffect(() => { angleRef.current = angle; }, [angle]);
+
+  // Show the rotate tip on mobile when opened in portrait
+  const [toastOpen, setToastOpen] = useState(() => mobile && isPortraitViewport());
+
   // Touch tracking refs
   const pinchRef = useRef<{ dist: number; scale: number } | null>(null);
   const dragRef = useRef<{ startX: number; startY: number; originX: number; originY: number } | null>(null);
@@ -158,10 +290,15 @@ function Lightbox({
       const next = Math.min(Math.max(pinchRef.current.scale * (dist / pinchRef.current.dist), 1), 5);
       applyZoom({ scale: next, x: next === 1 ? 0 : zoomRef.current.x, y: next === 1 ? 0 : zoomRef.current.y });
     } else if (e.touches.length === 1 && dragRef.current && zoomRef.current.scale > 1) {
+      const dx = e.touches[0].clientX - dragRef.current.startX;
+      const dy = e.touches[0].clientY - dragRef.current.startY;
+      // Map finger movement into the viewer's own (possibly rotated) axes
+      const a = angleRef.current;
+      const [lx, ly] = a === 90 ? [dy, -dx] : a === -90 ? [-dy, dx] : [dx, dy];
       applyZoom({
         scale: zoomRef.current.scale,
-        x: dragRef.current.originX + (e.touches[0].clientX - dragRef.current.startX),
-        y: dragRef.current.originY + (e.touches[0].clientY - dragRef.current.startY),
+        x: dragRef.current.originX + lx,
+        y: dragRef.current.originY + ly,
       });
     }
   };
@@ -178,9 +315,23 @@ function Lightbox({
   const isZoomed = zoom.scale !== 1 || zoom.x !== 0 || zoom.y !== 0;
   const image = images[current];
 
+  const rotatedStyle: React.CSSProperties | undefined = angle
+    ? {
+        inset: 'auto',
+        top: '50%',
+        left: '50%',
+        width: '100dvh',
+        height: '100dvw',
+        transform: `translate(-50%, -50%) rotate(${angle}deg)`,
+      }
+    : undefined;
+
   return (
+    <>
+    {toastOpen && <RotateToast dismissed={angle !== 0} onGone={() => setToastOpen(false)} />}
     <div
       className="fixed inset-0 z-50 bg-bg-primary flex flex-col"
+      style={rotatedStyle}
       role="dialog"
       aria-modal="true"
       aria-label="Fullscreen image viewer"
@@ -230,6 +381,7 @@ function Lightbox({
         </div>
       )}
     </div>
+    </>
   );
 }
 
@@ -259,7 +411,10 @@ export default function GallerySection({ images }: { images: CaseStudyGalleryIma
             {/* Image with expand link above */}
             <div className="flex flex-col items-end gap-3 w-full">
               <button
-                onClick={() => setLightboxOpen(true)}
+                onClick={() => {
+                  if (isMobile()) requestMotionPermission();
+                  setLightboxOpen(true);
+                }}
                 className="text-link font-body not-italic text-base text-text-primary cursor-pointer"
               >
                 Expand gallery
